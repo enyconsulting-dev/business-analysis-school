@@ -1,593 +1,494 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
+import AcceleratorTiers from "@/components/AcceleratorTiers";
+import Counter from "@/components/Counter";
+import ResourceOptinModal from "@/components/ResourceOptinModal";
+import QuizModal from "@/components/QuizModal";
+
 export default function Home() {
+  const [activeModal, setActiveModal] = useState<{ type: 'masterclass' | 'ebook'; title: string } | null>(null);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
+
+  // Framer Motion Variants for Sequential Stagger
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.7, ease: [0.21, 1.11, 0.81, 0.99] as any }
+    },
+  };
+
+  const iconVariants = {
+    hidden: { scale: 0, rotate: -15 },
+    visible: { 
+      scale: 1, 
+      rotate: 0,
+      transition: { type: "spring" as const, stiffness: 200, damping: 15, delay: 0.2 } 
+    },
+  };
+
+  useEffect(() => {
+    // Other client-side initializations can go here
+  }, []);
   return (
-    <>
-      {/* Hero Section */}
-      <section className="relative w-full bg-gradient-to-br from-primary via-[#1e40af] to-[#1e3a8a] py-16 lg:py-24 overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 size-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="layout-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Text Content */}
-            <div className="flex flex-col gap-6 text-white text-center lg:text-left">
-              <div className="inline-flex items-center justify-center lg:justify-start gap-2 text-blue-100 text-sm font-medium">
-                <span className="bg-white/20 px-2 py-1 rounded text-xs uppercase tracking-wider">
-                  New Cohort
-                </span>
-                <span>Enrollment Open for 2025</span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
-                Fast-track your income to{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-100">
-                  Six Figures
-                </span>
-              </h1>
-
-              <p className="text-lg text-blue-100 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                The #1 Platform for Non-Tech Professionals to pivot into
-                Business Analysis. Official IIBA Endorsed Education Provider
-                (EEP) & ScrumStudy Partner.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                <button className="h-12 px-8 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold text-base transition-transform hover:scale-105 shadow-lg">
-                  Get Started Free
-                </button>
-                <button className="h-12 px-8 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-base border border-white/20 backdrop-blur-sm flex items-center justify-center gap-2">
-                  <span className="material-symbols-outlined">play_circle</span>
-                  Watch Success Stories
-                </button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="pt-8 flex flex-col items-center lg:items-start gap-3 opacity-90">
-                <p className="text-xs uppercase tracking-widest text-blue-200">
-                  Accredited By
-                </p>
-                <div className="flex items-center gap-6 grayscale contrast-200 brightness-200">
-                  {/* IIBA Text Logo Representation */}
-                  <div className="h-8 flex items-center gap-1 font-bold text-xl italic font-serif">
-                    <span>IIBA</span>
-                    <span className="text-[10px] not-italic font-sans border border-white px-1 rounded ml-1">
-                      EEP
-                    </span>
-                  </div>
-                  {/* ScrumStudy Text Logo Representation */}
-                  <div className="h-8 flex items-center gap-1 font-bold text-lg">
-                    <span className="material-symbols-outlined">
-                      workspace_premium
-                    </span>
-                    <span>ScrumStudy</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="relative lg:h-auto w-full max-w-lg mx-auto lg:max-w-none">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent z-10"></div>
-                <img
-                  alt="Diverse group of professional students collaborating in a modern office environment"
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSg-jHCAhk5IKxRq8lep7IPTpLVmFRm9EaF_axLohLnY3wGA7I_l52JWNS-SavIW810t9pJp1LZJqJTK8nZoaTncPwJsbLj5lHWvd-mTyx_Vyd4yR7uLiynF-AV7Dpor5ANql7J7U3EZ5yG5WOHCxve_kgciVMBKdsK7hdvx9cOHqnWK0zqL8icg8rf2Qy9gvOv9hRvfAsaynQFTqVu0t_Jd7i-xY6MN6ELX5pame3OJmDFsveurFeC4lXXtALQPkgQWJICAH8Pyo"
-                />
-                {/* Floating Card */}
-                <div className="absolute bottom-6 left-6 right-6 z-20 bg-white/95 backdrop-blur shadow-xl rounded-xl p-4 flex items-center gap-4">
-                  <div className="bg-green-100 p-2 rounded-full text-green-600">
-                    <span className="material-symbols-outlined">
-                      trending_up
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-semibold uppercase">
-                      Average Salary Hike
-                    </p>
-                    <p className="text-lg font-bold text-gray-900">
-                      +45% after certification
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div className="flex flex-col">
+      {/* ========== HERO ========== */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-navy-deep via-navy to-[#1A0A2E]">
+        {/* Animated Glow & Grid */}
+        <div className="absolute inset-0 hero-grid opacity-20"></div>
+        <div className="absolute -top-[30%] -right-[15%] w-[60vw] h-[60vw] bg-[radial-gradient(circle,rgba(150,8,142,0.2)_0%,transparent_60%)] animate-glow"></div>
+        
+        <div className="relative z-10 max-w-[1140px] mx-auto px-6 md:px-10 py-12 md:py-20 flex flex-col items-center text-center lg:items-start lg:text-left">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gold/10 border border-gold/25 rounded-full text-[0.7rem] font-bold uppercase tracking-widest text-gold mb-6 animate-fade-up">
+            <span className="w-1.5 h-1.5 bg-gold rounded-full"></span>
+            IIBA Endorsed Education Provider
+          </div>
+          
+          <h1 className="font-serif text-[clamp(2.4rem,4.5vw,3.6rem)] leading-[1.15] text-white mb-6 animate-fade-up [animation-delay:200ms]">
+            Land a Six-Figure Career in Tech <br className="hidden md:block" /> 
+            <span className="italic text-gold-lt font-normal italic">Without a Tech Degree</span>
+          </h1>
+          
+          <p className="text-[1.05rem] leading-[1.7] text-white/60 max-w-[560px] font-light mb-8 animate-fade-up [animation-delay:400ms]">
+            Business Analysis School is the global leader in business analysis education. We help mid-career professionals, career changers, and ambitious individuals master AI-driven business analysis skills and land six-figure roles in 90 days.
+          </p>
+          
+          <div className="flex flex-wrap gap-3.5 animate-fade-up [animation-delay:600ms]">
+            <Link href="/free-training" className="bg-orchid hover:bg-orchid-lt text-white text-[0.85rem] font-semibold py-3.5 px-8 rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(150,8,142,0.35)]">
+              Start Free Training
+            </Link>
+            <Link href="/programs" className="bg-transparent text-white border border-white/20 hover:border-white hover:bg-white/5 text-[0.85rem] font-semibold py-3.5 px-8 rounded-md transition-all">
+              Explore Programs
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Trusted Companies Marquee */}
-      <section className="py-10 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 text-center mb-6">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-widest">
-            Trusted by professionals at top companies
-          </h3>
-        </div>
-        <div className="relative flex overflow-x-hidden group">
-          <div className="animate-marquee whitespace-nowrap flex gap-16 px-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            {/* Logos repeated for marquee effect */}
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">language</span>{" "}
-              GlobalTech
+      {/* ========== PROOF BAR (FRAMER MOTION) ========== */}
+      <section className="bg-navy border-b border-white/5 py-8 overflow-hidden">
+        <div className="max-w-[1140px] mx-auto px-6 md:px-10 flex flex-wrap items-center justify-center gap-10 md:gap-x-20">
+          
+          {/* STAT 1 */}
+          <div className="text-center group min-w-[120px]">
+            <div className="font-serif text-3xl md:text-4xl text-gold leading-none mb-2">
+              <Counter to={100} suffix="K+" />
             </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">cloud</span>{" "}
-              CloudSystems
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">payments</span>{" "}
-              FinCorp
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">shopping_cart</span>{" "}
-              MarketPlace
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">
-                health_and_safety
-              </span>{" "}
-              HealthPlus
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">language</span>{" "}
-              GlobalTech
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">cloud</span>{" "}
-              CloudSystems
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">payments</span>{" "}
-              FinCorp
-            </div>
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-400">
-              <span className="material-symbols-outlined">shopping_cart</span>{" "}
-              MarketPlace
-            </div>
+            <div className="text-[0.65rem] text-white/40 uppercase tracking-[0.2em] font-bold">Professionals Trained</div>
           </div>
+
+          <div className="hidden lg:block w-px h-10 bg-white/10 shrink-0"></div>
+
+          {/* STAT 2 */}
+          <div className="text-center group min-w-[120px]">
+            <div className="font-serif text-3xl md:text-4xl text-gold leading-none mb-2">
+              <Counter to={90} suffix="+" />
+            </div>
+            <div className="text-[0.65rem] text-white/40 uppercase tracking-[0.2em] font-bold">Countries</div>
+          </div>
+
+          <div className="hidden lg:block w-px h-10 bg-white/10 shrink-0"></div>
+
+          {/* STAT 3 */}
+          <div className="text-center group min-w-[120px]">
+            <div className="font-serif text-3xl md:text-4xl text-gold leading-none mb-2">IIBA</div>
+            <div className="text-[0.65rem] text-white/40 uppercase tracking-[0.2em] font-bold">Endorsed Education Provider</div>
+          </div>
+
+          <div className="hidden lg:block w-px h-10 bg-white/10 shrink-0"></div>
+
+          {/* STAT 4 */}
+          <div className="text-center group min-w-[120px]">
+            <div className="font-serif text-3xl md:text-4xl text-gold leading-none mb-2">
+              <span className="text-[0.8em] font-sans mr-0.5">$</span>85K–140K
+            </div>
+            <div className="text-[0.65rem] text-white/40 uppercase tracking-[0.2em] font-bold">Avg BA Salary (USA)</div>
+          </div>
+
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-20 bg-background-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-            <div className="w-full lg:w-1/2 relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-dots-pattern opacity-20"></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[3/4] lg:aspect-square max-w-md mx-auto">
-                <img
-                  alt="Eno Eka, founder of Business Analysis School, smiling professionally in business attire"
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQViEycEBjI20-h6VWNjZhlwv8hgXKvebq_jyHi3jluPcyR2CTEt9XnHchv0ez72LTd82pzL_nkLNH5sCLhCBBfvc502c4ku5kZoJ1dEF2oTQq9YQMbCObSxdJwWJBn4p7lilTlr9N5FyXMsRuWDzmSydgDRnBe8uMnwRqF_cbOfWrkdZ3NX_zhgFDEdhk65v_2pHlS5-54QQSwIui7ZuTijmRmvGksdDuxbRngkJaFPaXb_cZxyEYbDwKCHApQNR3-aq1RFzZU7w"
-                />
+      {/* ========== THE PROBLEM WE SOLVE (STICKY SCROLL) ========== */}
+      <section className="py-24 bg-white relative">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gray-100 to-transparent"></div>
+        <div className="max-w-[1140px] mx-auto px-6 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+            {/* Header Column (Full width but in sticky context) */}
+            <div className="lg:col-span-12 mb-4 md:mb-8 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-orchid/10 border border-orchid/25 rounded-md text-[0.7rem] font-bold uppercase tracking-widest text-orchid mb-6">
+                The Problem We Solve
               </div>
-              {/* Stats Card Overlay */}
-              <div className="absolute -bottom-6 -right-6 lg:right-0 bg-white p-6 rounded-xl shadow-xl max-w-[200px] hidden sm:block">
-                <p className="text-4xl font-bold text-primary mb-1">
-                  100k+
-                </p>
-                <p className="text-sm text-gray-600 font-medium">
-                  Students Mentored Globally
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full lg:w-1/2 flex flex-col gap-6">
-              <div className="inline-flex items-center gap-2 text-accent font-bold uppercase tracking-wider text-sm">
-                <span className="w-8 h-[2px] bg-accent"></span>
-                Meet Your Instructor
-              </div>
-
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                Helping you pivot with confidence.
+              <h2 className="font-serif text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.1] text-navy mb-8 max-w-[900px]">
+                You Have the Experience. <br className="hidden md:block" />
+                <span className="italic text-gold font-normal italic">You Just Don’t Have the Positioning.</span>
               </h2>
+            </div>
+            
+            {/* Left Column (Scrollable Text Stages with Focus Animation) */}
+            <div className="lg:col-span-7 space-y-32 py-10">
+              <motion.div 
+                initial={{ opacity: 0.3, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ amount: 0.8 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light">
+                  You’re an experienced professional. You have skills, education, and years of real work under your belt. <span className="font-medium text-orchid">But you’re stuck</span> — stuck in a role that underpay you, stuck in an industry that’s shrinking, or stuck wondering how to break into tech without going back to school and starting over from scratch.
+                </p>
+              </motion.div>
 
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Led by Eno Eka, an award-winning Business Analyst and Career
-                Coach. We don&apos;t just teach theory; we provide the blueprint
-                that has helped thousands of non-tech professionals land
-                six-figure roles at Fortune 500 companies.
-              </p>
+              <motion.div 
+                initial={{ opacity: 0.3, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ amount: 0.8 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light">
+                  Here’s what nobody tells you: <span className="italic">you don’t need a computer science degree</span> to earn six figures in tech. You don’t need to learn to code. You don’t need to start at the bottom. What you need is a proven system to repackage your existing experience, position yourself for the roles that are hiring right now, and walk into interviews with the confidence and credentials that make you the obvious choice.
+                </p>
+              </motion.div>
 
-              <div className="grid grid-cols-2 gap-6 mt-4">
-                <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                  <h4 className="text-3xl font-black text-primary">
-                    95%
-                  </h4>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Certification Pass Rate
+              <motion.div 
+                initial={{ opacity: 0.3, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ amount: 0.8 }}
+                transition={{ duration: 0.6 }}
+              >
+                <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light pb-20">
+                  That’s exactly what Business Analysis School delivers. We’ve helped over <span className="bg-gold/10 px-1 font-bold">100,000 professionals</span> across 90+ countries make this exact transition — from accountants, project managers, teachers, operations professionals, and managers into high-paying business analysis, product management, data analysis, and AI consulting roles.
+                </p>
+                <div className="pt-10 border-t border-gray-100">
+                  <p className="text-[1.2rem] md:text-3xl font-serif text-navy leading-snug">
+                    The question isn’t whether you can do this. <br />
+                    <span className="text-orchid">The question is how quickly you want to start.</span>
                   </p>
                 </div>
-                <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                  <h4 className="text-3xl font-black text-primary">
-                    $100k+
-                  </h4>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Average Graduate Salary
-                  </p>
-                </div>
-              </div>
+              </motion.div>
+            </div>
 
-              <div className="pt-4">
-                <a
-                  className="text-primary font-bold hover:underline inline-flex items-center gap-1"
-                  href="#"
-                >
-                  Read Eno&apos;s Story{" "}
-                  <span className="material-symbols-outlined text-sm">
-                    arrow_forward
-                  </span>
-                </a>
+            {/* Right Column (Sticky Visual) */}
+            <div className="lg:col-span-5 lg:sticky lg:top-48 self-start pb-10 h-fit">
+              <div className="aspect-square rounded-[2rem] bg-navy-alt overflow-hidden relative shadow-2xl group border border-white/5">
+                 <div className="absolute inset-0 bg-gradient-to-tr from-navy via-navy-alt to-orchid/20 opacity-95"></div>
+                 <div className="absolute inset-0 flex items-center justify-center p-12 text-center text-white">
+                    <div className="animate-fade-up">
+                      <div className="w-24 h-24 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-8 border border-gold/25 relative">
+                        <div className="absolute inset-0 bg-gold/10 rounded-full animate-ping opacity-20"></div>
+                        <span className="material-symbols-outlined text-[3rem] text-gold">change_circle</span>
+                      </div>
+                      <h4 className="font-serif text-3xl mb-4 italic">The Positioning Shift</h4>
+                      <p className="text-white/40 font-light leading-relaxed max-w-[280px] mx-auto">
+                        Moving from 'Generalist Experience' to 'Specialist Strategic Asset' in 90 days.
+                      </p>
+                      <div className="mt-8 inline-flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-orchid-lt">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orchid-lt animate-pulse"></span>
+                        Active Transformation
+                      </div>
+                    </div>
+                 </div>
+                 {/* Decorative floaters */}
+                 <div className="absolute top-10 right-10 w-24 h-24 bg-orchid/10 blur-3xl rounded-full"></div>
+                 <div className="absolute bottom-10 left-10 w-32 h-32 bg-gold/5 blur-3xl rounded-full"></div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* IIBA Certification Section */}
-      <section className="py-20 bg-white ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center justify-center size-16 bg-orange-100 text-orange-600 rounded-full mb-4">
-              <span className="material-symbols-outlined text-3xl">
-                verified
-              </span>
+      {/* ========== HOW IT WORKS (SEQUENTIAL ANIMATION) ========== */}
+      <section className="py-24 bg-navy text-white relative">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-orchid/5 blur-[120px] pointer-events-none"></div>
+        <div className="max-w-[1140px] mx-auto px-6 md:px-10 relative z-10">
+          <div className="mb-16 md:mb-20 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 border border-gold/20 rounded-md text-[0.7rem] font-bold uppercase tracking-widest text-gold mb-4">
+              How It Works
             </div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Official IIBA Endorsed Education Provider
+            <h2 className="font-serif text-[clamp(2.2rem,4vw,3rem)] leading-tight text-white italic">
+              Three Steps to a <span className="text-gold italic">Six-Figure</span> Career
             </h2>
-            <p className="text-lg text-gray-600">
-              Get certified and increase your earning potential by up to 40%. We
-              guide you through every level of the IIBA certification roadmap.
+          </div>
+
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12"
+          >
+            {[ 
+              { step: "01", icon: "📚", title: "Learn the Skills", body: "Master business analysis frameworks, AI tools, and methodologies used by the world’s top companies. Our curriculum is endorsed by the IIBA — the global standard-setting body for business analysis — and aligned with the real-world practices." },
+              { step: "02", icon: "🏆", title: "Get Certified", body: "Earn globally recognized certifications that instantly position you as a qualified professional employers trust: ECBA, CCBA, CBAP from the IIBA, plus Scrum Master, Product Owner, and Six Sigma." },
+              { step: "03", icon: "💰", title: "Land the Role", body: "Our career coaching, resume optimization, LinkedIn rewrite, interview preparation, and job search strategy get you in front of the right employers fast. We provide the mentorship needed to secure competitive roles." }
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                variants={itemVariants}
+                className="relative group"
+              >
+                <div className="absolute -top-6 -left-6 text-[4.5rem] font-serif italic text-white/5 group-hover:text-gold/10 transition-colors select-none">{item.step}</div>
+                <div className="bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-10 transition-all hover:border-gold/30 hover:bg-gold/5 flex flex-col h-full relative z-10">
+                  <motion.div 
+                    variants={iconVariants}
+                    className="w-14 h-14 rounded-2xl bg-gold/10 flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform"
+                  >
+                    {item.icon}
+                  </motion.div>
+                  <h4 className="font-serif text-xl text-white mb-4 group-hover:text-gold transition-colors italic">Step {item.step.replace(/^0/, "")}: {item.title}</h4>
+                  <p className="text-[0.95rem] leading-[1.7] text-white/60 font-light flex-grow">
+                    {item.body}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ========== AI ACCELERATOR PROGRAMS (3 TIERS) ========== */}
+      <AcceleratorTiers />
+
+      {/* ========== SUCCESS STORIES (ROTATING CAROUSEL) ========== */}
+      <TestimonialCarousel />
+
+      {/* ========== FREE RESOURCES SECTION ========== */}
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-orchid/5 blur-[120px] pointer-events-none"></div>
+        <div className="max-w-[1140px] mx-auto px-6 md:px-10 relative z-10">
+          <div className="mb-16 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-orchid/10 border border-orchid/20 rounded-md text-[0.7rem] font-bold uppercase tracking-widest text-orchid mb-4">
+              Free Resources
+            </div>
+            <h2 className="font-serif text-[clamp(2.2rem,4vw,3rem)] leading-tight text-navy mb-4">
+              Start Learning for Free — <span className="italic text-gold">Right Now</span>
+            </h2>
+            <p className="text-[1.1rem] text-gray-500 font-light max-w-[600px] leading-relaxed">
+              No credit card required. No commitment. Just valuable training and tools that could change your career trajectory today.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Card 1 - ECBA */}
-            <div className="bg-background-light rounded-xl p-8 border border-gray-200 hover:border-primary/50 transition-colors group relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <span className="material-symbols-outlined text-8xl text-primary">
-                  school
-                </span>
-              </div>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-primary mb-2">
-                  ECBA™
-                </h3>
-                <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
-                  Entry Certificate in Business Analysis
-                </p>
-                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                  Perfect for individuals entering the field of business
-                  analysis. No experience required.
-                </p>
-                <ul className="space-y-2 mb-8 text-sm text-gray-600">
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-500 text-base">
-                      check_circle
-                    </span>{" "}
-                    21 PD Hours Included
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-500 text-base">
-                      check_circle
-                    </span>{" "}
-                    Exam Prep Simulator
-                  </li>
-                </ul>
-                <a
-                  className="inline-block w-full text-center py-2.5 rounded border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-colors"
-                  href="#"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { 
+                icon: "🎓", 
+                title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree", 
+                body: "Join 50,000+ professionals who have taken this training. In this masterclass, you’ll learn the #1 non-technical career path into tech, the exact 90-day roadmap our graduates follow, and how AI is creating massive demand.", 
+                cta: "Watch Free", 
+                iconClass: "bg-orchid/10", 
+                btnClass: "bg-navy hover:bg-navy-alt text-white",
+                onClick: () => setActiveModal({ type: 'masterclass', title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree" })
+              },
+              { 
+                icon: "📖", 
+                title: "The Business Analysis Career Starter Kit", 
+                body: "A free downloadable eBook with everything you need to evaluate and plan your career transition: career path overview, salary data by country, skills checklist, and a 90-day action plan.", 
+                cta: "Download Free", 
+                iconClass: "bg-gold/10", 
+                btnClass: "bg-white border border-navy text-navy hover:bg-gray-50",
+                onClick: () => setActiveModal({ type: 'ebook', title: "The Business Analysis Career Starter Kit" })
+              },
+              { 
+                icon: "❓", 
+                title: "Is Business Analysis the Right Career for You?", 
+                body: "Take our 3-minute assessment and get personalized recommendations based on your experience, skills, and goals. Instant results with a custom career roadmap suggestion.", 
+                cta: "Take the Quiz", 
+                iconClass: "bg-green/10", 
+                btnClass: "bg-orchid hover:bg-orchid-lt text-white",
+                onClick: () => setIsQuizOpen(true)
+              }
+            ].map((res, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="bg-white border border-gray-100 rounded-[2rem] p-8 md:p-10 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 flex flex-col group"
+              >
+                <div className={`w-14 h-14 rounded-2xl ${res.iconClass} flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform`}>{res.icon}</div>
+                <h3 className="font-serif text-xl border-b border-gray-100 pb-4 mb-4 text-navy italic">{res.title}</h3>
+                <p className="text-[0.9rem] leading-[1.7] text-gray-400 font-light flex-grow mb-8">{res.body}</p>
+                <button 
+                  onClick={res.onClick}
+                  className={`inline-flex items-center justify-center gap-2 ${res.btnClass} font-bold py-3.5 px-6 rounded-xl transition-all`}
                 >
-                  Learn More
-                </a>
+                  {res.cta} <span className="material-symbols-outlined text-sm">{res.icon === "📖" ? "download" : res.icon === "❓" ? "quiz" : "play_circle"}</span>
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== SALARY BENCHMARKS (ANIMATED REVEAL) ========== */}
+      <section id="salary-benchmarks" className="py-24 bg-navy text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-white/10"></div>
+        <div className="max-w-[1140px] mx-auto px-6 md:px-10">
+          <div className="mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 border border-gold/20 rounded-md text-[0.7rem] font-bold uppercase tracking-widest text-gold mb-6">
+              Salary Benchmarks
+            </div>
+            <h2 className="font-serif text-[clamp(2.2rem,4vw,3.5rem)] leading-tight text-white italic">
+              What Business Analysts <span className="text-gold italic font-normal">Actually Earn</span>
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {[
+              { flag: "🇺🇸", country: "USA", range: "$85K – $140K+" },
+              { flag: "🇨🇦", country: "Canada", range: "CAD $75K – $120K+" },
+              { flag: "🇬🇧", country: "United Kingdom", range: "£45K – £80K+" },
+              { flag: "🇦🇺", country: "Australia", range: "AUD $80K – $130K+" },
+              { flag: "🇳🇬", country: "Nigeria", range: "₦5M – ₦20M+", full: true }
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className={`bg-white/5 border border-white/10 rounded-2xl p-6 transition-all hover:bg-white/10 hover:border-white/20 group ${item.full ? "col-span-2 md:col-span-1" : ""}`}
+              >
+                <div className="text-3xl mb-4 grayscale group-hover:grayscale-0 transition-all">{item.flag}</div>
+                <div className="text-[0.65rem] text-white/40 uppercase tracking-widest mb-2 font-bold">{item.country}</div>
+                <div className="font-serif text-[1.4rem] md:text-[1.6rem] text-gold whitespace-nowrap">{item.range}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-12 max-w-[800px] mx-auto">
+            <p className="text-[0.78rem] text-white/30 font-light leading-relaxed italic">
+              Source: industry salary surveys. <span className="text-white/60">AI-skilled business analysts command 20-40% premium.</span> Remote and international roles increase earning potential significantly.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== THE BOOK ========== */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="max-w-[1140px] mx-auto px-6 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20 items-center">
+            {/* Book Cover Visual */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gold/20 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="relative bg-gradient-to-br from-navy-alt to-navy rounded-[2.5rem] aspect-[3/4.2] flex flex-col items-center justify-center p-12 shadow-2xl overflow-hidden border border-white/10">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 blur-3xl rounded-full"></div>
+                 <div className="absolute bottom-0 left-0 w-40 h-40 bg-orchid/10 blur-3xl rounded-full"></div>
+                 
+                 <div className="relative text-center z-10">
+                    <div className="text-gold/50 font-serif text-[1rem] uppercase tracking-[0.3em] mb-4">The Bestseller</div>
+                    <h3 className="font-serif text-[2.5rem] md:text-[3rem] text-white leading-[1.1] mb-6 italic">The <span className="text-gold">Six-Figure</span> Business Analyst</h3>
+                    <div className="w-16 h-1 bg-gold/50 mx-auto rounded-full"></div>
+                    <p className="mt-8 text-white/40 text-[0.7rem] uppercase tracking-widest font-bold">By Eno E.</p>
+                 </div>
+
+                 {/* Decorative floater */}
+                 <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rotate-12 border border-white/10 rounded-2xl"></div>
               </div>
             </div>
 
-            {/* Card 2 - CCBA (Popular) */}
-            <div className="bg-primary text-white rounded-xl p-8 shadow-xl transform md:-translate-y-4 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10">
-                <span className="material-symbols-outlined text-8xl">
-                  military_tech
-                </span>
+            {/* Content Column */}
+            <div className="animate-fade-up">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-orchid/10 border border-orchid/20 rounded-md text-[0.7rem] font-bold uppercase tracking-widest text-orchid mb-6 font-sans">
+                The Bestselling Book
               </div>
-              <div className="relative z-10">
-                <div className="absolute top-0 right-0 bg-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                  POPULAR
-                </div>
-                <h3 className="text-2xl font-bold mb-2">CCBA®</h3>
-                <p className="text-sm font-semibold text-blue-200 uppercase tracking-wide mb-4">
-                  Certification of Capability in Business Analysis
-                </p>
-                <p className="text-blue-100 mb-6 text-sm leading-relaxed">
-                  For professionals with 2-3 years of business analysis
-                  experience. Validate your skills.
-                </p>
-                <ul className="space-y-2 mb-8 text-sm text-blue-100">
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-accent text-base">
-                      check_circle
-                    </span>{" "}
-                    21 PD Hours Included
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-accent text-base">
-                      check_circle
-                    </span>{" "}
-                    Application Support
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-accent text-base">
-                      check_circle
-                    </span>{" "}
-                    1-on-1 Coaching
-                  </li>
-                </ul>
-                <a
-                  className="inline-block w-full text-center py-2.5 rounded bg-white text-primary font-bold hover:bg-blue-50 transition-colors"
-                  href="#"
-                >
-                  Get Certified
-                </a>
-              </div>
-            </div>
+              
+              <h2 className="font-serif text-[clamp(2.5rem,5vw,3.5rem)] leading-[1.1] text-navy mb-4">The Six-Figure Business Analyst</h2>
+              <p className="text-[1.1rem] md:text-[1.3rem] italic text-gold font-serif mb-6 leading-relaxed">
+                12 Simple Steps to Kickstart Your Career Without a Tech Degree or Experience
+              </p>
 
-            {/* Card 3 - CBAP */}
-            <div className="bg-background-light rounded-xl p-8 border border-gray-200 hover:border-primary/50 transition-colors group relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <span className="material-symbols-outlined text-8xl text-primary">
-                  workspace_premium
-                </span>
+              <div className="flex items-center gap-1 mb-8">
+                {[1,2,3,4,5].map(i => (
+                  <span key={i} className="material-symbols-outlined text-gold text-[1.4rem]">star</span>
+                ))}
+                <span className="ml-3 text-[0.9rem] font-bold text-navy">4.9/5</span>
+                <span className="ml-1 text-[0.9rem] text-gray-400 font-light">(2,500+ Reviews)</span>
               </div>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-primary mb-2">
-                  CBAP®
-                </h3>
-                <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-4">
-                  Certified Business Analysis Professional
+
+              <div className="space-y-6 text-[1rem] md:text-[1.1rem] text-gray-500 font-light leading-relaxed mb-10 max-w-[600px]">
+                <p>
+                  The career guide that has helped thousands of professionals around the world make the transition into business analysis and land six-figure roles. 
                 </p>
-                <p className="text-gray-600 mb-6 text-sm leading-relaxed">
-                  The gold standard for senior business analysts with over 5
-                  years of experience.
+                <p>
+                  Written from Eno’s personal experience of going from accountant to six-figure consultant within months of moving to Canada. This isn’t theory — it’s a step-by-step playbook from someone who actually did it.
                 </p>
-                <ul className="space-y-2 mb-8 text-sm text-gray-600">
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-500 text-base">
-                      check_circle
-                    </span>{" "}
-                    35 PD Hours Included
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-green-500 text-base">
-                      check_circle
-                    </span>{" "}
-                    Advanced Case Studies
-                  </li>
-                </ul>
-                <a
-                  className="inline-block w-full text-center py-2.5 rounded border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-colors"
-                  href="#"
-                >
-                  Learn More
-                </a>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/book" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl shadow-xl shadow-navy/20 transition-all active:scale-[0.98] no-underline text-center">
+                  Get the Book
+                </Link>
+                <Link href="/book" className="bg-white border border-navy text-navy hover:bg-gray-50 font-bold py-4 px-10 rounded-xl transition-all active:scale-[0.98] no-underline text-center">
+                  Book + Workbook Bundle
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Us Section */}
-      <section className="py-20 bg-background-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Feature 1 */}
-            <div className="flex flex-col items-start p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="size-12 rounded-lg bg-blue-100 text-primary flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined">
-                  supervisor_account
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
-                Expert Instructors
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Learn from industry leaders who have worked at global giants
-                like Accenture and IBM.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="flex flex-col items-start p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="size-12 rounded-lg bg-blue-100 text-primary flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined">public</span>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
-                Global Community
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Join a network of 100k+ professionals sharing jobs, tips, and
-                study resources.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="flex flex-col items-start p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="size-12 rounded-lg bg-blue-100 text-primary flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined">hotel_class</span>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
-                Top Notch Courses
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Curriculum designed to meet current market demands and
-                certification standards.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="flex flex-col items-start p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="size-12 rounded-lg bg-blue-100 text-primary flex items-center justify-center mb-4">
-                <span className="material-symbols-outlined">handshake</span>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
-                Mentorship
-              </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                Get personalized guidance on resume building, interview prep,
-                and salary negotiation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Program Overview */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Explore Our Programs
-              </h2>
-              <p className="text-gray-600">
-                Choose the learning path that fits your schedule and goals.
-              </p>
-            </div>
-            <a
-              className="hidden md:flex items-center text-primary font-semibold hover:underline"
-              href="#"
-            >
-              View all programs{" "}
-              <span className="material-symbols-outlined">arrow_forward</span>
-            </a>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Program 1 */}
-            <a
-              className="group block p-1 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50  hover:from-primary hover:to-primary-dark transition-all duration-300"
-              href="#"
-            >
-              <div className="bg-white h-full rounded-xl p-6 flex flex-col">
-                <div className="size-10 rounded-full bg-orange-100 text-accent flex items-center justify-center mb-6 group-hover:bg-orange-50 transition-colors">
-                  <span className="material-symbols-outlined">
-                    rocket_launch
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  Coaching Program
-                </h3>
-                <p className="text-sm text-gray-500 mb-4 flex-grow">
-                  Intensive 12-week live mentorship to launch your career.
-                </p>
-                <span className="text-sm font-semibold text-primary flex items-center gap-1">
-                  Learn More{" "}
-                  <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">
-                    arrow_forward
-                  </span>
-                </span>
-              </div>
-            </a>
-
-            {/* Program 2 */}
-            <a
-              className="group block p-1 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50  hover:from-primary hover:to-primary-dark transition-all duration-300"
-              href="#"
-            >
-              <div className="bg-white h-full rounded-xl p-6 flex flex-col">
-                <div className="size-10 rounded-full bg-blue-100 text-primary flex items-center justify-center mb-6 group-hover:bg-blue-50 transition-colors">
-                  <span className="material-symbols-outlined">schedule</span>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  On-Demand
-                </h3>
-                <p className="text-sm text-gray-500 mb-4 flex-grow">
-                  Self-paced courses you can take anytime, anywhere.
-                </p>
-                <span className="text-sm font-semibold text-primary flex items-center gap-1">
-                  Learn More{" "}
-                  <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">
-                    arrow_forward
-                  </span>
-                </span>
-              </div>
-            </a>
-
-            {/* Program 3 */}
-            <a
-              className="group block p-1 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50  hover:from-primary hover:to-primary-dark transition-all duration-300"
-              href="#"
-            >
-              <div className="bg-white h-full rounded-xl p-6 flex flex-col">
-                <div className="size-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mb-6 group-hover:bg-purple-50 transition-colors">
-                  <span className="material-symbols-outlined">history_edu</span>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  Career Services
-                </h3>
-                <p className="text-sm text-gray-500 mb-4 flex-grow">
-                  Resume reviews, LinkedIn optimization, and mock interviews.
-                </p>
-                <span className="text-sm font-semibold text-primary flex items-center gap-1">
-                  Learn More{" "}
-                  <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">
-                    arrow_forward
-                  </span>
-                </span>
-              </div>
-            </a>
-
-            {/* Program 4 */}
-            <a
-              className="group block p-1 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50  hover:from-primary hover:to-primary-dark transition-all duration-300"
-              href="#"
-            >
-              <div className="bg-white h-full rounded-xl p-6 flex flex-col">
-                <div className="size-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-6 group-hover:bg-green-50 transition-colors">
-                  <span className="material-symbols-outlined">
-                    corporate_fare
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  Corporate Training
-                </h3>
-                <p className="text-sm text-gray-500 mb-4 flex-grow">
-                  Upskill your team with custom business analysis workshops.
-                </p>
-                <span className="text-sm font-semibold text-primary flex items-center gap-1">
-                  Learn More{" "}
-                  <span className="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">
-                    arrow_forward
-                  </span>
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="relative py-24 bg-primary text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-blue-900"></div>
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight mb-6">
-            Ready to change your life?
+      {/* ========== CTA BANNER ========== */}
+      <section className="relative py-32 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-alt to-orchid text-white"></div>
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-10 hero-grid pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-full h-px bg-white/10"></div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative z-10 max-w-[800px] mx-auto px-6"
+        >
+          <div className="w-16 h-1 bg-gold/50 mx-auto mb-10 rounded-full"></div>
+          <h2 className="font-serif text-[clamp(2.2rem,5vw,3.8rem)] text-white leading-[1.1] mb-8 italic">
+            Your Six-Figure Career <br />
+            <span className="text-gold font-normal not-italic italic">Starts With One Decision</span>
           </h2>
-          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-            Join thousands of students who have transitioned from low-paying
-            jobs to six-figure careers in Business Analysis.
+          <p className="text-[1.1rem] md:text-[1.25rem] text-white/70 font-light mb-12 leading-relaxed max-w-[700px] mx-auto">
+            Join 100,000+ professionals who chose to stop waiting and start building the career they deserve. Whether you start with our free training or go straight into a program, your next chapter begins the moment you decide it does.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="h-14 px-8 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold text-lg transition-transform hover:-translate-y-1 shadow-xl">
-              Start Free Training
-            </button>
-            <button className="h-14 px-8 rounded-lg bg-transparent border-2 border-white/30 hover:bg-white/10 text-white font-bold text-lg transition-colors">
-              Talk to an Advisor
-            </button>
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+            <Link href="/free-training" className="bg-white hover:bg-gray-100 text-navy font-bold py-5 px-12 rounded-xl transition-all shadow-2xl active:scale-[0.98] no-underline">
+              Start With Free Training
+            </Link>
+            <Link href="/programs" className="bg-transparent border border-white/30 hover:bg-white/5 text-white font-bold py-5 px-12 rounded-xl transition-all active:scale-[0.98] no-underline">
+              Explore Programs
+            </Link>
           </div>
-        </div>
+          
+          <div className="mt-16 inline-flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.3em] text-white/30">
+            <span className="w-2 h-2 rounded-full bg-gold/50 animate-pulse"></span>
+            The Standard for Business Analysis Excellence
+          </div>
+        </motion.div>
       </section>
-    </>
+      {/* Modals */}
+      <ResourceOptinModal 
+        isOpen={!!activeModal}
+        onClose={() => setActiveModal(null)}
+        type={activeModal?.type || 'masterclass'}
+        resourceTitle={activeModal?.title || ''}
+      />
+      <QuizModal 
+        isOpen={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+      />
+    </div>
   );
 }

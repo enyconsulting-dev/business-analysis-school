@@ -1,47 +1,77 @@
 @import "tailwindcss";
 
+@layer base {
+  :root {
+    --navy: #0B1D3A;
+    --navy-deep: #060F20;
+    --navy-mid: #112647;
+    --orchid: #96088E;
+    --orchid-lt: #B84DB2;
+    --orchid-glow: rgba(150, 8, 142, 0.12);
+    --gold: #D4A843;
+    --gold-lt: #E8C97A;
+    --green: #0DB760;
+    --green-bg: rgba(13, 183, 96, 0.1);
+    --white: #FFFFFF;
+    --light: #F6F4F9;
+    --gray-100: #EDE9F2;
+    --gray-300: #B0A8BA;
+    --gray-500: #7A7284;
+    --gray-800: #2D2433;
+
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-sans: 'Outfit', -apple-system, sans-serif;
+  }
+
+  body {
+    @apply bg-white text-gray-800 font-sans leading-relaxed overflow-x-hidden;
+  }
+}
+
 @theme inline {
-  /* Custom Colors */
-  --color-primary: #5417cf;
-  --color-primary-dark: #172e6b;
-  --color-accent: #f97316;
-  --color-accent-hover: #ea580c;
-  --color-background-light: #ffffff;
-  --color-background-dark: #121620;
+  --color-navy: #0B1D3A;
+  --color-navy-deep: #060F20;
+  --color-navy-mid: #112647;
+  --color-orchid: #96088E;
+  --color-orchid-lt: #B84DB2;
+  --color-gold: #D4A843;
+  --color-gold-lt: #E8C97A;
+  --color-green: #0DB760;
+  --color-light: #F6F4F9;
+  --color-gray-500: #7A7284;
 
-  --color-text-dark: #131118;
-  --color-text-light: #f6f6f8;
-  
-  /* Font Family */
-  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  
-  /* Border Radius */
-  --radius: 0.25rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-full: 9999px;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Outfit', -apple-system, sans-serif;
 }
 
-/* Custom Marquee Animation */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* Animations */
+@keyframes glow {
+  0% { opacity: 0.6; transform: translate(0, 0); }
+  100% { opacity: 1; transform: translate(-3%, 2%); }
 }
 
-.animate-marquee {
-  animation: marquee 30s linear infinite;
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Custom Pattern Background */
-.bg-dots-pattern {
-  background-image: radial-gradient(#1e3b8a 1px, transparent 1px);
-  background-size: 10px 10px;
+.animate-glow {
+  animation: glow 6s ease-in-out infinite alternate;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Hero & Section Utilities */
+.hero-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.glass {
+  @apply bg-navy/95 backdrop-blur-lg border-b border-white/5;
 }
 
 /* Material Symbols Icon Styling */
