@@ -1,20 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Serif, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MobileCTA from "@/components/MobileCTA";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 
-const inter = Inter({
+const serif = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-inter",
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const sans = Outfit({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Business Analysis School",
   description:
-    "The #1 Platform for Non-Tech Professionals to pivot into Business Analysis. Official IIBA Endorsed Education Provider (EEP) & ScrumStudy Partner.",
+    "The global leader in business analysis education. IIBA Endorsed Education Provider & ScrumStudy Authorized Training Partner.",
 };
 
 export default function RootLayout({
@@ -23,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
@@ -31,11 +41,13 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} font-sans bg-background-light dark:bg-background-dark text-[#0f121a] antialiased overflow-x-hidden`}
+        className="font-sans bg-white text-gray-800 antialiased overflow-x-hidden pt-[68px]"
       >
         <Header />
-        {children}
+        <main>{children}</main>
         <Footer />
+        <MobileCTA />
+        <ExitIntentPopup />
       </body>
     </html>
   );

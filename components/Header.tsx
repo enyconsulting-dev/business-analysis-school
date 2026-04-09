@@ -1,93 +1,161 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Prevent background scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Free Training", href: "/free-training" },
+    { name: "Programs", href: "/programs" },
+    { name: "Resources", href: "/resources" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const linkVariants = {
+    closed: { opacity: 0, x: -20 },
+    open: { opacity: 1, x: 0 },
+  };
+
   return (
     <>
-      {/* Announcement Banner */}
-      <div className="w-full bg-blue-50 border-b border-primary/10">
-        <p className="text-primary text-sm font-medium leading-normal py-2 px-4 text-center">
-          Announcement:{" "}
-          <span className="font-bold">Land your 6 Figure Job in 2025</span>
-        </p>
-      </div>
+      <nav className="fixed top-0 left-0 right-0 z-[1001] h-[72px] flex items-center justify-between px-6 md:px-10 bg-navy/95 backdrop-blur-[16px] border-b border-white/5 transition-all">
+        {/* Logo */}
+        <Link href="/" className="font-sans font-extrabold text-[0.95rem] text-white no-underline tracking-wide z-[1002]">
+          BUSINESS ANALYSIS <span className="text-gold">SCHOOL</span>
+        </Link>
 
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full bg-white border-b border-[#e9ebf2] shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-primary hover:opacity-90 transition-opacity"
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-7">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.name}
+              href={link.href} 
+              className="text-[0.78rem] font-medium text-white/60 hover:text-gold no-underline tracking-wide transition-colors"
             >
-              <div className="flex items-center justify-center size-8 rounded bg-primary text-white">
-                <span className="material-symbols-outlined text-xl">
-                  school
-                </span>
-              </div>
-              <h2 className="text-lg font-bold tracking-tight text-primary">
-                BA School
-              </h2>
+              {link.name}
             </Link>
-
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              <div className="relative group">
-                <Link
-                  href="/program"
-                  className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-primary"
-                >
-                  Programs
-                  <span className="material-symbols-outlined text-[18px]">
-                    expand_more
-                  </span>
-                </Link>
-              </div>
-              <Link
-                className="text-sm font-medium text-gray-700 hover:text-primary"
-                href="#"
-              >
-                Success Stories
-              </Link>
-              <Link
-                className="text-sm font-medium text-gray-700 hover:text-primary"
-                href="/blog"
-              >
-                Blog
-              </Link>
-              <Link
-                className="text-sm font-medium text-gray-700 hover:text-primary"
-                href="/about"
-              >
-                About
-              </Link>
-              <Link className="text-sm font-bold text-primary" href="/program">
-                IIBA Certification
-              </Link>
-            </nav>
-
-            {/* Auth & CTA */}
-            <div className="flex items-center gap-4">
-              <Link
-                className="hidden sm:block text-sm font-medium text-gray-700 hover:text-primary"
-                href="#"
-              >
-                Login
-              </Link>
-              <Link
-                href="/contact"
-                className="flex cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-accent hover:bg-accent-hover transition-colors text-white text-sm font-bold leading-normal tracking-wide shadow-md"
-              >
-                Get Started Free
-              </Link>
-              {/* Mobile Menu Button */}
-              <button className="md:hidden p-2 text-gray-600 dark:text-gray-300">
-                <span className="material-symbols-outlined">menu</span>
-              </button>
-            </div>
-          </div>
+          ))}
+          <Link 
+            href="/contact" 
+            className="bg-gold hover:bg-gold-lt text-navy text-[0.8rem] font-bold py-2.5 px-6 rounded-lg no-underline transition-all hover:-translate-y-px active:translate-y-0 shadow-lg shadow-gold/10"
+          >
+            Apply Now
+          </Link>
         </div>
-      </header>
+
+        {/* Mobile Menu Toggle Button */}
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden relative z-[1005] w-10 h-10 flex items-center justify-center text-white focus:outline-none"
+          aria-label="Toggle Menu"
+        >
+          <div className="flex flex-col gap-1.5 w-6">
+            <motion.span 
+              animate={isMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              className="w-full h-0.5 bg-white rounded-full transition-all"
+            />
+            <motion.span 
+              animate={isMenuOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+              className="w-full h-0.5 bg-white rounded-full transition-all"
+            />
+            <motion.span 
+              animate={isMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+              className="w-full h-0.5 bg-white rounded-full transition-all"
+            />
+          </div>
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] bg-navy-deep md:hidden pt-[72px]"
+          >
+            {/* Background Texture */}
+            <div className="absolute inset-0 hero-grid opacity-5 pointer-events-none"></div>
+            
+            <motion.div 
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="relative h-full flex flex-col items-center justify-center px-10 gap-8"
+            >
+              <div className="flex flex-col items-center gap-6">
+                {navLinks.map((link) => (
+                  <motion.div key={link.name} variants={linkVariants}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="text-2xl font-serif text-white hover:text-gold no-underline transition-colors block text-center"
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div variants={linkVariants} className="mt-8">
+                <Link
+                  href="/contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="bg-gold hover:bg-gold-lt text-navy font-bold py-4 px-12 rounded-xl no-underline transition-all shadow-xl shadow-gold/10 inline-block text-[1rem]"
+                >
+                  Apply Now
+                </Link>
+              </motion.div>
+
+              <motion.div variants={linkVariants} className="mt-12 text-center">
+                <p className="text-[0.7rem] text-white/30 uppercase tracking-[0.2em] font-bold mb-4">Official EEP Provider</p>
+                <div className="flex gap-4 justify-center opacity-20">
+                  <div className="w-8 h-8 rounded bg-white"></div>
+                  <div className="w-8 h-8 rounded bg-white"></div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
