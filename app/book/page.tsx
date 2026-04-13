@@ -134,14 +134,17 @@ export default function Book() {
                initial={{ opacity: 0, scale: 0.9 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}
-               className="relative overflow-hidden aspect-[4/5] rounded-[3rem] bg-gray-50 border border-gray-100 p-8 flex items-center justify-center group"
+               className="relative overflow-hidden aspect-[4/5] rounded-[3rem] bg-gray-50 border border-gray-100 group"
             >
-               {/* Background quote mark */}
-               <div className="absolute top-10 left-10 text-[10rem] font-serif text-gray-100 select-none leading-none opacity-50 group-hover:text-gold/20 transition-colors">“</div>
-               <div className="relative z-10 text-center">
-                  <div className="w-24 h-24 bg-navy rounded-full mx-auto mb-8 flex items-center justify-center text-white text-3xl font-serif">EE</div>
-                  <h4 className="font-serif text-2xl mb-2 text-navy italic">Eno Eka</h4>
-                  <p className="text-[0.8rem] text-gray-400 uppercase tracking-widest font-bold">Author & Founder</p>
+               <img 
+                 src="/eno-glossy.png" 
+                 alt="Eno Eka" 
+                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+               />
+               <div className="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-40"></div>
+               <div className="absolute bottom-8 left-8 right-8 z-20 text-white text-center">
+                  <h4 className="font-serif text-2xl mb-1 italic">Eno Eka</h4>
+                  <p className="text-[0.65rem] text-white/70 uppercase tracking-widest font-bold">Author & Founder</p>
                </div>
                <div className="absolute inset-0 border-[20px] border-white z-20 pointer-events-none rounded-[3.5rem]"></div>
             </motion.div>
