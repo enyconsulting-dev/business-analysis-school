@@ -191,13 +191,14 @@ export default function FreeTraining() {
                initial={{ opacity: 0, x: -20 }}
                whileInView={{ opacity: 1, x: 0 }}
                viewport={{ once: true }}
-               className="relative aspect-square rounded-[3rem] overflow-hidden border border-white/10"
+               className="relative aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 group"
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-navy to-transparent z-10 opacity-60"></div>
-              <div className="absolute inset-0 flex items-center justify-center bg-white/5 text-white/20">
-                 <span className="material-symbols-outlined text-[10rem]">person</span>
-              </div>
-              {/* Image would go here */}
+              <img 
+                src="/eno-glossy.png" 
+                alt="Eno Eka" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy to-transparent z-10 opacity-40"></div>
             </motion.div>
 
             <motion.div 

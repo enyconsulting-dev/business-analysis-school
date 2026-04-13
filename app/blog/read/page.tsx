@@ -52,7 +52,7 @@ export default function BlogReadPage() {
               <img
                 alt="Eno Eka"
                 className="w-full h-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzKl87cUT0PvbwvwElDRGbXleifEqK2jDWShcvP1edqrdkd-ZRhHT0Ni_PJgoVk20m7vuGxtE2biw5ZgiP7vKFVx9DFoOnmD7QkhZViX0k4jKidBr9-ry-X9L-TBgQ3-7bmDgbZQPlyEyQV2htl9GggfCD16oEnP_FHB2V_lY-Dcvfsce8bVqP7iuVVIX3UWRarW3vSMEcc4sMEfhY5inLze5xqa2QyBoPv83KYEF-f6TXTUahjnOhLgHdXUkYLRnlPyi7P9FXReY"
+                src="/eno-eka-white.png"
               />
             </div>
             <div className="flex-1">
@@ -307,7 +307,7 @@ export default function BlogReadPage() {
                     <img
                       alt="Eno Eka"
                       className="w-full h-full object-cover"
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzKl87cUT0PvbwvwElDRGbXleifEqK2jDWShcvP1edqrdkd-ZRhHT0Ni_PJgoVk20m7vuGxtE2biw5ZgiP7vKFVx9DFoOnmD7QkhZViX0k4jKidBr9-ry-X9L-TBgQ3-7bmDgbZQPlyEyQV2htl9GggfCD16oEnP_FHB2V_lY-Dcvfsce8bVqP7iuVVIX3UWRarW3vSMEcc4sMEfhY5inLze5xqa2QyBoPv83KYEF-f6TXTUahjnOhLgHdXUkYLRnlPyi7P9FXReY"
+                      src="/eno-eka-white.png"
                     />
                   </div>
                   <div className="flex-1">

@@ -58,7 +58,7 @@ export default function About() {
       </section>
 
       {/* ========== NARRATIVE STORY ========== */}
-      <section className="py-24 md:py-40 bg-white relative overflow-hidden">
+      <section className="py-24 md:py-40 bg-white relative">
         <div className="max-w-[1140px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-16 lg:gap-24 items-start">
              <motion.div 
@@ -99,8 +99,16 @@ export default function About() {
                viewport={{ once: true }}
                className="relative lg:sticky lg:top-32"
              >
-                <div className="aspect-[4/5] bg-gray-50 rounded-[3rem] border border-gray-100 flex flex-col items-center justify-center p-12 text-center group">
-                   <div className="w-24 h-24 bg-navy rounded-2xl mb-8 flex items-center justify-center text-white text-3xl font-serif">EE</div>
+                <div className="aspect-[4/5] bg-gray-50 rounded-[3rem] border border-gray-100 overflow-hidden group relative mb-8">
+                   <img 
+                    src="/EnoTr8.png" 
+                    alt="Eno Eka" 
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                
+                <div className="text-center px-6">
                    <h3 className="font-serif text-3xl text-navy mb-2">Eno Eka</h3>
                    <div className="text-[0.7rem] font-bold text-gold uppercase tracking-widest mb-6">Founder & Lead Instructor</div>
                    
