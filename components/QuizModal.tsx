@@ -77,7 +77,8 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
       first_name: formData.firstName,
       last_name: formData.lastName,
       email: formData.email,
-      answers: mappedAnswers
+      answers: mappedAnswers,
+      tags: `Quiz Diagnostic, ${mappedAnswers.background}, ${mappedAnswers.goal}`
     });
 
     setIsSubmitting(false);

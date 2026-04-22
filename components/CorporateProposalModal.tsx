@@ -33,7 +33,8 @@ export default function CorporateProposalModal({ isOpen, onClose }: CorporatePro
       company_name: formData.company,
       team_size: formData.teamSize,
       job_title: formData.jobTitle,
-      training_objectives: formData.objectives
+      training_objectives: formData.objectives,
+      tags: "Corporate Training, Enterprise RFP"
     });
     
     setIsSubmitting(false);

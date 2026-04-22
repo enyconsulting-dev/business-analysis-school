@@ -28,7 +28,8 @@ export default function FreeTraining() {
       resource_type: "masterclass",
       full_name: formData.name,
       email: formData.email,
-      phone: formData.phone
+      phone: formData.phone,
+      tags: "Free Training, Masterclass Opt-in"
     }, FREE_TRAINING_WEBHOOK);
 
     setIsSubmitting(false);

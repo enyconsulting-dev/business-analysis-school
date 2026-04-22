@@ -15,7 +15,8 @@ export default function BlogPage() {
     await submitToWebhook({
       event_type: "newsletter_signup",
       email: email,
-      source: "blog_footer"
+      source: "blog_footer",
+      tags: "Newsletter Signup, Blog Footer"
     });
 
     setIsSubmitting(false);

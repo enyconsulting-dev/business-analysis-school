@@ -32,7 +32,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
       resource_type: type,
       full_name: formData.name,
       email: formData.email,
-      phone: formData.phone
+      phone: formData.phone,
+      tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
     }, webhookUrl);
 
     setIsSubmitting(false);

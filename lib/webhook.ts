@@ -1,6 +1,7 @@
 /**
  * Centralized Webhook Utility
  * Used to send lead data, applications, and inquiries to a unified backend/GHL endpoint.
+ * Standardized inputs now include a 'tags' string for better CRM segmentation.
  */
 
 // Centralized Webhook URL for the platform.

@@ -33,7 +33,8 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
       phone: formData.phone,
       current_role: formData.role,
       income_level: formData.income,
-      primary_goal: formData.goal
+      primary_goal: formData.goal,
+      tags: "Tier 3 Application, Empire Builder"
     });
 
     setIsSubmitted(true);

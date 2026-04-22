@@ -26,7 +26,8 @@ export default function Contact() {
       email: formData.email,
       phone: formData.phone,
       interest: formData.interest,
-      message: formData.message
+      message: formData.message,
+      tags: `Contact Inquiry, ${formData.interest}`
     });
 
     setIsSubmitting(false);
