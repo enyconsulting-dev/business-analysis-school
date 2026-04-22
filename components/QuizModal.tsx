@@ -38,12 +38,19 @@ const steps = [
   }
 ];
 
+import { submitToWebhook } from "@/lib/webhook";
+
 export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isFinalStep, setIsFinalStep] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: ""
+  });
 
   const handleOptionSelect = (value: string) => {
     setAnswers({ ...answers, [currentStep]: value });
@@ -54,15 +61,28 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate GHL Submission & Segmentation
-    setTimeout(() => {
-      onClose();
-      router.push("/success?type=training");
-    }, 1500);
+    // Map answer indices to readable keys
+    const mappedAnswers = {
+      background: answers[0],
+      goal: answers[1],
+      commitment: answers[2]
+    };
+
+    await submitToWebhook({
+      event_type: "quiz_diagnostic",
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      email: formData.email,
+      answers: mappedAnswers
+    });
+
+    setIsSubmitting(false);
+    onClose();
+    router.push("/success?type=training");
   };
 
   const progress = ((currentStep + (isFinalStep ? 1 : 0)) / (steps.length + 1)) * 100;
@@ -156,6 +176,8 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                           type="text" 
                           placeholder="Jane"
                           className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 transition-all font-light"
+                          value={formData.firstName}
+                          onChange={e => setFormData({...formData, firstName: e.target.value})}
                         />
                       </div>
                       <div>
@@ -165,6 +187,8 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                           type="text" 
                           placeholder="Doe"
                           className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 transition-all font-light"
+                          value={formData.lastName}
+                          onChange={e => setFormData({...formData, lastName: e.target.value})}
                         />
                       </div>
                     </div>
@@ -176,6 +200,8 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                         type="email" 
                         placeholder="name@example.com"
                         className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 transition-all font-light"
+                        value={formData.email}
+                        onChange={e => setFormData({...formData, email: e.target.value})}
                       />
                     </div>
 

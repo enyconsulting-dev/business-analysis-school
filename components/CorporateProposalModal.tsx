@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { submitToWebhook } from "@/lib/webhook";
 
 interface CorporateProposalModalProps {
   isOpen: boolean;
@@ -25,8 +26,15 @@ export default function CorporateProposalModal({ isOpen, onClose }: CorporatePro
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call to GHL Corporate Pipeline
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await submitToWebhook({
+      event_type: "corporate_rfp",
+      contact_name: formData.name,
+      work_email: formData.email,
+      company_name: formData.company,
+      team_size: formData.teamSize,
+      job_title: formData.jobTitle,
+      training_objectives: formData.objectives
+    });
     
     setIsSubmitting(false);
     router.push("/success?type=contact");
