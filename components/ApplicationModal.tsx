@@ -7,15 +7,36 @@ interface ApplicationModalProps {
   onClose: () => void;
 }
 
+import { submitToWebhook } from "@/lib/webhook";
+
 export default function ApplicationModal({ isOpen, onClose }: ApplicationModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    role: "",
+    income: "",
+    goal: ""
+  });
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    await submitToWebhook({
+      event_type: "application_submission",
+      program: "Empire Builder (Tier 3)",
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      current_role: formData.role,
+      income_level: formData.income,
+      primary_goal: formData.goal
+    });
+
     setIsSubmitted(true);
-    // In production, this would route to GHL Webhook
   };
 
   return (
@@ -47,28 +68,61 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[0.7rem] font-bold text-navy uppercase tracking-widest mb-1.5 ml-1">Full Name</label>
-                    <input required type="text" placeholder="e.g. Adewale Johnson" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" />
+                    <input 
+                      required 
+                      type="text" 
+                      placeholder="e.g. Adewale Johnson" 
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" 
+                      value={formData.fullName}
+                      onChange={e => setFormData({...formData, fullName: e.target.value})}
+                    />
                   </div>
                   <div>
                     <label className="block text-[0.7rem] font-bold text-navy uppercase tracking-widest mb-1.5 ml-1">Email Address</label>
-                    <input required type="email" placeholder="e.g. adewale@gmail.com" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" />
+                    <input 
+                      required 
+                      type="email" 
+                      placeholder="e.g. adewale@gmail.com" 
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" 
+                      value={formData.email}
+                      onChange={e => setFormData({...formData, email: e.target.value})}
+                    />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-[0.7rem] font-bold text-navy uppercase tracking-widest mb-1.5 ml-1">Phone Number (WhatsApp Preferred)</label>
-                  <input required type="tel" placeholder="e.g. +234 908..." className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" />
+                  <input 
+                    required 
+                    type="tel" 
+                    placeholder="e.g. +234 908..." 
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" 
+                    value={formData.phone}
+                    onChange={e => setFormData({...formData, phone: e.target.value})}
+                  />
                 </div>
 
                 <div>
                   <label className="block text-[0.7rem] font-bold text-navy uppercase tracking-widest mb-1.5 ml-1">Current Professional Role</label>
-                  <input required type="text" placeholder="e.g. Accountant at KPMG" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" />
+                  <input 
+                    required 
+                    type="text" 
+                    placeholder="e.g. Accountant at KPMG" 
+                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all placeholder:text-gray-300" 
+                    value={formData.role}
+                    onChange={e => setFormData({...formData, role: e.target.value})}
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[0.7rem] font-bold text-navy uppercase tracking-widest mb-1.5 ml-1">Income Level</label>
-                    <select required className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all appearance-none cursor-pointer">
+                    <select 
+                      required 
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all appearance-none cursor-pointer"
+                      value={formData.income}
+                      onChange={e => setFormData({...formData, income: e.target.value})}
+                    >
                       <option value="">Select Level</option>
                       <option value="60-240">$60,000 – $240,000</option>
                       <option value="240-720">$240,000 – $720,000</option>
@@ -77,7 +131,12 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                   </div>
                   <div>
                     <label className="block text-[0.7rem] font-bold text-navy uppercase tracking-widest mb-1.5 ml-1">Primary Career Goal</label>
-                    <select required className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all appearance-none cursor-pointer">
+                    <select 
+                      required 
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 text-sm focus:border-orchid outline-none transition-all appearance-none cursor-pointer"
+                      value={formData.goal}
+                      onChange={e => setFormData({...formData, goal: e.target.value})}
+                    >
                       <option value="">Select Goal</option>
                       <option value="transition">Transition into Tech</option>
                       <option value="upskill">Upskill with AI</option>

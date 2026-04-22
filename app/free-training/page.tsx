@@ -3,21 +3,34 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { submitToWebhook } from "@/lib/webhook";
 import ResourceOptinModal from "@/components/ResourceOptinModal";
 
 export default function FreeTraining() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate GHL Submission logic
-    setTimeout(() => {
-      router.push("/free-training/video");
-    }, 1200);
+    await submitToWebhook({
+      event_type: "lead_optin",
+      resource_title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree",
+      resource_type: "masterclass",
+      full_name: formData.name,
+      email: formData.email,
+      phone: formData.phone
+    });
+
+    setIsSubmitting(false);
+    router.push("/free-training/video");
   };
 
   const discoveryPoints = [
@@ -103,6 +116,8 @@ export default function FreeTraining() {
                   type="text" 
                   placeholder="Your full name"
                   className="w-full bg-gray-50 border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                  value={formData.name}
+                  onChange={e => setFormData({...formData, name: e.target.value})}
                 />
               </div>
               <div className="space-y-1.5">
@@ -112,6 +127,8 @@ export default function FreeTraining() {
                   type="email" 
                   placeholder="Your best email"
                   className="w-full bg-gray-50 border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                  value={formData.email}
+                  onChange={e => setFormData({...formData, email: e.target.value})}
                 />
               </div>
               <div className="space-y-1.5">
@@ -121,6 +138,8 @@ export default function FreeTraining() {
                   type="tel" 
                   placeholder="WhatsApp number preferred"
                   className="w-full bg-gray-50 border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                  value={formData.phone}
+                  onChange={e => setFormData({...formData, phone: e.target.value})}
                 />
               </div>
 
