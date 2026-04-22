@@ -10,9 +10,10 @@ interface ResourceOptinModalProps {
   onClose: () => void;
   type: "masterclass" | "ebook";
   resourceTitle: string;
+  webhookUrl?: string;
 }
 
-export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle }: ResourceOptinModalProps) {
+export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, webhookUrl }: ResourceOptinModalProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
       full_name: formData.name,
       email: formData.email,
       phone: formData.phone
-    });
+    }, webhookUrl);
 
     setIsSubmitting(false);
     onClose();

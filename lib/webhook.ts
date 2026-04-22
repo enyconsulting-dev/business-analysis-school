@@ -3,12 +3,13 @@
  * Used to send lead data, applications, and inquiries to a unified backend/GHL endpoint.
  */
 
-// Placeholder for the actual webhook URL. 
-// Replace this with your URL when ready.
-const WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/9611dab4-09c1-4154-aa55-eeba6d14d269"; 
+// Centralized Webhook URL for the platform.
+const DEFAULT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/a2f5bec8-ada8-4e62-b919-f9e9e118e13e"; 
 
-export async function submitToWebhook(payload: any) {
+export async function submitToWebhook(payload: any, customUrl?: string) {
+  const targetUrl = customUrl || DEFAULT_WEBHOOK_URL;
   const timestamp = new Date().toISOString();
+  
   const enhancedPayload = {
     ...payload,
     timestamp,
@@ -16,7 +17,7 @@ export async function submitToWebhook(payload: any) {
     user_agent: typeof window !== 'undefined' ? navigator.userAgent : 'server-side'
   };
 
-  if (!WEBHOOK_URL) {
+  if (!targetUrl) {
     console.group("🚀 [Mock Webhook Submission]");
     console.log("Event Type:", payload.event_type || 'unspecified');
     console.log("Payload:", enhancedPayload);
@@ -28,7 +29,7 @@ export async function submitToWebhook(payload: any) {
   }
 
   try {
-    const response = await fetch(WEBHOOK_URL, {
+    const response = await fetch(targetUrl, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',

@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { submitToWebhook } from "@/lib/webhook";
 import ResourceOptinModal from "@/components/ResourceOptinModal";
 
+const FREE_TRAINING_WEBHOOK = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/9b5a9adb-ac9a-4848-aeef-c7f6147af5cc";
+
 export default function FreeTraining() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,7 +29,7 @@ export default function FreeTraining() {
       full_name: formData.name,
       email: formData.email,
       phone: formData.phone
-    });
+    }, FREE_TRAINING_WEBHOOK);
 
     setIsSubmitting(false);
     router.push("/free-training/video");
@@ -274,6 +276,7 @@ export default function FreeTraining() {
         onClose={() => setIsModalOpen(false)}
         type="masterclass"
         resourceTitle="How to Become an AI Business Analyst in 2026 Without a Tech Degree"
+        webhookUrl={FREE_TRAINING_WEBHOOK}
       />
     </div>
   );
