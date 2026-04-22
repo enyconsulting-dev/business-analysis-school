@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { submitToWebhook } from "@/lib/webhook";
 
 interface ResourceOptinModalProps {
   isOpen: boolean;
@@ -14,20 +15,32 @@ interface ResourceOptinModalProps {
 export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle }: ResourceOptinModalProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: ""
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate GHL Submission
-    setTimeout(() => {
-      onClose();
-      if (type === 'masterclass') {
-        router.push("/free-training/video");
-      } else {
-        router.push("/success?type=training");
-      }
-    }, 1500);
+    await submitToWebhook({
+      event_type: "lead_optin",
+      resource_title: resourceTitle,
+      resource_type: type,
+      full_name: formData.name,
+      email: formData.email,
+      phone: formData.phone
+    });
+
+    setIsSubmitting(false);
+    onClose();
+    if (type === 'masterclass') {
+      router.push("/free-training/video");
+    } else {
+      router.push("/success?type=training");
+    }
   };
 
   return (
@@ -77,6 +90,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                     type="text" 
                     placeholder="Your full name"
                     className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                    value={formData.name}
+                    onChange={e => setFormData({...formData, name: e.target.value})}
                   />
                 </div>
                 
@@ -87,6 +102,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                     type="email" 
                     placeholder="Your best email"
                     className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                    value={formData.email}
+                    onChange={e => setFormData({...formData, email: e.target.value})}
                   />
                 </div>
 
@@ -97,6 +114,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                     type="tel" 
                     placeholder="WhatsApp number preferred"
                     className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                    value={formData.phone}
+                    onChange={e => setFormData({...formData, phone: e.target.value})}
                   />
                 </div>
 

@@ -3,19 +3,34 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { submitToWebhook } from "@/lib/webhook";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    email: "",
+    phone: "",
+    interest: "AI Business Analyst Accelerator",
+    message: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate GHL Submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
+    
+    await submitToWebhook({
+      event_type: "contact_inquiry",
+      first_name: formData.firstName,
+      email: formData.email,
+      phone: formData.phone,
+      interest: formData.interest,
+      message: formData.message
+    });
+
+    setIsSubmitting(false);
+    setIsSuccess(true);
   };
 
   const contactMethods = [
@@ -184,22 +199,46 @@ export default function Contact() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">First Name</label>
-                          <input required type="text" placeholder="Your name" className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" />
+                          <input 
+                            required 
+                            type="text" 
+                            placeholder="Your name" 
+                            className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" 
+                            value={formData.firstName}
+                            onChange={e => setFormData({...formData, firstName: e.target.value})}
+                          />
                         </div>
                         <div>
                           <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Email Address</label>
-                          <input required type="email" placeholder="email@address.com" className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" />
+                          <input 
+                            required 
+                            type="email" 
+                            placeholder="email@address.com" 
+                            className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" 
+                            value={formData.email}
+                            onChange={e => setFormData({...formData, email: e.target.value})}
+                          />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Phone (Optional)</label>
-                          <input type="tel" placeholder="+1..." className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" />
+                          <input 
+                            type="tel" 
+                            placeholder="+1..." 
+                            className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" 
+                            value={formData.phone}
+                            onChange={e => setFormData({...formData, phone: e.target.value})}
+                          />
                         </div>
                         <div>
                           <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">I'm Interested In</label>
-                          <select className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all appearance-none cursor-pointer">
+                          <select 
+                            className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all appearance-none cursor-pointer"
+                            value={formData.interest}
+                            onChange={e => setFormData({...formData, interest: e.target.value})}
+                          >
                             {interests.map(item => <option key={item} value={item}>{item}</option>)}
                           </select>
                         </div>
@@ -207,7 +246,13 @@ export default function Contact() {
 
                       <div>
                         <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Message</label>
-                        <textarea required placeholder="How can we help?" className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] h-32 focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all resize-none"></textarea>
+                        <textarea 
+                          required 
+                          placeholder="How can we help?" 
+                          className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] h-32 focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all resize-none"
+                          value={formData.message}
+                          onChange={e => setFormData({...formData, message: e.target.value})}
+                        ></textarea>
                       </div>
 
                       <button 

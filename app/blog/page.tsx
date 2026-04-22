@@ -1,4 +1,27 @@
+"use client";
+
+import { useState } from "react";
+import { submitToWebhook } from "@/lib/webhook";
+
 export default function BlogPage() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    await submitToWebhook({
+      event_type: "newsletter_signup",
+      email: email,
+      source: "blog_footer"
+    });
+
+    setIsSubmitting(false);
+    setIsSuccess(true);
+    setEmail("");
+  };
   return (
     <>
       {/* Hero Section */}
@@ -388,18 +411,35 @@ export default function BlogPage() {
             Join 15,000+ professionals getting weekly career tips delivered to
             their inbox.
           </p>
-          <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-            <input
-              className="flex-grow px-5 py-3 rounded-lg border-2 border-transparent focus:border-accent focus:ring-0 text-gray-900 placeholder-gray-500"
-              placeholder="Enter your email address"
-              type="email"
-            />
-            <button
-              className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold transition-transform hover:-translate-y-0.5 shadow-lg"
-              type="button"
-            >
-              Subscribe
-            </button>
+          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            {isSuccess ? (
+              <div className="w-full py-4 bg-white/10 rounded-lg text-white font-bold animate-fade-in">
+                ✓ You're on the list!
+              </div>
+            ) : (
+              <>
+                <input
+                  required
+                  className="flex-grow px-5 py-3 rounded-lg border-2 border-transparent focus:border-accent focus:ring-0 text-gray-900 placeholder-gray-500"
+                  placeholder="Enter your email address"
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                <button
+                  disabled={isSubmitting}
+                  className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold transition-transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center min-w-[140px]"
+                  type="submit"
+                >
+                  {isSubmitting ? (
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                  ) : (
+                    "Subscribe"
+                  )}
+                </button>
+              </>
+            )}
           </form>
         </div>
       </section>
