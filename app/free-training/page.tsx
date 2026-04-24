@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { submitToWebhook } from "@/lib/webhook";
 import ResourceOptinModal from "@/components/ResourceOptinModal";
 
-const FREE_TRAINING_WEBHOOK = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/9b5a9adb-ac9a-4848-aeef-c7f6147af5cc";
+const FREE_TRAINING_WEBHOOK = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/c82296b3-022a-41a1-84c1-d0c213bf7518";
 
 export default function FreeTraining() {
   const router = useRouter();
@@ -23,6 +23,9 @@ export default function FreeTraining() {
     setIsSubmitting(true);
     
     await submitToWebhook({
+      source: "BAS",
+      tag: "BAS Free Training Opt-in",
+      type: "free master class",
       event_type: "lead_optin",
       resource_title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree",
       resource_type: "masterclass",

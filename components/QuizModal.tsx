@@ -73,6 +73,9 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     };
 
     await submitToWebhook({
+      source: "BAS",
+      tag: "BAS Quiz Diagnostic",
+      type: "quiz",
       event_type: "quiz_diagnostic",
       first_name: formData.firstName,
       last_name: formData.lastName,

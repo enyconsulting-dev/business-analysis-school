@@ -5,7 +5,7 @@
  */
 
 // Centralized Webhook URL for the platform.
-const DEFAULT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/a2f5bec8-ada8-4e62-b919-f9e9e118e13e"; 
+const DEFAULT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/c82296b3-022a-41a1-84c1-d0c213bf7518"; 
 
 export async function submitToWebhook(payload: any, customUrl?: string) {
   const targetUrl = customUrl || DEFAULT_WEBHOOK_URL;

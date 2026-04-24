@@ -53,20 +53,12 @@ export default function Book() {
               <div className="absolute inset-0 bg-gold/20 blur-[100px] scale-75 rounded-full opacity-50 group-hover:scale-90 transition-all"></div>
               
               {/* 3D Book Mockup */}
-              <div className="relative w-full max-w-[380px] aspect-[1/1.4] mx-auto">
-                 <div className="absolute inset-0 bg-gradient-to-br from-[#0D1D3A] to-[#060F20] rounded-r-xl shadow-[20px_20px_60px_rgba(0,0,0,0.6)] border-l-4 border-gold/40 flex flex-col items-center justify-center p-10 text-center transform-style-3d group-hover:rotate-y-12 transition-transform duration-700">
-                    <div className="w-16 h-1 bg-gold/50 mb-8 rounded-full"></div>
-                    <h2 className="font-serif text-[2.5rem] leading-[1.1] text-white mb-6 select-none italic">The Six-Figure <br /> Business Analyst</h2>
-                    <div className="text-[0.6rem] font-bold tracking-[0.4em] text-white/40 uppercase mb-8">Eno Eka</div>
-                    <div className="mt-auto pt-10 border-t border-white/5 w-full flex items-center justify-between px-2">
-                       <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center">
-                          <span className="material-symbols-outlined text-[1rem] text-gold">verified</span>
-                       </div>
-                       <div className="text-[0.6rem] font-bold text-white/30 uppercase tracking-widest">Global Best Seller</div>
-                    </div>
-                 </div>
-                 {/* Page Edges Effect */}
-                 <div className="absolute top-2 right-[-10px] bottom-2 w-4 bg-white/10 rounded-r-lg border border-white/5"></div>
+              <div className="relative w-full max-w-[380px] aspect-[1/1.4] mx-auto rounded-r-xl overflow-hidden shadow-[20px_20px_60px_rgba(0,0,0,0.6)] border-l-4 border-gold/40 transition-transform duration-700 hover:scale-[1.02]">
+                 <img 
+                   src="/six-figure.webp" 
+                   alt="The Six-Figure Business Analyst Book Cover" 
+                   className="w-full h-full object-cover"
+                 />
               </div>
             </motion.div>
 

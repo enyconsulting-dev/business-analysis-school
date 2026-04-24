@@ -26,6 +26,9 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
     e.preventDefault();
     
     await submitToWebhook({
+      source: "BAS",
+      tag: "BAS Empire Builder Application",
+      type: "application",
       event_type: "application_submission",
       program: "Empire Builder (Tier 3)",
       full_name: formData.fullName,

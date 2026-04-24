@@ -27,6 +27,9 @@ export default function CorporateProposalModal({ isOpen, onClose }: CorporatePro
     setIsSubmitting(true);
     
     await submitToWebhook({
+      source: "BAS",
+      tag: "BAS Corporate Training Inquiry",
+      type: "contact",
       event_type: "corporate_rfp",
       contact_name: formData.name,
       work_email: formData.email,

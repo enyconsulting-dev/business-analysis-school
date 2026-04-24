@@ -27,6 +27,9 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
     setIsSubmitting(true);
     
     await submitToWebhook({
+      source: "BAS",
+      tag: `BAS ${type === 'masterclass' ? 'Masterclass' : 'Ebook'} Opt-in`,
+      type: type === 'masterclass' ? "free master class" : "resource",
       event_type: "lead_optin",
       resource_title: resourceTitle,
       resource_type: type,

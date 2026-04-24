@@ -384,19 +384,14 @@ export default function Home() {
             {/* Book Cover Visual */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gold/20 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <div className="relative bg-gradient-to-br from-navy-alt to-navy rounded-[2.5rem] aspect-[3/4.2] flex flex-col items-center justify-center p-12 shadow-2xl overflow-hidden border border-white/10">
-                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 blur-3xl rounded-full"></div>
-                 <div className="absolute bottom-0 left-0 w-40 h-40 bg-orchid/10 blur-3xl rounded-full"></div>
-                 
-                 <div className="relative text-center z-10">
-                    <div className="text-gold/50 font-serif text-[1rem] uppercase tracking-[0.3em] mb-4">The Bestseller</div>
-                    <h3 className="font-serif text-[2.5rem] md:text-[3rem] text-white leading-[1.1] mb-6 italic">The <span className="text-gold">Six-Figure</span> Business Analyst</h3>
-                    <div className="w-16 h-1 bg-gold/50 mx-auto rounded-full"></div>
-                    <p className="mt-8 text-white/40 text-[0.7rem] uppercase tracking-widest font-bold">By Eno E.</p>
-                 </div>
-
+              <div className="relative aspect-[3/4.2] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10">
+                 <img 
+                   src="/six-figure.webp" 
+                   alt="The Six-Figure Business Analyst Book Cover" 
+                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                 />
                  {/* Decorative floater */}
-                 <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rotate-12 border border-white/10 rounded-2xl"></div>
+                 <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rotate-12 border border-white/10 rounded-2xl pointer-events-none"></div>
               </div>
             </div>
 

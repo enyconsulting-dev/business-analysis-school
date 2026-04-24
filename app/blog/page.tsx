@@ -13,9 +13,11 @@ export default function BlogPage() {
     setIsSubmitting(true);
     
     await submitToWebhook({
+      source: "BAS",
+      tag: "BAS Newsletter Signup",
+      type: "newsletter",
       event_type: "newsletter_signup",
       email: email,
-      source: "blog_footer",
       tags: "Newsletter Signup, Blog Footer"
     });
 

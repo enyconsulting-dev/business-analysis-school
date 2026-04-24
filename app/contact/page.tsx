@@ -21,8 +21,11 @@ export default function Contact() {
     setIsSubmitting(true);
     
     await submitToWebhook({
+      source: "BAS",
+      tag: "BAS Contact Inquiry",
+      type: "contact",
       event_type: "contact_inquiry",
-      first_name: formData.firstName,
+      full_name: formData.firstName,
       email: formData.email,
       phone: formData.phone,
       interest: formData.interest,
@@ -125,7 +128,7 @@ export default function Contact() {
             
             <div className="shrink-0">
               <a 
-                href="https://link.gohighlevel.com/enrollment-call" 
+                href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" 
                 target="_blank"
                 className="inline-flex items-center justify-center gap-4 bg-gold hover:bg-gold-lt text-navy font-bold py-6 px-12 rounded-2xl shadow-xl shadow-gold/20 transition-all hover:-translate-y-1 active:scale-[0.98] no-underline text-[1.1rem]"
               >
