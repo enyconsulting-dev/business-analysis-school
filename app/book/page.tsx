@@ -80,7 +80,7 @@ export default function Book() {
                   12 Simple Steps to Kickstart Your Career Without a Tech Degree or Experience
                 </p>
                 <div className="flex flex-col sm:flex-row gap-5">
-                  <a href="#offer" className="bg-white hover:bg-gray-100 text-navy font-bold py-5 px-12 rounded-2xl shadow-2xl transition-all active:scale-[0.98] no-underline flex items-center justify-center gap-3">
+                  <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="bg-white hover:bg-gray-100 text-navy font-bold py-5 px-12 rounded-2xl shadow-2xl transition-all active:scale-[0.98] no-underline flex items-center justify-center gap-3">
                     Get the Book
                     <span className="material-symbols-outlined text-sm">shopping_cart</span>
                   </a>
@@ -209,9 +209,9 @@ export default function Book() {
                 <li className="flex gap-3"><span className="text-orchid">✓</span> 12 Proven Steps Roadmap</li>
                 <li className="flex gap-3"><span className="text-orchid">✓</span> Interview Cheat Sheet</li>
               </ul>
-              <button className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-5 rounded-2xl transition-all shadow-lg active:scale-[0.98]">
+              <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-5 rounded-2xl transition-all shadow-lg active:scale-[0.98] text-center no-underline flex items-center justify-center">
                 Get the Book
-              </button>
+              </a>
             </motion.div>
 
             {/* Bundle */}
@@ -231,9 +231,9 @@ export default function Book() {
                 <li className="flex gap-3"><span className="text-gold">✓</span> Exercises & Planning Templates</li>
                 <li className="flex gap-3"><span className="text-gold">✓</span> Career Transformation Map</li>
               </ul>
-              <button className="w-full bg-gold hover:bg-gold-lt text-navy font-bold py-5 rounded-2xl shadow-xl shadow-gold/20 transition-all active:scale-[0.98] ring-4 ring-gold/10">
+              <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="w-full bg-gold hover:bg-gold-lt text-navy font-bold py-5 rounded-2xl shadow-xl shadow-gold/20 transition-all active:scale-[0.98] ring-4 ring-gold/10 text-center no-underline flex items-center justify-center">
                 Get Book + Workbook Bundle
-              </button>
+              </a>
             </motion.div>
           </div>
         </div>

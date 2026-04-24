@@ -424,12 +424,12 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/book" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl shadow-xl shadow-navy/20 transition-all active:scale-[0.98] no-underline text-center">
+                <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl shadow-xl shadow-navy/20 transition-all active:scale-[0.98] no-underline text-center">
                   Get the Book
-                </Link>
-                <Link href="/book" className="bg-white border border-navy text-navy hover:bg-gray-50 font-bold py-4 px-10 rounded-xl transition-all active:scale-[0.98] no-underline text-center">
+                </a>
+                <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="bg-white border border-navy text-navy hover:bg-gray-50 font-bold py-4 px-10 rounded-xl transition-all active:scale-[0.98] no-underline text-center">
                   Book + Workbook Bundle
-                </Link>
+                </a>
               </div>
             </div>
           </div>
