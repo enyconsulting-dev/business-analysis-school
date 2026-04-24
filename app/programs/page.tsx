@@ -171,7 +171,7 @@ export default function Programs() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <a href="https://link.gohighlevel.com/enrollment-call" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
+            <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
               Book a Free Enrollment Call
             </a>
             <button 

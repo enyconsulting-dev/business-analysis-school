@@ -84,7 +84,7 @@ export default function AIAccelerator() {
               <a href="#tiers" className="bg-gold hover:bg-gold-lt text-navy-deep font-bold py-5 px-10 rounded-xl transition-all shadow-2xl active:scale-[0.98] no-underline">
                 Choose Your Tier & Enroll
               </a>
-              <a href="https://link.gohighlevel.com/enrollment-call" className="bg-white/10 hover:bg-white/20 text-white font-bold py-5 px-10 rounded-xl border border-white/10 transition-all backdrop-blur-sm no-underline">
+              <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="bg-white/10 hover:bg-white/20 text-white font-bold py-5 px-10 rounded-xl border border-white/10 transition-all backdrop-blur-sm no-underline">
                 Book a Call With Enrollment Team
               </a>
             </div>
@@ -251,7 +251,7 @@ export default function AIAccelerator() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <a href="https://link.gohighlevel.com/enrollment-call" className="bg-white hover:bg-gray-100 text-navy-deep font-bold py-5 px-12 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
+            <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="bg-white hover:bg-gray-100 text-navy-deep font-bold py-5 px-12 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
               Book a Free Enrollment Call
             </a>
             <a href="https://link.gohighlevel.com/tier3-application" className="bg-gold hover:bg-gold-lt text-navy-deep font-bold py-5 px-12 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">

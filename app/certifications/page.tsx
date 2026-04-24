@@ -148,7 +148,7 @@ export default function Certifications() {
                       <div className="text-[0.8rem] text-white/30 mt-2 font-light">Global average for {cert.id.toUpperCase()} holders.</div>
                     </div>
 
-                    <a href="https://link.gohighlevel.com/enrollment-call" className="inline-flex items-center gap-3 bg-white text-navy font-bold py-4 px-10 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 no-underline">
+                    <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="inline-flex items-center gap-3 bg-white text-navy font-bold py-4 px-10 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 no-underline">
                       Talk to a Certification Advisor
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </a>
@@ -223,7 +223,7 @@ export default function Certifications() {
                       ))}
                    </div>
 
-                   <a href="https://link.gohighlevel.com/enrollment-call" className="bg-transparent border border-white/30 hover:bg-white/5 text-white font-bold py-4 px-10 rounded-xl transition-all no-underline inline-block">
+                   <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="bg-transparent border border-white/30 hover:bg-white/5 text-white font-bold py-4 px-10 rounded-xl transition-all no-underline inline-block">
                       View Certification Schedule
                    </a>
                 </motion.div>
@@ -261,7 +261,7 @@ export default function Certifications() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="https://link.gohighlevel.com/enrollment-call" className="bg-gold hover:bg-gold-lt text-navy font-bold py-5 px-12 rounded-2xl shadow-xl shadow-gold/20 active:scale-[0.98] transition-all no-underline">
+                <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="bg-gold hover:bg-gold-lt text-navy font-bold py-5 px-12 rounded-2xl shadow-xl shadow-gold/20 active:scale-[0.98] transition-all no-underline">
                   Book a Consultation Call
                 </a>
                 <Link href="/contact" className="bg-white/5 hover:bg-white/10 text-white font-bold py-5 px-12 rounded-2xl border border-white/10 active:scale-[0.98] transition-all no-underline">
