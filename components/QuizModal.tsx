@@ -236,3 +236,6 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     </AnimatePresence>
   );
 }
+
+
+// 

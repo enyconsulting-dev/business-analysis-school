@@ -79,7 +79,7 @@ export default function AcceleratorTiers() {
 
             <div className="space-y-4">
               <div className="text-[0.7rem] text-center text-white/30 uppercase tracking-widest">50 Spots Available Per Cohort</div>
-              <a href="#" className="flex items-center justify-center gap-3 bg-[#4FC3F7] hover:bg-[#81D4FA] text-navy-deep font-bold py-4 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 group/btn no-underline">
+              <a href="/contact" className="flex items-center justify-center gap-3 bg-[#4FC3F7] hover:bg-[#81D4FA] text-navy-deep font-bold py-4 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 group/btn no-underline">
                 Enroll Now — 50 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
               </a>
@@ -140,7 +140,7 @@ export default function AcceleratorTiers() {
 
             <div className="space-y-4">
               <div className="text-[0.7rem] text-center text-white/30 uppercase tracking-widest">25 Spots Available Per Cohort</div>
-              <a href="#" className="flex items-center justify-center gap-3 bg-orchid hover:bg-orchid-lt text-white font-bold py-4 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 group/btn no-underline">
+              <a href="/contact" className="flex items-center justify-center gap-3 bg-orchid hover:bg-orchid-lt text-white font-bold py-4 rounded-xl transition-all shadow-xl hover:-translate-y-0.5 group/btn no-underline">
                 Enroll Now — 25 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
               </a>
@@ -200,13 +200,10 @@ export default function AcceleratorTiers() {
 
             <div className="space-y-4">
               <div className="text-[0.7rem] text-center text-white/30 uppercase tracking-widest">Only 10 Spots per cohort</div>
-              <button 
-                onClick={() => setIsModalOpen(true)}
-                className="w-full flex items-center justify-center gap-3 bg-white text-navy-deep font-bold py-4 rounded-xl transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 group/btn"
-              >
+              <a href="/contact" className="w-full flex items-center justify-center gap-3 bg-white text-navy-deep font-bold py-4 rounded-xl transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 group/btn no-underline">
                 Apply Now — Only 10 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">assignment_turned_in</span>
-              </button>
+              </a>
               <div className="text-[0.75rem] text-center bg-green/10 text-green py-2 px-3 rounded-lg border border-green/20">
                 <strong>Pay-in-Full Bonus:</strong> $900 Cert Bundle FREE
               </div>
