@@ -10,10 +10,11 @@ interface ResourceOptinModalProps {
   onClose: () => void;
   type: "masterclass" | "ebook";
   resourceTitle: string;
+  file?: string;
   webhookUrl?: string;
 }
 
-export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, webhookUrl }: ResourceOptinModalProps) {
+export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file, webhookUrl }: ResourceOptinModalProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -40,6 +41,17 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
     }, webhookUrl);
 
     setIsSubmitting(false);
+    
+    // Trigger download if file is provided
+    if (file) {
+      const link = document.createElement('a');
+      link.href = file;
+      link.download = file.split('/').pop() || 'download';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    
     onClose();
     if (type === 'masterclass') {
       router.push("/free-training/video");

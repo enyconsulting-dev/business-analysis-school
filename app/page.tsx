@@ -10,7 +10,7 @@ import ResourceOptinModal from "@/components/ResourceOptinModal";
 import QuizModal from "@/components/QuizModal";
 
 export default function Home() {
-  const [activeModal, setActiveModal] = useState<{ type: 'masterclass' | 'ebook'; title: string } | null>(null);
+  const [activeModal, setActiveModal] = useState<{ type: 'masterclass' | 'ebook'; title: string; file?: string } | null>(null);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
 
   // Framer Motion Variants for Sequential Stagger
@@ -298,7 +298,7 @@ export default function Home() {
                 cta: "Download Free", 
                 iconClass: "bg-gold/10", 
                 btnClass: "bg-white border border-navy text-navy hover:bg-gray-50",
-                onClick: () => setActiveModal({ type: 'ebook', title: "The Business Analysis Career Starter Kit" })
+                onClick: () => setActiveModal({ type: 'ebook', title: "The Business Analysis Career Starter Kit", file: "/BAS_Career_Starter_Kit.pdf" })
               },
               { 
                 icon: "❓", 
@@ -479,6 +479,7 @@ export default function Home() {
         onClose={() => setActiveModal(null)}
         type={activeModal?.type || 'masterclass'}
         resourceTitle={activeModal?.title || ''}
+        file={activeModal?.file}
       />
       <QuizModal 
         isOpen={isQuizOpen}

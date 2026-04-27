@@ -6,7 +6,7 @@ import ResourceOptinModal from "@/components/ResourceOptinModal";
 import QuizModal from "@/components/QuizModal";
 
 export default function Resources() {
-  const [activeModal, setActiveModal] = useState<{ type: 'masterclass' | 'ebook'; title: string } | null>(null);
+  const [activeModal, setActiveModal] = useState<{ type: 'masterclass' | 'ebook'; title: string; file?: string } | null>(null);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
 
   const resources = [
@@ -18,6 +18,7 @@ export default function Resources() {
       icon: "school",
       cta: "Watch Immediately",
       featured: true,
+      file: null, // No download for masterclass
       onClick: () => setActiveModal({ type: 'masterclass', title: "Free Masterclass: How to Become an AI Business Analyst in 2026" })
     },
     {
@@ -27,7 +28,8 @@ export default function Resources() {
       desc: "The definitive guide to the BA career path, salaries by country, skills checklist, and a proven 90-day transition roadmap.",
       icon: "menu_book",
       cta: "Download eBook",
-      onClick: () => setActiveModal({ type: 'ebook', title: "BA Career Starter Kit (eBook)" })
+      file: "/BAS_Career_Starter_Kit.pdf",
+      onClick: () => setActiveModal({ type: 'ebook', title: "BA Career Starter Kit (eBook)", file: "/BAS_Career_Starter_Kit.pdf" })
     },
     {
       id: "resume-template",
@@ -36,7 +38,8 @@ export default function Resources() {
       desc: "A professional, fill-in-the-blank resume optimized specifically for business analysis roles and ATS algorithms.",
       icon: "article",
       cta: "Get Template",
-      onClick: () => setActiveModal({ type: 'ebook', title: "BA Resume Template (DOCX)" })
+      file: "/BAS_Resume_Template.pdf",
+      onClick: () => setActiveModal({ type: 'ebook', title: "BA Resume Template (DOCX)", file: "/BAS_Resume_Template.pdf" })
     },
     {
       id: "interview-prep",
@@ -45,7 +48,8 @@ export default function Resources() {
       desc: "Get the most common interview questions and model answers designed to help you demonstrate authority and confidence.",
       icon: "record_voice_over",
       cta: "Send My Guide",
-      onClick: () => setActiveModal({ type: 'ebook', title: "Top 50 BA Interview Questions (PDF)" })
+      file: "/BAS_Top_50_Interview_Questions.pdf",
+      onClick: () => setActiveModal({ type: 'ebook', title: "Top 50 BA Interview Questions (PDF)", file: "/BAS_Top_50_Interview_Questions.pdf" })
     },
     {
       id: "frameworks",
@@ -54,7 +58,8 @@ export default function Resources() {
       desc: "A visual reference guide of the top frameworks every BA needs to know, from SWOT and PESTLE to User Story Mapping.",
       icon: "grid_view",
       cta: "Download Cheat Sheet",
-      onClick: () => setActiveModal({ type: 'ebook', title: "Business Analysis Frameworks Cheat Sheet (PDF)" })
+      file: "/BAS_Frameworks_Cheat_Sheet.pdf",
+      onClick: () => setActiveModal({ type: 'ebook', title: "Business Analysis Frameworks Cheat Sheet (PDF)", file: "/BAS_Frameworks_Cheat_Sheet.pdf" })
     },
     {
       id: "quiz",
@@ -63,6 +68,7 @@ export default function Resources() {
       desc: "A 3-minute quiz that evaluates your skills and experience to provide personalized career path recommendations.",
       icon: "quiz",
       cta: "Start Assessment",
+      file: null,
       onClick: () => setIsQuizOpen(true)
     },
     {
@@ -72,6 +78,7 @@ export default function Resources() {
       desc: "Deep-dive into practical AI implementations for business analysts. Learn how to leverage LLMs and AI tools at work.",
       icon: "smart_toy",
       cta: "Get the Playbook",
+      file: null, // Assuming no file yet
       onClick: () => setActiveModal({ type: 'ebook', title: "AI Business Analysis Playbook (eBook)" })
     },
     {
@@ -81,6 +88,7 @@ export default function Resources() {
       desc: "Strategic steps to move from foundational business analysis into high-income consulting and leadership roles.",
       icon: "trending_up",
       cta: "Download Roadmap",
+      file: null, // Assuming no file yet
       onClick: () => setActiveModal({ type: 'ebook', title: "The Six-Figure Career Roadmap (eBook)" })
     }
   ];
@@ -223,6 +231,7 @@ export default function Resources() {
         onClose={() => setActiveModal(null)}
         type={activeModal?.type || 'masterclass'}
         resourceTitle={activeModal?.title || ''}
+        file={activeModal?.file}
       />
       <QuizModal 
         isOpen={isQuizOpen}
