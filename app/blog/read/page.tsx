@@ -1,3 +1,13 @@
+import Link from "next/link";
+import Image from "next/image";
+import { siteUrl } from "@/lib/site-config";
+
+const canonicalArticleUrl = new URL("/blog/read", siteUrl).toString();
+const articleShareUrl = encodeURIComponent(canonicalArticleUrl);
+const articleTitle = encodeURIComponent(
+  "The Future of Business Analysis: AI, Data, and Strategic Thinking in 2025",
+);
+
 export default function BlogReadPage() {
   return (
     <>
@@ -5,19 +15,19 @@ export default function BlogReadPage() {
       <div className="bg-white border-b border-gray-100 py-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center gap-2 text-sm">
-            <a
+            <Link
               className="text-gray-500 hover:text-primary transition-colors"
-              href="#"
+              href="/"
             >
               Home
-            </a>
+            </Link>
             <span className="text-gray-300">/</span>
-            <a
+            <Link
               className="text-gray-500 hover:text-primary transition-colors"
-              href="#"
+              href="/blog"
             >
               Blog
-            </a>
+            </Link>
             <span className="text-gray-300">/</span>
             <span className="text-gray-900 font-medium">
               The Future of Business Analysis
@@ -49,10 +59,12 @@ export default function BlogReadPage() {
           {/* Author Info */}
           <div className="flex items-center gap-4 pb-8 border-b border-gray-200">
             <div className="size-14 rounded-full bg-gray-200 overflow-hidden">
-              <img
+              <Image
                 alt="Eno Eka"
                 className="w-full h-full object-cover"
                 src="/eno-eka-white.png"
+                width={56}
+                height={56}
               />
             </div>
             <div className="flex-1">
@@ -62,16 +74,17 @@ export default function BlogReadPage() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button className="size-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <a
+                aria-label="Share article on LinkedIn"
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${articleShareUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="size-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+              >
                 <span className="material-symbols-outlined text-[18px] text-gray-600">
                   share
                 </span>
-              </button>
-              <button className="size-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
-                <span className="material-symbols-outlined text-[18px] text-gray-600">
-                  bookmark
-                </span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -81,10 +94,13 @@ export default function BlogReadPage() {
       <div className="bg-white pb-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl overflow-hidden shadow-lg">
-            <img
+            <Image
               alt="Team analyzing business data on a large screen"
               className="w-full h-auto"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMHnjELQMbxN4RaCJ74GfXaOHWAfJ7AB4sPfCpbsHVWmRzqGNMvMzUgKVCSQVqnxImiUY2QTmiUYWvISVl6VkNmso89f9b1WJKqvi7PtKBum6DWBXOOM_h5KKl1YEFRuCAOEQIJs0bsj8_Gvx8WJtQ5FJPXZxT3dDT9j587bFH4tzBDgZtmqOcEOQmNOcBDei1rLrkCeSbF9ATZq5W0FWCsKXT7UH1Kr40GAZc4wX1cSt8qogwI0QNav1fty5mQ_dbmKeIvgDl70Q"
+              width={1200}
+              height={675}
+              sizes="(max-width: 1024px) 100vw, 1024px"
             />
           </div>
         </div>
@@ -106,7 +122,7 @@ export default function BlogReadPage() {
                     to stay ahead of the curve.
                   </p>
 
-                  <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">
+                  <h2 id="changing-landscape" className="text-2xl font-bold text-gray-900 mt-12 mb-4">
                     The Changing Landscape
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -135,7 +151,7 @@ export default function BlogReadPage() {
                     </p>
                   </div>
 
-                  <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">
+                  <h2 id="key-skills" className="text-2xl font-bold text-gray-900 mt-12 mb-4">
                     Key Skills for the Modern BA
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -143,7 +159,7 @@ export default function BlogReadPage() {
                     to develop several critical competencies:
                   </p>
 
-                  <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">
+                  <h3 id="data-analytics" className="text-xl font-bold text-gray-900 mt-8 mb-4">
                     1. Data Analytics and Visualization
                   </h3>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -154,7 +170,7 @@ export default function BlogReadPage() {
                     crucial differentiator.
                   </p>
 
-                  <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">
+                  <h3 id="ai-awareness" className="text-xl font-bold text-gray-900 mt-8 mb-4">
                     2. AI and Automation Awareness
                   </h3>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -166,7 +182,7 @@ export default function BlogReadPage() {
                     implementation.
                   </p>
 
-                  <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">
+                  <h3 id="strategic-thinking" className="text-xl font-bold text-gray-900 mt-8 mb-4">
                     3. Strategic Thinking
                   </h3>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -177,7 +193,7 @@ export default function BlogReadPage() {
                     to articulate the ROI of proposed solutions.
                   </p>
 
-                  <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">
+                  <h2 id="practical-steps" className="text-2xl font-bold text-gray-900 mt-12 mb-4">
                     Practical Steps to Future-Proof Your Career
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -233,7 +249,7 @@ export default function BlogReadPage() {
                     </li>
                   </ul>
 
-                  <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">
+                  <h2 id="bottom-line" className="text-2xl font-bold text-gray-900 mt-12 mb-4">
                     The Bottom Line
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
@@ -257,19 +273,19 @@ export default function BlogReadPage() {
                     Tags
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer">
+                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
                       Business Analysis
                     </span>
-                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer">
+                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
                       AI
                     </span>
-                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer">
+                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
                       Career Development
                     </span>
-                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer">
+                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
                       Future of Work
                     </span>
-                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer">
+                    <span className="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
                       Data Analytics
                     </span>
                   </div>
@@ -281,18 +297,18 @@ export default function BlogReadPage() {
                     Share This Article
                   </h3>
                   <div className="flex gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0077b5] text-white hover:bg-[#006399] transition-colors">
+                    <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${articleShareUrl}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0077b5] text-white hover:bg-[#006399] transition-colors no-underline">
                       <span className="font-bold text-sm">LinkedIn</span>
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1DA1F2] text-white hover:bg-[#1a8cd8] transition-colors">
-                      <span className="font-bold text-sm">Twitter</span>
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">
+                    </a>
+                    <a href={`https://x.com/intent/post?url=${articleShareUrl}&text=${articleTitle}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1DA1F2] text-white hover:bg-[#1a8cd8] transition-colors no-underline">
+                      <span className="font-bold text-sm">X</span>
+                    </a>
+                    <a href={`mailto:?subject=${articleTitle}&body=${encodeURIComponent(`I thought you might enjoy this article: ${canonicalArticleUrl}`)}`} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors no-underline">
                       <span className="material-symbols-outlined text-[18px]">
                         link
                       </span>
-                      <span className="font-bold text-sm">Copy Link</span>
-                    </button>
+                      <span className="font-bold text-sm">Email</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -320,15 +336,15 @@ export default function BlogReadPage() {
                       is to help 100,000 people gain financial freedom through
                       tech careers.
                     </p>
-                    <a
+                    <Link
                       className="text-sm font-bold text-primary hover:underline flex items-center gap-1"
-                      href="#"
+                      href="/blog"
                     >
                       View all posts by Eno{" "}
                       <span className="material-symbols-outlined text-sm">
                         arrow_forward
                       </span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -396,9 +412,9 @@ export default function BlogReadPage() {
                   Join our comprehensive IIBA certification program and master
                   the skills employers are looking for.
                 </p>
-                <button className="w-full bg-accent hover:bg-accent-hover text-white font-bold py-3 rounded-lg transition-colors shadow-md">
+                <Link href="/programs" className="block w-full rounded-lg bg-accent py-3 text-center font-bold text-white no-underline shadow-md transition-colors hover:bg-accent-hover">
                   Explore Programs
-                </button>
+                </Link>
               </div>
 
               {/* Newsletter */}
@@ -407,127 +423,21 @@ export default function BlogReadPage() {
                   Get Weekly Insights
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Join 15,000+ professionals getting career tips delivered to
-                  their inbox.
+                  Subscribe to receive Business Analysis School updates by email.
                 </p>
-                <input
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm mb-3 focus:ring-2 focus:ring-accent focus:border-transparent"
-                  placeholder="Enter your email"
-                  type="email"
-                />
-                <button className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2.5 rounded-lg transition-colors text-sm">
+                <Link href="/blog#blog-newsletter" className="block w-full rounded-lg bg-primary py-2.5 text-center text-sm font-bold text-white no-underline transition-colors hover:bg-primary-dark">
                   Subscribe
-                </button>
+                </Link>
               </div>
             </aside>
           </div>
         </div>
       </div>
 
-      {/* Related Articles */}
-      <section className="bg-white py-16 border-t border-gray-100">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Related Articles
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Related Article 1 */}
-            <article className="flex flex-col bg-background-off rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 group">
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  alt="Students studying together"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqoSgSkJTBagDIfts2PlUcyV4qFjcUYDAcRB58UlZaxsFbXFu9ngGSlNAjNITmeoSV15sHcgEqE8U11RZj2PQ6WGaX9LowZwLr97GP-SLXSdPXCGwzUZ8h5x9tF2mZx-DRgSsmq8zeo2yvpRlKQFEgS9obmdp2IfUqNEtq_v_07O4mg2i8VFyKegx1ZjDUI9_s7A9NvhIOb62oFbh0TAdBd8nyyF_wyjZf-c2qLpBSg45LtbDqqpALvKQFnmJZuzQhWaIuTSlFgj4"
-                />
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <span className="text-xs font-bold text-accent mb-2">
-                  IIBA Prep
-                </span>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  How to Pass the ECBA Exam on Your First Try
-                </h3>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  A step-by-step study guide breaking down the BABOK guide and
-                  key knowledge areas.
-                </p>
-                <div className="mt-auto flex items-center justify-between text-xs text-gray-500">
-                  <span>5 min read</span>
-                  <a
-                    className="text-primary font-bold hover:underline"
-                    href="#"
-                  >
-                    Read More →
-                  </a>
-                </div>
-              </div>
-            </article>
-
-            {/* Related Article 2 */}
-            <article className="flex flex-col bg-background-off rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 group">
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  alt="Person working on laptop"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-UdekfpKt0vMdAYsc9LjafpryJPabb7g9KtUdVi1Wl6RFnyrYN3dHUNvMEVUlayulBLowjzu01MBwjc53bgYaE-2C3W7fqzY9xSsblrtZsfPENMVHlSPu_vDppn5Ge4dXGDNbVAEhfOz3k6daB1vx4rBENCEl1ef3uBo1VeHbK54WbOzNFfOU5XBWWLmz2nBxSnlMLtbHq9fZsHSQY9GttpaXUCRg5zYsFfPZPRfzWrRl4UXks7UB3JFegM5UfrLR9a6MBY09UyE"
-                />
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <span className="text-xs font-bold text-accent mb-2">
-                  Career Tips
-                </span>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  5 Non-Tech Roles That Transition Easily to BA
-                </h3>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  Discover how your transferable skills give you a unique
-                  advantage in Business Analysis.
-                </p>
-                <div className="mt-auto flex items-center justify-between text-xs text-gray-500">
-                  <span>6 min read</span>
-                  <a
-                    className="text-primary font-bold hover:underline"
-                    href="#"
-                  >
-                    Read More →
-                  </a>
-                </div>
-              </div>
-            </article>
-
-            {/* Related Article 3 */}
-            <article className="flex flex-col bg-background-off rounded-xl overflow-hidden border border-gray-100 hover:shadow-lg transition-all duration-300 group">
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  alt="Graph on tablet"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMbLuMUduU0r1bm09bC1BRaBBo_MezdDU2yorKoi-FE4L12BTpvfwGrbZgdY7jYQNsGGDRwWW3KnUm6DS1FLTr6S77zdA8VPBpQWhdwkXS4KMiL-5gzjQ3LFQhCm-pM7Hv_65a3nwsWdPVXAiuaiqfd30vyroYqpmGonxxUizPfd5V_oKCpgUOSXi3yvBe3UMAcrLsWBLNSjoUxUIwO0oIbhxYPjVaD0bi4Zrk7fd0rkurbQjB0Wz5nxXiIwWFB7XCScgB3hY6_s8"
-                />
-              </div>
-              <div className="p-6 flex flex-col flex-grow">
-                <span className="text-xs font-bold text-accent mb-2">
-                  Industry Trends
-                </span>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                  Agile vs. Waterfall: What Modern BAs Need to Know
-                </h3>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                  Understanding the methodologies that drive software
-                  development today.
-                </p>
-                <div className="mt-auto flex items-center justify-between text-xs text-gray-500">
-                  <span>7 min read</span>
-                  <a
-                    className="text-primary font-bold hover:underline"
-                    href="#"
-                  >
-                    Read More →
-                  </a>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
+      <section className="border-t border-gray-100 bg-white py-12 text-center">
+        <Link href="/blog" className="font-bold text-primary hover:underline">
+          Browse published articles
+        </Link>
       </section>
     </>
   );

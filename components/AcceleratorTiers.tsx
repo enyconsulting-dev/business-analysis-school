@@ -200,10 +200,10 @@ export default function AcceleratorTiers() {
 
             <div className="space-y-4">
               <div className="text-[0.7rem] text-center text-white/30 uppercase tracking-widest">Only 10 Spots per cohort</div>
-              <a href="/contact" className="w-full flex items-center justify-center gap-3 bg-white text-navy-deep font-bold py-4 rounded-xl transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 group/btn no-underline">
+              <button type="button" onClick={() => setIsModalOpen(true)} className="w-full flex items-center justify-center gap-3 bg-white text-navy-deep font-bold py-4 rounded-xl transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 group/btn">
                 Apply Now — Only 10 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">assignment_turned_in</span>
-              </a>
+              </button>
               <div className="text-[0.75rem] text-center bg-green/10 text-green py-2 px-3 rounded-lg border border-green/20">
                 <strong>Pay-in-Full Bonus:</strong> $900 Cert Bundle FREE
               </div>

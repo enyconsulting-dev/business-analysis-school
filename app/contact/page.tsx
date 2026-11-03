@@ -1,13 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { submitToWebhook } from "@/lib/webhook";
 
+const interests = [
+  "AI Business Analyst Accelerator",
+  "AI Business Strategist",
+  "AI Business Consultant",
+  "Certification Prep",
+  "Corporate Training",
+  "Career Consultation",
+  "Free Training",
+  "Other"
+];
+
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     email: "",
@@ -16,25 +29,55 @@ export default function Contact() {
     message: ""
   });
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedInterest = params.get("interest");
+    const consultationDuration = params.get("consultation");
+    const isBrochureRequest = params.get("request") === "brochure";
+
+    setFormData((previous) => ({
+      ...previous,
+      interest:
+        requestedInterest && interests.includes(requestedInterest)
+          ? requestedInterest
+          : previous.interest,
+      message: consultationDuration
+        ? `I would like details about the ${consultationDuration}-minute career consultation.`
+        : isBrochureRequest
+          ? "I would like to request the corporate training brochure."
+          : previous.message,
+    }));
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Contact Inquiry",
-      type: "contact",
-      event_type: "contact_inquiry",
-      full_name: formData.firstName,
-      email: formData.email,
-      phone: formData.phone,
-      interest: formData.interest,
-      message: formData.message,
-      tags: `Contact Inquiry, ${formData.interest}`
-    });
+    setError("");
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Contact Inquiry",
+        type: "contact",
+        event_type: "contact_inquiry",
+        full_name: formData.firstName,
+        email: formData.email,
+        phone: formData.phone,
+        interest: formData.interest,
+        message: formData.message,
+        tags: `Contact Inquiry, ${formData.interest}`
+      });
+
+      setIsSuccess(true);
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "We couldn't send your message. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactMethods = [
@@ -68,16 +111,6 @@ export default function Contact() {
       link: "https://aibusinessanalysis.ca/support", 
       icon: "public" 
     }
-  ];
-
-  const interests = [
-    "AI Business Analyst Accelerator",
-    "AI Business Strategist",
-    "AI Business Consultant",
-    "Certification Prep",
-    "Corporate Training",
-    "Free Training",
-    "Other"
   ];
 
   return (
@@ -196,14 +229,16 @@ export default function Contact() {
                   >
                     <h3 className="font-serif text-3xl text-navy mb-4 italic">Send a Message</h3>
                     <p className="text-[0.95rem] text-gray-400 font-light mb-12">
-                      Have a specific question? Fill out the form below and our team will route it to the right specialist.
+                      Have a specific question? Fill out the form below to send your inquiry to our team.
                     </p>
                     
                     <form onSubmit={handleSubmit} className="space-y-6">
+                      {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">First Name</label>
+                          <label htmlFor="contact-name" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">First Name</label>
                           <input 
+                            id="contact-name"
                             required 
                             type="text" 
                             placeholder="Your name" 
@@ -213,8 +248,9 @@ export default function Contact() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Email Address</label>
+                          <label htmlFor="contact-email" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Email Address</label>
                           <input 
+                            id="contact-email"
                             required 
                             type="email" 
                             placeholder="email@address.com" 
@@ -227,8 +263,9 @@ export default function Contact() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Phone (Optional)</label>
+                          <label htmlFor="contact-phone" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Phone (Optional)</label>
                           <input 
+                            id="contact-phone"
                             type="tel" 
                             placeholder="+1..." 
                             className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all" 
@@ -237,8 +274,9 @@ export default function Contact() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">I'm Interested In</label>
+                          <label htmlFor="contact-interest" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">I'm Interested In</label>
                           <select 
+                            id="contact-interest"
                             className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all appearance-none cursor-pointer"
                             value={formData.interest}
                             onChange={e => setFormData({...formData, interest: e.target.value})}
@@ -249,8 +287,9 @@ export default function Contact() {
                       </div>
 
                       <div>
-                        <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Message</label>
+                        <label htmlFor="contact-message" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">Message</label>
                         <textarea 
+                          id="contact-message"
                           required 
                           placeholder="How can we help?" 
                           className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] h-32 focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all resize-none"
@@ -284,9 +323,9 @@ export default function Contact() {
                     <div className="w-20 h-20 bg-green/10 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
                        <span className="material-symbols-outlined text-[3rem]">check_circle</span>
                     </div>
-                    <h3 className="font-serif text-3xl text-navy mb-4 italic">Message Received!</h3>
+                    <h3 role="status" aria-live="polite" className="font-serif text-3xl text-navy mb-4 italic">Message Received!</h3>
                     <p className="text-gray-400 font-light mb-10 max-w-[320px] mx-auto leading-relaxed">
-                      Thank you for reaching out. A specialist will review your inquiry and get back to you within 24 business hours.
+                      Thank you for reaching out. Your inquiry has been submitted to our team.
                     </p>
                     <button 
                       onClick={() => setIsSuccess(false)}

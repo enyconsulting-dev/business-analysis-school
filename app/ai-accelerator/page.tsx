@@ -27,7 +27,7 @@ export default function AIAccelerator() {
     },
     { 
       q: "Is there a refund policy?", 
-      a: "We stand behind our program’s quality. Full refund policy details are available on our terms page. We want you to succeed — that’s why we offer enrollment consultations before you commit." 
+      a: "Contact our team for the current refund terms before you enroll."
     },
     { 
       q: "What makes this different from free AI courses online?", 
@@ -254,8 +254,8 @@ export default function AIAccelerator() {
             <a href="https://link.enyconsulting.ca/widget/bookings/enrollment-specialist-call" className="bg-white hover:bg-gray-100 text-navy-deep font-bold py-5 px-12 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
               Book a Free Enrollment Call
             </a>
-            <a href="https://link.gohighlevel.com/tier3-application" className="bg-gold hover:bg-gold-lt text-navy-deep font-bold py-5 px-12 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
-              Apply for Tier 3 (10 Spots Only)
+            <a href="#tiers" className="bg-gold hover:bg-gold-lt text-navy-deep font-bold py-5 px-12 rounded-xl transition-all shadow-xl active:scale-[0.98] no-underline">
+              View Tier 3 Options
             </a>
           </div>
         </div>

@@ -1,51 +1,39 @@
-/**
- * Centralized Webhook Utility
- * Used to send lead data, applications, and inquiries to a unified backend/GHL endpoint.
- * Standardized inputs now include a 'tags' string for better CRM segmentation.
- */
+export type LeadPayload = Record<
+  string,
+  string | Record<string, string | undefined>
+>;
 
-// Centralized Webhook URL for the platform.
-const DEFAULT_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/c82296b3-022a-41a1-84c1-d0c213bf7518"; 
-
-export async function submitToWebhook(payload: any, customUrl?: string) {
-  const targetUrl = customUrl || DEFAULT_WEBHOOK_URL;
-  const timestamp = new Date().toISOString();
-  
-  const enhancedPayload = {
-    ...payload,
-    timestamp,
-    source_url: typeof window !== 'undefined' ? window.location.href : 'server-side',
-    user_agent: typeof window !== 'undefined' ? navigator.userAgent : 'server-side'
-  };
-
-  if (!targetUrl) {
-    console.group("🚀 [Mock Webhook Submission]");
-    console.log("Event Type:", payload.event_type || 'unspecified');
-    console.log("Payload:", enhancedPayload);
-    console.groupEnd();
-    
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    return { success: true, mock: true };
-  }
+export async function submitToWebhook(payload: LeadPayload): Promise<void> {
+  let response: Response;
 
   try {
-    const response = await fetch(targetUrl, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(enhancedPayload)
+    response = await fetch("/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
-
-    if (!response.ok) {
-      throw new Error(`Webhook failed with status: ${response.status}`);
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error("❌ Webhook Submission Error:", error);
-    return { success: false, error };
+  } catch {
+    throw new Error("We couldn't send your request. Please try again.");
   }
+
+  if (response.ok) return;
+
+  let errorMessage: string | undefined;
+  try {
+    const result: unknown = await response.json();
+    if (
+      typeof result === "object" &&
+      result !== null &&
+      "error" in result &&
+      typeof result.error === "string"
+    ) {
+      errorMessage = result.error;
+    }
+  } catch {
+    errorMessage = undefined;
+  }
+
+  throw new Error(
+    errorMessage || "We couldn't send your request. Please try again.",
+  );
 }

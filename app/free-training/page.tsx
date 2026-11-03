@@ -6,12 +6,22 @@ import { motion } from "framer-motion";
 import { submitToWebhook } from "@/lib/webhook";
 import ResourceOptinModal from "@/components/ResourceOptinModal";
 
-const FREE_TRAINING_WEBHOOK = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/c82296b3-022a-41a1-84c1-d0c213bf7518";
+const hasMasterclassEmbed = (() => {
+  const embedUrl = process.env.NEXT_PUBLIC_MASTERCLASS_EMBED_URL;
+  if (!embedUrl) return false;
+
+  try {
+    return new URL(embedUrl).protocol === "https:";
+  } catch {
+    return false;
+  }
+})();
 
 export default function FreeTraining() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,22 +31,32 @@ export default function FreeTraining() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Free Training Opt-in",
-      type: "free master class",
-      event_type: "lead_optin",
-      resource_title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree",
-      resource_type: "masterclass",
-      full_name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      tags: "Free Training, Masterclass Opt-in"
-    }, FREE_TRAINING_WEBHOOK);
+    setError("");
 
-    setIsSubmitting(false);
-    router.push("/free-training/video");
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Free Training Opt-in",
+        type: "free master class",
+        event_type: "lead_optin",
+        resource_title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree",
+        resource_type: "masterclass",
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        tags: "Free Training, Masterclass Opt-in"
+      });
+
+      router.push("/free-training/video");
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "We couldn't register you. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const discoveryPoints = [
@@ -80,7 +100,9 @@ export default function FreeTraining() {
             className="flex flex-col items-start"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-orchid/10 border border-orchid/25 rounded-full text-[0.65rem] font-bold uppercase tracking-widest text-orchid-lt mb-8">
-              Free Masterclass • Instant Access
+              {hasMasterclassEmbed
+                ? "Free Masterclass • Watch Online"
+                : "Free Masterclass • Request Information"}
             </div>
             
             <h1 className="font-serif text-[clamp(2.2rem,5vw,3.8rem)] leading-[1.05] mb-8">
@@ -110,14 +132,24 @@ export default function FreeTraining() {
             <div className="absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r from-orchid via-gold to-orchid animate-glow"></div>
             
             <div className="mb-10 text-center">
-              <h3 className="font-serif text-3xl mb-3 tracking-tight italic">Register for Free Instant Access</h3>
-              <p className="text-[0.9rem] text-gray-500 font-light italic">Watch immediately. No waiting. No fluff. Just strategy that works.</p>
+              <h3 className="font-serif text-3xl mb-3 tracking-tight italic">
+                {hasMasterclassEmbed
+                  ? "Register for the Free Masterclass"
+                  : "Request Masterclass Information"}
+              </h3>
+              <p className="text-[0.9rem] text-gray-500 font-light italic">
+                {hasMasterclassEmbed
+                  ? "Submit your details to open the masterclass."
+                  : "The video is not available yet. Submit a request for information."}
+              </p>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-5">
+              {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
               <div className="space-y-1.5">
-                <label className="block text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gray-400 ml-1">Full Name</label>
+                <label htmlFor="free-training-name" className="block text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gray-400 ml-1">Full Name</label>
                 <input 
+                  id="free-training-name"
                   required
                   type="text" 
                   placeholder="Your full name"
@@ -127,8 +159,9 @@ export default function FreeTraining() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gray-400 ml-1">Email Address</label>
+                <label htmlFor="free-training-email" className="block text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gray-400 ml-1">Email Address</label>
                 <input 
+                  id="free-training-email"
                   required
                   type="email" 
                   placeholder="Your best email"
@@ -138,8 +171,9 @@ export default function FreeTraining() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="block text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gray-400 ml-1">Phone Number</label>
+                <label htmlFor="free-training-phone" className="block text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gray-400 ml-1">Phone Number</label>
                 <input 
+                  id="free-training-phone"
                   required
                   type="tel" 
                   placeholder="WhatsApp number preferred"
@@ -157,7 +191,7 @@ export default function FreeTraining() {
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
                 ) : (
                   <>
-                    Get Free Access Now
+                    {hasMasterclassEmbed ? "Open the Free Masterclass" : "Request Information"}
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                   </>
                 )}
@@ -166,7 +200,7 @@ export default function FreeTraining() {
               <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[0.65rem] text-gray-400 font-bold uppercase tracking-wider italic">
                 <span>✓ Free</span>
                 <span>✓ No credit card required</span>
-                <span>✓ Instant access</span>
+                <span>✓ No payment required</span>
               </div>
             </form>
           </motion.div>
@@ -268,7 +302,7 @@ export default function FreeTraining() {
               onClick={() => setIsModalOpen(true)}
               className="bg-orchid hover:bg-orchid-lt text-white font-bold py-5 px-12 rounded-2xl shadow-[0_20px_60px_rgba(150,8,142,0.3)] transition-all active:scale-[0.98] text-[1.1rem]"
             >
-              Watch the Free Training Now
+              {hasMasterclassEmbed ? "Watch the Free Training" : "Request Masterclass Information"}
             </button>
           </motion.div>
         </div>
@@ -280,7 +314,6 @@ export default function FreeTraining() {
         onClose={() => setIsModalOpen(false)}
         type="masterclass"
         resourceTitle="How to Become an AI Business Analyst in 2026 Without a Tech Degree"
-        webhookUrl={FREE_TRAINING_WEBHOOK}
       />
     </div>
   );

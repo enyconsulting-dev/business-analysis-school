@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import CorporateProposalModal from "@/components/CorporateProposalModal";
-import ResourceOptinModal from "@/components/ResourceOptinModal";
 
 export default function CorporateTraining() {
   const [isProposalOpen, setIsProposalOpen] = useState(false);
-  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
 
   const includes = [
     "Training needs assessment and skills gap analysis",
@@ -52,12 +51,12 @@ export default function CorporateTraining() {
               >
                 Request a Training Proposal
               </button>
-              <button 
-                onClick={() => setIsBrochureOpen(true)}
-                className="bg-white/5 border border-white/20 text-white font-bold py-5 px-10 rounded-xl transition-all hover:bg-white/10 active:scale-[0.98]"
+              <Link
+                href="/contact?interest=Corporate%20Training&request=brochure"
+                className="bg-white/5 border border-white/20 text-white font-bold py-5 px-10 rounded-xl transition-all hover:bg-white/10 active:scale-[0.98] no-underline text-center"
               >
-                Download Corporate Brochure
-              </button>
+                Request Corporate Brochure
+              </Link>
             </div>
           </motion.div>
 
@@ -226,12 +225,12 @@ export default function CorporateTraining() {
             >
               Request a Training Proposal
             </button>
-            <button 
-              onClick={() => setIsBrochureOpen(true)}
-              className="bg-transparent border border-white/30 hover:bg-white/5 text-white font-bold py-5 px-12 rounded-xl transition-all active:scale-[0.98]"
+            <Link
+              href="/contact?interest=Corporate%20Training&request=brochure"
+              className="bg-transparent border border-white/30 hover:bg-white/5 text-white font-bold py-5 px-12 rounded-xl transition-all active:scale-[0.98] no-underline"
             >
-              Download Corporate Brochure
-            </button>
+              Request Corporate Brochure
+            </Link>
           </div>
         </div>
       </section>
@@ -240,12 +239,6 @@ export default function CorporateTraining() {
       <CorporateProposalModal 
         isOpen={isProposalOpen}
         onClose={() => setIsProposalOpen(false)}
-      />
-      <ResourceOptinModal 
-        isOpen={isBrochureOpen}
-        onClose={() => setIsBrochureOpen(false)}
-        type="ebook"
-        resourceTitle="Corporate Training Brochure & Curriculum"
       />
     </div>
   );

@@ -4,10 +4,42 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import ResourceOptinModal from "@/components/ResourceOptinModal";
 import QuizModal from "@/components/QuizModal";
+import { submitToWebhook } from "@/lib/webhook";
 
 export default function Resources() {
   const [activeModal, setActiveModal] = useState<{ type: 'masterclass' | 'ebook'; title: string; file?: string } | null>(null);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
+  const [newsletterError, setNewsletterError] = useState("");
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsNewsletterSubmitting(true);
+    setNewsletterError("");
+
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Newsletter Signup",
+        type: "newsletter",
+        event_type: "newsletter_signup",
+        email: newsletterEmail,
+        tags: "Newsletter Signup, Resource Hub"
+      });
+      setNewsletterSubmitted(true);
+      setNewsletterEmail("");
+    } catch (submissionError) {
+      setNewsletterError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "We couldn't subscribe you. Please try again.",
+      );
+    } finally {
+      setIsNewsletterSubmitting(false);
+    }
+  };
 
   const resources = [
     {
@@ -17,6 +49,7 @@ export default function Resources() {
       desc: "Join 50,000+ professionals. Learn the #1 non-technical career path, our 90-day roadmap, and how AI is creating massive demand.",
       icon: "school",
       cta: "Watch Immediately",
+      available: true,
       featured: true,
       file: null, // No download for masterclass
       onClick: () => setActiveModal({ type: 'masterclass', title: "Free Masterclass: How to Become an AI Business Analyst in 2026" })
@@ -28,18 +61,20 @@ export default function Resources() {
       desc: "The definitive guide to the BA career path, salaries by country, skills checklist, and a proven 90-day transition roadmap.",
       icon: "menu_book",
       cta: "Download eBook",
+      available: true,
       file: "/BAS_Career_Starter_Kit.pdf",
       onClick: () => setActiveModal({ type: 'ebook', title: "BA Career Starter Kit (eBook)", file: "/BAS_Career_Starter_Kit.pdf" })
     },
     {
       id: "resume-template",
-      type: "DOCX Template",
-      title: "BA Resume Template",
+      type: "PDF Template",
+      title: "BA Resume Template (PDF)",
       desc: "A professional, fill-in-the-blank resume optimized specifically for business analysis roles and ATS algorithms.",
       icon: "article",
       cta: "Get Template",
+      available: true,
       file: "/BAS_Resume_Template.pdf",
-      onClick: () => setActiveModal({ type: 'ebook', title: "BA Resume Template (DOCX)", file: "/BAS_Resume_Template.pdf" })
+      onClick: () => setActiveModal({ type: 'ebook', title: "BA Resume Template (PDF)", file: "/BAS_Resume_Template.pdf" })
     },
     {
       id: "interview-prep",
@@ -48,6 +83,7 @@ export default function Resources() {
       desc: "Get the most common interview questions and model answers designed to help you demonstrate authority and confidence.",
       icon: "record_voice_over",
       cta: "Send My Guide",
+      available: true,
       file: "/BAS_Top_50_Interview_Questions.pdf",
       onClick: () => setActiveModal({ type: 'ebook', title: "Top 50 BA Interview Questions (PDF)", file: "/BAS_Top_50_Interview_Questions.pdf" })
     },
@@ -58,6 +94,7 @@ export default function Resources() {
       desc: "A visual reference guide of the top frameworks every BA needs to know, from SWOT and PESTLE to User Story Mapping.",
       icon: "grid_view",
       cta: "Download Cheat Sheet",
+      available: true,
       file: "/BAS_Frameworks_Cheat_Sheet.pdf",
       onClick: () => setActiveModal({ type: 'ebook', title: "Business Analysis Frameworks Cheat Sheet (PDF)", file: "/BAS_Frameworks_Cheat_Sheet.pdf" })
     },
@@ -68,6 +105,7 @@ export default function Resources() {
       desc: "A 3-minute quiz that evaluates your skills and experience to provide personalized career path recommendations.",
       icon: "quiz",
       cta: "Start Assessment",
+      available: true,
       file: null,
       onClick: () => setIsQuizOpen(true)
     },
@@ -77,7 +115,8 @@ export default function Resources() {
       title: "AI Business Analysis Playbook",
       desc: "Deep-dive into practical AI implementations for business analysts. Learn how to leverage LLMs and AI tools at work.",
       icon: "smart_toy",
-      cta: "Get the Playbook",
+      cta: "Coming Soon",
+      available: false,
       file: null, // Assuming no file yet
       onClick: () => setActiveModal({ type: 'ebook', title: "AI Business Analysis Playbook (eBook)" })
     },
@@ -87,7 +126,8 @@ export default function Resources() {
       title: "The Six-Figure Career Roadmap",
       desc: "Strategic steps to move from foundational business analysis into high-income consulting and leadership roles.",
       icon: "trending_up",
-      cta: "Download Roadmap",
+      cta: "Coming Soon",
+      available: false,
       file: null, // Assuming no file yet
       onClick: () => setActiveModal({ type: 'ebook', title: "The Six-Figure Career Roadmap (eBook)" })
     }
@@ -180,15 +220,18 @@ export default function Resources() {
                   {res.desc}
                 </p>
                 
-                <button 
+                <button
+                  type="button"
+                  disabled={!res.available}
                   onClick={res.onClick}
-                  className={`flex items-center justify-center gap-3 font-bold py-4 px-8 rounded-xl transition-all shadow-lg active:scale-[0.98] ${
+                  className={`flex items-center justify-center gap-3 font-bold py-4 px-8 rounded-xl transition-all shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 ${
                     res.featured 
                     ? 'bg-gold hover:bg-gold-lt text-navy shadow-gold/10' 
                     : 'bg-navy hover:bg-navy-alt text-white shadow-navy/10'
                   }`}
                 >
-                  {res.cta} <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  {res.cta}
+                  {res.available && <span className="material-symbols-outlined text-sm">arrow_forward</span>}
                 </button>
               </motion.div>
             ))}
@@ -211,16 +254,32 @@ export default function Resources() {
               New resources are added every month. Join 50,000+ professionals and get the latest BA and AI strategies delivered to your inbox every week.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 max-w-[540px] mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your best email"
-                className="flex-grow bg-white/5 border border-white/10 rounded-xl px-6 py-5 text-white text-[1rem] focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
-              />
-              <button className="bg-orchid hover:bg-orchid-lt text-white font-bold py-5 px-10 rounded-xl shadow-xl shadow-orchid/30 transition-all hover:-translate-y-0.5 active:translate-y-0">
-                Join Now
-              </button>
-            </div>
+            <form onSubmit={handleNewsletterSubmit} className="max-w-[540px] mx-auto">
+              {newsletterSubmitted ? (
+                <p role="status" className="text-green-200 font-semibold">Thanks for subscribing.</p>
+              ) : (
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <input
+                    required
+                    type="email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    disabled={isNewsletterSubmitting}
+                    placeholder="Enter your best email"
+                    aria-label="Email address"
+                    className="flex-grow bg-white/5 border border-white/10 rounded-xl px-6 py-5 text-white text-[1rem] focus:outline-none focus:ring-2 focus:ring-orchid transition-all"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isNewsletterSubmitting}
+                    className="bg-orchid hover:bg-orchid-lt text-white font-bold py-5 px-10 rounded-xl shadow-xl shadow-orchid/30 transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50"
+                  >
+                    {isNewsletterSubmitting ? "Joining..." : "Join Now"}
+                  </button>
+                </div>
+              )}
+              {newsletterError && <p role="alert" className="mt-3 text-sm text-red-200">{newsletterError}</p>}
+            </form>
           </motion.div>
         </div>
       </section>

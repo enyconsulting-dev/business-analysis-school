@@ -54,7 +54,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-[1001] h-[72px] flex items-center justify-between px-6 md:px-10 bg-navy/95 backdrop-blur-[16px] border-b border-white/5 transition-all">
+      <nav aria-label="Main navigation" className="fixed top-0 left-0 right-0 z-[1001] h-[72px] flex items-center justify-between px-6 md:px-10 bg-navy/95 backdrop-blur-[16px] border-b border-white/5 transition-all">
         {/* Logo */}
         <Link href="/" className="font-sans font-extrabold text-[0.95rem] text-white no-underline tracking-wide z-[1002]">
           BUSINESS ANALYSIS <span className="text-gold">SCHOOL</span>
@@ -83,7 +83,10 @@ export default function Header() {
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="md:hidden relative z-[1005] w-10 h-10 flex items-center justify-center text-white focus:outline-none"
-          aria-label="Toggle Menu"
+          type="button"
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-navigation"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           <div className="flex flex-col gap-1.5 w-6">
             <motion.span 
@@ -106,6 +109,9 @@ export default function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-navigation"
+            role="navigation"
+            aria-label="Mobile navigation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

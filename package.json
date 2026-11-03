@@ -16,12 +16,18 @@
     "typescript": "^5"
   },
   "name": "bas",
+  "packageManager": "npm@10.9.9",
   "private": true,
   "scripts": {
-    "build": "node init && next build",
-    "dev": "node init && next dev",
+    "build": "next build",
+    "dev": "next dev",
     "lint": "eslint",
-    "start": "node init && next start"
+    "start": "next start",
+    "test": "node --experimental-strip-types --test",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=22.6.0"
   },
   "version": "0.1.0"
 }

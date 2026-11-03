@@ -51,7 +51,6 @@ export default function Footer() {
               <Link href="/book" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">The Bestselling Book</Link>
               <Link href="/blog" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Industry Blog</Link>
               <Link href="/success-stories" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Success Stories</Link>
-              <Link href="#" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Podcast</Link>
             </div>
           </div>
 
@@ -73,12 +72,6 @@ export default function Footer() {
         <div className="border-t border-white/5 pt-10 flex flex-col gap-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-[0.75rem] gap-6">
             <span className="text-gray-500">© 2026 Business Analysis School. All rights reserved.</span>
-            
-            <div className="flex flex-wrap items-center gap-4 md:gap-8">
-              <Link href="#" className="hover:text-gold transition-colors duration-300 no-underline">Privacy Policy</Link>
-              <Link href="#" className="hover:text-gold transition-colors duration-300 no-underline">Terms of Service</Link>
-              <Link href="#" className="hover:text-gold transition-colors duration-300 no-underline">Refund Policy</Link>
-            </div>
           </div>
 
           {/* Disclaimer */}

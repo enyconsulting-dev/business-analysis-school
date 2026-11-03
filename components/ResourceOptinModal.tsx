@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { submitToWebhook } from "@/lib/webhook";
+import { useDialogAccessibility } from "@/lib/useDialogAccessibility";
 
 interface ResourceOptinModalProps {
   isOpen: boolean;
@@ -11,12 +12,13 @@ interface ResourceOptinModalProps {
   type: "masterclass" | "ebook";
   resourceTitle: string;
   file?: string;
-  webhookUrl?: string;
 }
 
-export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file, webhookUrl }: ResourceOptinModalProps) {
+export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file }: ResourceOptinModalProps) {
   const router = useRouter();
+  const dialogRef = useDialogAccessibility(isOpen, onClose);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,38 +27,47 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: `BAS ${type === 'masterclass' ? 'Masterclass' : 'Ebook'} Opt-in`,
-      type: type === 'masterclass' ? "free master class" : "resource",
-      event_type: "lead_optin",
-      resource_title: resourceTitle,
-      resource_type: type,
-      full_name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
-    }, webhookUrl);
-
-    setIsSubmitting(false);
-    
-    // Trigger download if file is provided
-    if (file) {
-      const link = document.createElement('a');
-      link.href = file;
-      link.download = file.split('/').pop() || 'download';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    if (type === "ebook" && !file) {
+      setError("This download is not available yet. Please contact us for help.");
+      return;
     }
-    
-    onClose();
-    if (type === 'masterclass') {
-      router.push("/free-training/video");
-    } else {
-      router.push("/success?type=training");
+
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: `BAS ${type === 'masterclass' ? 'Masterclass' : 'Ebook'} Opt-in`,
+        type: type === 'masterclass' ? "free master class" : "resource",
+        event_type: "lead_optin",
+        resource_title: resourceTitle,
+        resource_type: type,
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
+      });
+
+      if (file) {
+        const link = document.createElement('a');
+        link.href = file;
+        link.download = file.split('/').pop() || 'download';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      onClose();
+      router.push(type === "masterclass" ? "/free-training/video" : "/success?type=resource");
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof Error
+          ? submissionError.message
+          : "We couldn't send your request. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -76,12 +87,19 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="resource-optin-title"
+            tabIndex={-1}
             className="relative w-full max-w-[500px] bg-white rounded-3xl overflow-hidden shadow-2xl text-navy"
           >
             <div className={`h-2 bg-gradient-to-r ${type === 'masterclass' ? 'from-orchid to-gold' : 'from-gold to-gold-lt'}`}></div>
             
             <button 
               onClick={onClose}
+              type="button"
+              aria-label="Close resource request"
               className="absolute top-6 right-6 text-gray-400 hover:text-navy transition-colors"
             >
               <span className="material-symbols-outlined">close</span>
@@ -89,20 +107,22 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
 
             <div className="p-8 md:p-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-50 border border-gray-200 rounded-md text-[0.65rem] font-bold uppercase tracking-widest text-gray-400 mb-6 font-sans">
-                {type === 'masterclass' ? 'Instant Access Training' : 'Digital Guide Download'}
+                {type === 'masterclass' ? 'Masterclass Access Request' : 'Digital Guide Download'}
               </div>
               
-              <h2 className="font-serif text-2xl mb-4 leading-tight italic">
-                {type === 'masterclass' ? 'Watch the Masterclass' : 'Get the Starter Kit'}
+              <h2 id="resource-optin-title" className="font-serif text-2xl mb-4 leading-tight italic">
+                {type === 'masterclass' ? 'Request the Masterclass' : 'Get the Starter Kit'}
               </h2>
               <p className="text-[0.9rem] text-gray-500 font-light mb-8">
                 {resourceTitle}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+                {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
                 <div>
-                  <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Full Name</label>
+                  <label htmlFor="resource-optin-name" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Full Name</label>
                   <input 
+                    id="resource-optin-name"
                     required
                     type="text" 
                     placeholder="Your full name"
@@ -113,8 +133,9 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                 </div>
                 
                 <div>
-                  <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Email Address</label>
+                  <label htmlFor="resource-optin-email" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Email Address</label>
                   <input 
+                    id="resource-optin-email"
                     required
                     type="email" 
                     placeholder="Your best email"
@@ -125,8 +146,9 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                 </div>
 
                 <div>
-                  <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Phone Number</label>
+                  <label htmlFor="resource-optin-phone" className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Phone Number</label>
                   <input 
+                    id="resource-optin-phone"
                     required
                     type="tel" 
                     placeholder="WhatsApp number preferred"
@@ -144,14 +166,14 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                     <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
                   ) : (
                     <>
-                      {type === 'masterclass' ? 'Get Instant Access' : 'Send My eBook'}
+                      {type === 'masterclass' ? 'Submit Request' : 'Send My eBook'}
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </>
                   )}
                 </button>
                 
-                <p className="text-[0.6rem] text-gray-400 text-center mt-6">
-                  🔒 We value your privacy. Your data is encrypted and secure.
+                <p role="note" className="text-[0.6rem] text-gray-400 text-center mt-6">
+                  Submitting sends your details to our team with this resource request.
                 </p>
               </form>
             </div>

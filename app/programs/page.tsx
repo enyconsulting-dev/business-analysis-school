@@ -78,7 +78,7 @@ export default function Programs() {
       </section>
 
       {/* ========== ON-DEMAND COURSES ========== */}
-      <section className="py-24 bg-gray-50 border-t border-gray-100">
+      <section id="on-demand-courses" className="py-24 bg-gray-50 border-t border-gray-100">
         <div className="max-w-[1140px] mx-auto px-6 md:px-10">
           <div className="max-w-xl mb-16">
             <h2 className="font-serif text-[2.5rem] text-navy mb-4 italic">On-Demand Courses</h2>
@@ -101,8 +101,8 @@ export default function Programs() {
           </div>
           
           <div className="text-center">
-            <Link href="/courses" className="inline-flex items-center gap-2 text-navy font-bold hover:text-orchid transition-colors no-underline">
-              Browse All Courses <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            <Link href="/contact?interest=Certification%20Prep" className="inline-flex items-center gap-2 text-navy font-bold hover:text-orchid transition-colors no-underline">
+              Ask About Course Access <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </Link>
           </div>
         </div>

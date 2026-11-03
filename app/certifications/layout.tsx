@@ -1,9 +1,10 @@
-import { Metadata } from "next";
+import { createPageMetadata } from "@/lib/site-config";
 
-export const metadata: Metadata = {
-  title: "Business Analysis Certifications | ECBA, CCBA, CBAP Prep | Business Analysis School",
-  description: "Get globally recognized certifications. ECBA, CCBA, and CBAP preparation courses with a 98% first-time pass rate.",
-};
+export const metadata = createPageMetadata(
+  "Business Analysis Certification Preparation",
+  "Explore business analysis certification preparation programs and contact the team for current schedules.",
+  "/certifications",
+);
 
 export default function CertificationsLayout({
   children,

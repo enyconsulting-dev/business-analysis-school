@@ -1,9 +1,10 @@
-import { Metadata } from "next";
+import { createPageMetadata } from "@/lib/site-config";
 
-export const metadata: Metadata = {
-  title: "The Six-Figure Business Analyst | Bestselling Career Guide | Business Analysis School",
-  description: "12 Simple Steps to Kickstart Your Career Without a Tech Degree or Experience. The definitive guide by Eno Eka.",
-};
+export const metadata = createPageMetadata(
+  "The Six-Figure Business Analyst",
+  "A career guide by Eno Eka for starting or advancing a business analysis career.",
+  "/book",
+);
 
 export default function BookLayout({
   children,

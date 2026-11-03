@@ -4,6 +4,18 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Suspense } from "react";
 
+const configuredVideoUrl = process.env.NEXT_PUBLIC_MASTERCLASS_EMBED_URL;
+const masterclassVideoUrl = (() => {
+  if (!configuredVideoUrl) return null;
+
+  try {
+    const url = new URL(configuredVideoUrl);
+    return url.protocol === "https:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+})();
+
 function VideoContent() {
   return (
     <div className="min-h-screen bg-navy-deep text-white font-sans selection:bg-orchid/30 relative">
@@ -15,12 +27,8 @@ function VideoContent() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-green/10 border border-green/20 rounded-full text-[0.65rem] font-bold uppercase tracking-widest text-green mb-6">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green"></span>
-            </span>
-            Training In Progress: Do Not Close This Page
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold/10 border border-gold/20 rounded-full text-[0.65rem] font-bold uppercase tracking-widest text-gold mb-6">
+            {masterclassVideoUrl ? "Free Masterclass" : "Masterclass"}
           </div>
           <h1 className="font-serif text-[clamp(2rem,5vw,3.5rem)] leading-tight mb-6">
             The AI Business Analyst <br />
@@ -28,22 +36,31 @@ function VideoContent() {
           </h1>
         </motion.div>
 
-        {/* Video Player Placeholder */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
           className="w-full aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl relative border border-white/5 ring-1 ring-white/10"
         >
-          <div className="absolute inset-0 flex items-center justify-center bg-navy/40 backdrop-blur-[2px]">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-gold/20 cursor-pointer hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-navy text-4xl ml-1">play_arrow</span>
+          {masterclassVideoUrl ? (
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src={masterclassVideoUrl}
+              title="AI Business Analyst Career Roadmap masterclass"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-navy/40 p-8 text-center">
+              <div>
+                <span className="material-symbols-outlined text-5xl text-gold">videocam_off</span>
+                <p className="mt-4 text-white font-semibold">The masterclass video is not available yet.</p>
+                <p className="mt-2 text-sm text-white/60">Please contact our team for assistance.</p>
+                <Link href="/contact" className="mt-5 inline-block text-gold underline">Contact us</Link>
               </div>
-              <p className="text-white/60 font-medium">Click to play masterclass</p>
             </div>
-          </div>
-          {/* In a real app, use <iframe /> or <video /> here */}
+          )}
         </motion.div>
 
         <motion.div 

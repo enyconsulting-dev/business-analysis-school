@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+const consultationBookingUrls = {
+  30: process.env.NEXT_PUBLIC_CAREER_CONSULTATION_30_URL,
+  60: process.env.NEXT_PUBLIC_CAREER_CONSULTATION_60_URL,
+};
+
 export default function CareerConsultation() {
   return (
     <div className="bg-navy-deep text-white min-h-screen">
@@ -34,9 +39,14 @@ export default function CareerConsultation() {
                 <li className="flex gap-3"><span className="text-gold">✓</span> Immediate career gaps identified</li>
                 <li className="flex gap-3"><span className="text-gold">✓</span> 3 actionable next steps</li>
               </ul>
-              <button className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-4 rounded-xl border border-white/10 transition-all active:scale-[0.98]">
-                Book 30-Min Session
-              </button>
+              <a
+                href={consultationBookingUrls[30] || "/contact?interest=Career%20Consultation&consultation=30"}
+                target={consultationBookingUrls[30] ? "_blank" : undefined}
+                rel={consultationBookingUrls[30] ? "noopener noreferrer" : undefined}
+                className="block w-full bg-white/5 hover:bg-white/10 text-white font-bold py-4 rounded-xl border border-white/10 transition-all active:scale-[0.98] text-center no-underline"
+              >
+                {consultationBookingUrls[30] ? "Book 30-Min Session" : "Request 30-Min Session Details"}
+              </a>
             </div>
 
             {/* 60 Mins */}
@@ -51,9 +61,14 @@ export default function CareerConsultation() {
                 <li className="flex gap-3 font-bold"><span className="text-orchid-lt">✓</span> Interview strategy & salary negotiation</li>
                 <li className="flex gap-3 font-bold"><span className="text-orchid-lt">✓</span> 1 Week follow-up email support</li>
               </ul>
-              <button className="w-full bg-orchid hover:bg-orchid-lt text-white font-bold py-4 rounded-xl shadow-lg shadow-orchid/20 transition-all active:scale-[0.98]">
-                Book 60-Min Deep Dive
-              </button>
+              <a
+                href={consultationBookingUrls[60] || "/contact?interest=Career%20Consultation&consultation=60"}
+                target={consultationBookingUrls[60] ? "_blank" : undefined}
+                rel={consultationBookingUrls[60] ? "noopener noreferrer" : undefined}
+                className="block w-full bg-orchid hover:bg-orchid-lt text-white font-bold py-4 rounded-xl shadow-lg shadow-orchid/20 transition-all active:scale-[0.98] text-center no-underline"
+              >
+                {consultationBookingUrls[60] ? "Book 60-Min Deep Dive" : "Request 60-Min Session Details"}
+              </a>
             </div>
           </div>
         </div>

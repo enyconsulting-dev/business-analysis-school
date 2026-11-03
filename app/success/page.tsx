@@ -5,39 +5,55 @@ import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Suspense } from "react";
 
-type SuccessType = 'training' | 'contact' | 'booking' | 'enrollment';
+type SuccessType = 'training' | 'contact' | 'booking' | 'enrollment' | 'resource' | 'quiz';
 
 const contentMap: Record<SuccessType, { title: string; body: string; cta: string; href: string }> = {
   training: {
-    title: "You’re in!",
-    body: "Check your email for instant access to the masterclass. While you wait, here’s a quick preview of what you’ll learn...",
-    cta: "Watch Masterclass",
-    href: "/free-training"
+    title: "Request received",
+    body: "Your request was submitted. View the training page for current masterclass availability.",
+    cta: "View Training Page",
+    href: "/free-training/video"
   },
   contact: {
-    title: "Thank you!",
-    body: "Thank you for reaching out. Our team will respond within 24 hours. In the meantime, start with our free masterclass.",
-    cta: "Start Masterclass",
-    href: "/free-training"
+    title: "Inquiry received",
+    body: "Thank you for reaching out. Your inquiry has been submitted to our team.",
+    cta: "Return to Contact",
+    href: "/contact"
   },
   booking: {
-    title: "Your call is booked!",
-    body: "Check your email for confirmation and a brief questionnaire to help us prepare. We want to make every minute count.",
+    title: "Booking status",
+    body: "This page cannot confirm a booking. Check the booking provider for its confirmation and appointment details.",
     cta: "Back to Home",
     href: "/"
   },
   enrollment: {
-    title: "Welcome to Business Analysis School!",
-    body: "You’ve just made one of the best investments of your career. Check your email for onboarding instructions and your login credentials.",
-    cta: "Get Started",
-    href: "/"
+    title: "Enrollment status",
+    body: "This page cannot confirm enrollment or course access. Please contact our team or check the provider that processed your enrollment.",
+    cta: "Contact the Team",
+    href: "/contact"
+  },
+  resource: {
+    title: "Resource request complete",
+    body: "The download was requested. If it did not begin, return to the resource library and try again.",
+    cta: "Back to Resources",
+    href: "/resources"
+  },
+  quiz: {
+    title: "Assessment received",
+    body: "Your assessment answers were submitted. You can explore the available program options.",
+    cta: "Explore Programs",
+    href: "/programs"
   }
 };
 
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const type = (searchParams.get("type") as SuccessType) || "training";
-  const content = contentMap[type] || contentMap.training;
+  const requestedType = searchParams.get("type");
+  const type: SuccessType =
+    requestedType && Object.keys(contentMap).includes(requestedType)
+      ? (requestedType as SuccessType)
+      : "training";
+  const content = contentMap[type];
 
   return (
     <div className="min-h-screen bg-navy-deep flex items-center justify-center p-6 relative overflow-hidden">
@@ -46,6 +62,8 @@ function SuccessContent() {
       <div className="absolute top-[20%] right-[10%] w-[40vw] h-[40vw] bg-orchid/10 blur-[120px] rounded-full pointer-events-none"></div>
       
       <motion.div 
+        role="status"
+        aria-live="polite"
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="max-w-[500px] w-full bg-white rounded-3xl p-10 md:p-12 text-center shadow-2xl relative z-10"
@@ -73,11 +91,6 @@ function SuccessContent() {
           {content.cta}
         </Link>
 
-        {type === 'training' && (
-          <p className="mt-8 text-[0.8rem] text-gray-400">
-            Check your spam folder if you don't see the email within 2 minutes.
-          </p>
-        )}
       </motion.div>
     </div>
   );
