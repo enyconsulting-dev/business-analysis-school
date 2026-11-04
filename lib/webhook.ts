@@ -49,3 +49,4 @@ export async function submitToWebhook(payload: any, customUrl?: string) {
     return { success: false, error };
   }
 }
+
