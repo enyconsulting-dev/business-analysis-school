@@ -43,7 +43,7 @@ export default function Programs() {
       </section>
 
       {/* ========== FLAGSHIP AI ACCELERATORS ========== */}
-      <AcceleratorTiers />
+      <AcceleratorTiers showVipOffer />
 
       {/* ========== CERTIFICATION PREP ========== */}
       <section className="py-24 bg-white relative">
