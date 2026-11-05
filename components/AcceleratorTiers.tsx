@@ -3,7 +3,11 @@
 import { useState } from "react";
 import ApplicationModal from "./ApplicationModal";
 
-export default function AcceleratorTiers() {
+interface AcceleratorTiersProps {
+  showVipOffer?: boolean;
+}
+
+export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTiersProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -209,6 +213,95 @@ export default function AcceleratorTiers() {
               </div>
             </div>
           </div>
+
+          {showVipOffer && (
+            <article className="lg:col-span-3 relative overflow-hidden rounded-[2.5rem] border border-gold/40 bg-gradient-to-br from-[#21150A] via-[#11182A] to-[#0A1A35] p-8 shadow-2xl md:p-10">
+              <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
+              <div className="relative grid gap-10 lg:grid-cols-[0.85fr_1.5fr] lg:items-start">
+                <div className="flex h-full flex-col">
+                  <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-gold">
+                    <span className="material-symbols-outlined text-base">workspace_premium</span>
+                    New · VIP Business Consulting
+                  </div>
+                  <div className="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-gold/80">
+                    Certified AI Business Consultant · VIP Accelerator
+                  </div>
+                  <h3 className="mb-4 font-serif text-3xl italic leading-tight text-white md:text-4xl">
+                    Build your consulting business with Eno by your side.
+                  </h3>
+                  <p className="mb-8 max-w-xl text-sm leading-relaxed text-white/60">
+                    The complete consulting and AI consulting launch system, plus three months of direct, one-on-one access to Eno so you never have to figure out a step alone.
+                  </p>
+
+                  <div className="mb-7 mt-auto">
+                    <div className="font-serif text-5xl tracking-tight text-white">$9,997</div>
+                    <div className="mt-2 text-xs text-white/45">Grand price · VIP Business Consulting</div>
+                  </div>
+                  <a
+                    href="/contact"
+                    className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-6 py-4 font-bold text-navy-deep no-underline shadow-xl shadow-gold/10 transition-all hover:-translate-y-0.5 hover:bg-gold-lt sm:w-auto"
+                  >
+                    Apply for VIP Consulting
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </a>
+                </div>
+
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <section className="rounded-2xl border border-white/10 bg-black/10 p-5">
+                    <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-gold">
+                      Consulting Accelerator · 7 Core Modules
+                    </h4>
+                    <ul className="space-y-2.5 text-xs leading-relaxed text-white/70">
+                      <li>Consulting Clarity Blueprint <span className="text-white/40">· $497</span></li>
+                      <li>Consulting Business Launchpad <span className="text-white/40">· $297</span></li>
+                      <li>Visibility and Marketing System <span className="text-white/40">· $497</span></li>
+                      <li>Client Acquisition and Sales System <span className="text-white/40">· $597</span></li>
+                      <li>Delivery and Client Success System <span className="text-white/40">· $397</span></li>
+                      <li>Client Retention and Revenue System <span className="text-white/40">· $297</span></li>
+                      <li>Consulting Scale System <span className="text-white/40">· $497</span></li>
+                    </ul>
+                  </section>
+
+                  <section className="rounded-2xl border border-white/10 bg-black/10 p-5">
+                    <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-gold">
+                      Complete AI Consulting Track · 5 Modules
+                    </h4>
+                    <ul className="space-y-2.5 text-xs leading-relaxed text-white/70">
+                      <li>AI Opportunity Assessment <span className="text-white/40">· $497</span></li>
+                      <li>Business Automation Blueprint <span className="text-white/40">· $497</span></li>
+                      <li>AI Agent Deployment System <span className="text-white/40">· $597</span></li>
+                      <li>AI Revenue Systems Playbook <span className="text-white/40">· $497</span></li>
+                      <li>AI Consulting Offer Builder <span className="text-white/40">· $497</span></li>
+                    </ul>
+                  </section>
+
+                  <section className="rounded-2xl border border-gold/20 bg-gold/[0.05] p-5">
+                    <h4 className="mb-3 text-xs font-bold uppercase tracking-widest text-gold">
+                      Three Months of Direct Access to Eno
+                    </h4>
+                    <ul className="space-y-2 text-xs leading-relaxed text-white/70">
+                      <li>Private monthly strategy sessions and direct messaging</li>
+                      <li>Personal review of your consulting offer and first proposal</li>
+                      <li>Personal review of your pricing strategy</li>
+                      <li>Priority access at program events</li>
+                    </ul>
+                  </section>
+
+                  <section className="rounded-2xl border border-white/10 bg-black/10 p-5">
+                    <h4 className="mb-3 text-xs font-bold uppercase tracking-widest text-gold">
+                      VIP Bonus Suite & Toolkit Library
+                    </h4>
+                    <ul className="space-y-2 text-xs leading-relaxed text-white/70">
+                      <li>Done-for-you Consulting Authority Portfolio</li>
+                      <li>Done-for-you AI Command Center</li>
+                      <li>Sales, proposal, and marketing templates</li>
+                      <li>Operations toolkits</li>
+                    </ul>
+                  </section>
+                </div>
+              </div>
+            </article>
+          )}
 
         </div>
       </div>
