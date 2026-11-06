@@ -407,7 +407,7 @@ export default function BlogPage() {
       {/* Newsletter CTA */}
       <section className="py-16 bg-gradient-to-r from-primary to-primary-dark">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
             Stay Updated on Business Analysis Trends
           </h2>
           <p className="text-blue-100 mb-8 text-lg">
