@@ -50,7 +50,7 @@ export default function BlogPage() {
               />
             </div>
             <div className="flex flex-wrap justify-center gap-3">
-              <button className="px-5 py-2 rounded-full text-sm font-semibold bg-accent text-white shadow-md transition-transform hover:-translate-y-0.5">
+              <button className="px-5 py-2 rounded-full text-sm font-semibold bg-accent text-black shadow-md transition-transform hover:-translate-y-0.5">
                 All Posts
               </button>
               <button className="px-5 py-2 rounded-full text-sm font-medium bg-white text-gray-600 border border-gray-200 hover:border-accent hover:text-accent transition-colors">
@@ -435,7 +435,7 @@ export default function BlogPage() {
                   className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold transition-transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center min-w-[140px]"
                   type="submit"
                 >
-                  
+
                   {isSubmitting ? (
                     <span className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></span>
                   ) : (
