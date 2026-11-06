@@ -435,6 +435,7 @@ export default function BlogPage() {
                   className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold transition-transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center min-w-[140px]"
                   type="submit"
                 >
+                  
                   {isSubmitting ? (
                     <span className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></span>
                   ) : (
