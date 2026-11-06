@@ -410,7 +410,7 @@ export default function BlogPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
             Stay Updated on Business Analysis Trends
           </h2>
-          <p className="text-blue-100 mb-8 text-lg">
+          <p className="text-black mb-8 text-lg">
             Join 15,000+ professionals getting weekly career tips delivered to
             their inbox.
           </p>
