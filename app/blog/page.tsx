@@ -416,7 +416,7 @@ export default function BlogPage() {
           </p>
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
             {isSuccess ? (
-              <div className="w-full py-4 bg-white/10 rounded-lg text-white font-bold animate-fade-in">
+              <div className="w-full py-4 bg-white/10 rounded-lg text-black font-bold animate-fade-in">
                 ✓ You're on the list!
               </div>
             ) : (
@@ -432,7 +432,7 @@ export default function BlogPage() {
                 />
                 <button
                   disabled={isSubmitting}
-                  className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold transition-transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center min-w-[140px]"
+                  className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-black font-bold transition-transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center min-w-[140px]"
                   type="submit"
                 >
 
