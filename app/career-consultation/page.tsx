@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+const CONSULTATION_BOOKING_URL =
+  "https://link.enyconsulting.ca/widget/booking/UZ0zVWxzyQDG0CwxEILb";
+
 export default function CareerConsultation() {
   return (
     <div className="bg-navy-deep text-white min-h-screen">
@@ -23,27 +26,11 @@ export default function CareerConsultation() {
       {/* ========== PRICING TIERS ========== */}
       <section className="py-20 bg-navy">
         <div className="max-w-[1140px] mx-auto px-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[800px] mx-auto">
-            {/* 30 Mins */}
-            <div className="bg-navy-alt border border-white/5 p-10 rounded-3xl transition-all hover:border-orchid/20 hover:bg-white/[0.02] group">
-              <div className="text-[0.65rem] font-bold tracking-widest uppercase text-white/30 mb-2">Focused Strategy</div>
-              <h3 className="font-serif text-2xl mb-4 group-hover:text-gold transition-colors">30-Minute Consultation</h3>
-              <div className="font-serif text-4xl mb-8 text-white">$250</div>
-              <ul className="space-y-4 mb-10 list-none p-0 text-[0.88rem] text-white/50 font-light">
-                <li className="flex gap-3"><span className="text-gold">✓</span> Review of your current profile</li>
-                <li className="flex gap-3"><span className="text-gold">✓</span> Immediate career gaps identified</li>
-                <li className="flex gap-3"><span className="text-gold">✓</span> 3 actionable next steps</li>
-              </ul>
-              <button className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-4 rounded-xl border border-white/10 transition-all active:scale-[0.98]">
-                Book 30-Min Session
-              </button>
-            </div>
-
-            {/* 60 Mins */}
-            <div className="bg-navy-alt border-2 border-orchid p-10 rounded-3xl transition-all shadow-2xl shadow-orchid/5 -translate-y-4 relative overflow-hidden">
-              <div className="absolute top-4 right-4 bg-gold text-navy-deep text-[0.6rem] font-extrabold px-3 py-1.5 rounded-md uppercase tracking-wider">Most Impact</div>
+          <div className="mx-auto max-w-[620px]">
+            <div className="bg-navy-alt border-2 border-orchid p-10 rounded-3xl transition-all shadow-2xl shadow-orchid/5 relative overflow-hidden">
+              <div className="absolute top-4 right-4 bg-gold text-navy-deep text-[0.6rem] font-extrabold px-3 py-1.5 rounded-md uppercase tracking-wider">One-hour session</div>
               <div className="text-[0.65rem] font-bold tracking-widest uppercase text-orchid-lt mb-2">Deep Dive Roadmap</div>
-              <h3 className="font-serif text-2xl mb-4">60-Minute Consultation</h3>
+              <h3 className="font-serif text-2xl mb-4">1-Hour Paid Consultation</h3>
               <div className="font-serif text-4xl mb-8 text-white">$500</div>
               <ul className="space-y-4 mb-10 list-none p-0 text-[0.88rem] text-white/70 font-light">
                 <li className="flex gap-3 font-bold"><span className="text-orchid-lt">✓</span> Full experience auditing & mapping</li>
@@ -51,9 +38,17 @@ export default function CareerConsultation() {
                 <li className="flex gap-3 font-bold"><span className="text-orchid-lt">✓</span> Interview strategy & salary negotiation</li>
                 <li className="flex gap-3 font-bold"><span className="text-orchid-lt">✓</span> 1 Week follow-up email support</li>
               </ul>
-              <button className="w-full bg-orchid hover:bg-orchid-lt text-white font-bold py-4 rounded-xl shadow-lg shadow-orchid/20 transition-all active:scale-[0.98]">
-                Book 60-Min Deep Dive
-              </button>
+              <a
+                href={CONSULTATION_BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full bg-orchid hover:bg-orchid-lt text-white text-center font-bold py-4 rounded-xl shadow-lg shadow-orchid/20 transition-all active:scale-[0.98] no-underline"
+              >
+                Choose a Time & Book
+              </a>
+              <p className="mt-4 text-center text-xs text-white/40">
+                Booking and payment are completed on our secure scheduling page.
+              </p>
             </div>
           </div>
         </div>

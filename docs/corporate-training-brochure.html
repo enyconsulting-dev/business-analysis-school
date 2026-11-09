@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Corporate Training | Business Analysis School</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      :root {
+        color-scheme: light;
+        font-family: Arial, Helvetica, sans-serif;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        --navy: #071426;
+        --navy-light: #10233d;
+        --gold: #d4a843;
+        --ink: #17243a;
+        --muted: #647083;
+        --paper: #f5f6f8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        color: var(--ink);
+        background: #d8dce2;
+        font-size: 10pt;
+        line-height: 1.5;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        position: relative;
+        display: flex;
+        width: 210mm;
+        height: 297mm;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 18mm;
+        background: white;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .page:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+
+      .dark {
+        color: white;
+        background:
+          radial-gradient(ellipse at 90% 5%, rgba(212, 168, 67, 0.18), transparent 34%),
+          linear-gradient(145deg, var(--navy-light), var(--navy) 62%);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: inherit;
+        font-size: 9pt;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+      }
+
+      .brand-mark {
+        width: 9px;
+        height: 30px;
+        background: var(--gold);
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--gold);
+        font-size: 8pt;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.13;
+      }
+
+      h1,
+      h2 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 400;
+      }
+
+      h1 {
+        max-width: 155mm;
+        margin: 28mm 0 8mm;
+        font-size: 37pt;
+        letter-spacing: -0.035em;
+      }
+
+      h2 {
+        margin-bottom: 5mm;
+        font-size: 27pt;
+        letter-spacing: -0.025em;
+      }
+
+      h3 {
+        margin-bottom: 3mm;
+        font-size: 12pt;
+      }
+
+      p {
+        margin-bottom: 4mm;
+      }
+
+      .lead {
+        max-width: 145mm;
+        color: #d6deea;
+        font-size: 14pt;
+        line-height: 1.55;
+      }
+
+      .gold {
+        color: var(--gold);
+      }
+
+      .cover-bottom {
+        margin-top: auto;
+      }
+
+      .domain-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3mm;
+        margin-top: 16mm;
+      }
+
+      .domain-chip {
+        padding: 4mm 5mm;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 3mm;
+        color: #edf1f7;
+        font-size: 9pt;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: auto;
+        padding-top: 8mm;
+        border-top: 1px solid rgba(23, 36, 58, 0.12);
+        color: var(--muted);
+        font-size: 8pt;
+      }
+
+      .dark .footer {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #b7c1d0;
+      }
+
+      .section-intro {
+        max-width: 155mm;
+        margin-bottom: 10mm;
+        color: var(--muted);
+        font-size: 12pt;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5mm;
+      }
+
+      .card {
+        padding: 7mm;
+        border: 1px solid #e1e5eb;
+        border-radius: 4mm;
+        background: white;
+      }
+
+      .card p,
+      .card li {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 9pt;
+      }
+
+      .index {
+        display: block;
+        margin-bottom: 5mm;
+        color: var(--gold);
+        font-size: 8pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+
+      .subhead {
+        margin: 10mm 0 4mm;
+        color: var(--navy);
+        font-size: 9pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .service-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3mm 8mm;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .service-list li {
+        position: relative;
+        padding-left: 6mm;
+        color: var(--muted);
+        font-size: 9pt;
+      }
+
+      .service-list li::before {
+        position: absolute;
+        left: 0;
+        color: var(--gold);
+        content: "•";
+        font-weight: 700;
+      }
+
+      .agenda {
+        display: grid;
+        gap: 5mm;
+        margin-top: 6mm;
+      }
+
+      .agenda-day {
+        display: grid;
+        grid-template-columns: 31mm 1fr;
+        gap: 6mm;
+        padding: 7mm;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 4mm;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .day-label {
+        color: var(--gold);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 19pt;
+      }
+
+      .agenda-day h3 {
+        color: white;
+      }
+
+      .agenda-day p {
+        margin: 0;
+        color: #c2ccda;
+        font-size: 9pt;
+      }
+
+      .note {
+        margin-top: 6mm;
+        padding: 4mm 5mm;
+        border-left: 2px solid var(--gold);
+        color: #c2ccda;
+        font-size: 8.5pt;
+      }
+
+      .steps {
+        display: grid;
+        gap: 4mm;
+        margin: 10mm 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .steps li {
+        display: grid;
+        grid-template-columns: 11mm 1fr;
+        gap: 4mm;
+        align-items: start;
+      }
+
+      .step-number {
+        display: grid;
+        width: 9mm;
+        height: 9mm;
+        place-items: center;
+        border-radius: 50%;
+        background: #f5eedb;
+        color: #8a6719;
+        font-weight: 700;
+      }
+
+      .steps p {
+        margin: 1mm 0 0;
+        color: var(--muted);
+        font-size: 9pt;
+      }
+
+      .contact-panel {
+        margin-top: auto;
+        padding: 10mm;
+        border-radius: 5mm;
+        background: var(--navy);
+        color: white;
+      }
+
+      .contact-panel h3 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 19pt;
+        font-weight: 400;
+      }
+
+      .contact-panel p {
+        color: #cbd4e1;
+        font-size: 9pt;
+      }
+
+      .contact-panel a {
+        color: var(--gold);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .small {
+        font-size: 8pt;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="page dark">
+        <div class="brand"><span class="brand-mark"></span> BUSINESS ANALYSIS SCHOOL</div>
+        <p class="eyebrow" style="margin-top: 34mm">Corporate learning</p>
+        <h1>Build capability your teams can <span class="gold">put to work.</span></h1>
+        <p class="lead">
+          Practical, instructor-led learning in business analysis, applied AI,
+          data analytics, and agile ways of working—shaped around your
+          organization’s needs.
+        </p>
+        <div class="domain-row">
+          <div class="domain-chip">Business analysis</div>
+          <div class="domain-chip">AI and workflow automation</div>
+          <div class="domain-chip">Data analytics</div>
+          <div class="domain-chip">Agile and Scrum</div>
+        </div>
+        <div class="cover-bottom">
+          <p class="eyebrow">A focused path from learning to application</p>
+          <p style="max-width: 130mm; color: #d6deea">
+            Needs assessment · Custom curriculum · Live delivery ·
+            Post-training coaching and measurement
+          </p>
+        </div>
+        <div class="footer"><span>BUSINESS ANALYSIS SCHOOL</span><span>Corporate training</span></div>
+      </section>
+
+      <section class="page">
+        <div class="brand" style="color: var(--navy)"><span class="brand-mark"></span> BUSINESS ANALYSIS SCHOOL</div>
+        <p class="eyebrow" style="margin-top: 16mm">The learning approach</p>
+        <h2>Training built around your organization’s work.</h2>
+        <p class="section-intro">
+          Start with the capability your team needs to build. The training plan
+          can then be shaped to your goals, roles, and operating context.
+        </p>
+
+        <div class="card-grid">
+          <article class="card">
+            <span class="index">01 / BUSINESS ANALYSIS</span>
+            <h3>Make analysis more effective</h3>
+            <p>
+              Develop practical capability in analysis, requirements, and
+              structured problem-solving.
+            </p>
+          </article>
+          <article class="card">
+            <span class="index">02 / AI & AUTOMATION</span>
+            <h3>Apply AI to real workflows</h3>
+            <p>
+              Explore automation thinking, workflow design, prompt engineering,
+              and AI applications for business teams.
+            </p>
+          </article>
+          <article class="card">
+            <span class="index">03 / DATA ANALYTICS</span>
+            <h3>Build data capability</h3>
+            <p>
+              Include data analytics learning in a curriculum aligned to your
+              team’s business-analysis and decision-support needs.
+            </p>
+          </article>
+          <article class="card">
+            <span class="index">04 / AGILE & SCRUM</span>
+            <h3>Strengthen agile practice</h3>
+            <p>
+              Support agile ways of working and preparation for relevant
+              IIBA and ScrumStudy credentials.
+            </p>
+          </article>
+        </div>
+
+        <p class="subhead">Ways a program can be shaped</p>
+        <ul class="service-list">
+          <li>Training-needs assessment and skills-gap analysis</li>
+          <li>Curriculum design aligned to organizational challenges</li>
+          <li>Live instructor-led delivery, virtual or in person</li>
+          <li>Certification preparation for IIBA and ScrumStudy</li>
+          <li>Post-training coaching and performance measurement</li>
+          <li>Bulk pricing and dedicated account management</li>
+        </ul>
+
+        <div class="footer"><span>Learning pathways</span><span>02</span></div>
+      </section>
+
+      <section class="page dark">
+        <div class="brand"><span class="brand-mark"></span> BUSINESS ANALYSIS SCHOOL</div>
+        <p class="eyebrow" style="margin-top: 16mm">Illustrative curriculum</p>
+        <h2>A sample three-day intensive.</h2>
+        <p class="section-intro" style="color: #c2ccda">
+          An example sequence for teams exploring AI-enabled business analysis
+          and workflow design.
+        </p>
+
+        <div class="agenda">
+          <article class="agenda-day">
+            <div class="day-label">Day 01</div>
+            <div>
+              <h3>AI-First BA Fundamentals</h3>
+              <p>Automation mindset · N8N architecture · Prompt engineering for enterprise</p>
+            </div>
+          </article>
+          <article class="agenda-day">
+            <div class="day-label">Day 02</div>
+            <div>
+              <h3>Strategic Workflow Design</h3>
+              <p>API integration · Multi-agent systems · Legacy process migration</p>
+            </div>
+          </article>
+          <article class="agenda-day">
+            <div class="day-label">Day 03</div>
+            <div>
+              <h3>Implementation and Roadmap</h3>
+              <p>Pilot project initiation · Governance and security · Scaling AI across teams</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="note">
+          This is a sample agenda, not a fixed syllabus. Topics, duration, and
+          delivery are confirmed through a training-needs discussion.
+        </p>
+
+        <div class="footer"><span>Sample agenda · subject to scoping</span><span>03</span></div>
+      </section>
+
+      <section class="page">
+        <div class="brand" style="color: var(--navy)"><span class="brand-mark"></span> BUSINESS ANALYSIS SCHOOL</div>
+        <p class="eyebrow" style="margin-top: 16mm">From requirements to proposal</p>
+        <h2>Start with the team’s needs.</h2>
+        <p class="section-intro">
+          A useful proposal depends on the work your people do and the capability
+          you want them to take back to it.
+        </p>
+
+        <ol class="steps">
+          <li>
+            <span class="step-number">1</span>
+            <div><h3>Share the context</h3><p>Tell us about your team, roles, current challenges, and training objectives.</p></div>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <div><h3>Define the learning focus</h3><p>Identify the skills, subject areas, and any certification preparation relevant to your goals.</p></div>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <div><h3>Discuss delivery</h3><p>Consider virtual or in-person instruction, timing, team size, and post-training support.</p></div>
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            <div><h3>Request a tailored proposal</h3><p>We’ll use the information you provide to discuss a training approach for your organization.</p></div>
+          </li>
+        </ol>
+
+        <div class="contact-panel">
+          <p class="eyebrow">Next step</p>
+          <h3>Tell us what your team needs to learn.</h3>
+          <p>
+            Request a corporate training proposal at
+            <a href="https://businessanalysisschool.com/corporate-training">businessanalysisschool.com/corporate-training</a>
+            or email
+            <a href="mailto:support@businessanalysisschool.com">support@businessanalysisschool.com</a>.
+          </p>
+          <p class="small" style="margin-bottom: 0">
+            Program scope and pricing are discussed based on your requirements.
+          </p>
+        </div>
+
+        <div class="footer"><span>Business Analysis School · Corporate learning</span><span>04</span></div>
+      </section>
+    </main>
+  </body>
+</html>
