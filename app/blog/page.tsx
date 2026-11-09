@@ -437,7 +437,7 @@ export default function BlogPage() {
                 >
 
                   {isSubmitting ? (
-                    <span className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin"></span>
+                    <span className="w-5 h-5 border-2 border-black/80 border-t-black rounded-full animate-spin"></span>
                   ) : (
                     "Subscribe"
                   )}
