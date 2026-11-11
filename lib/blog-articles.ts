@@ -12,9 +12,64 @@ export interface BlogArticle {
   slug: string;
   category: string;
   excerpt: string;
+  image: {
+    src: string;
+    alt: string;
+  };
   blocks: ArticleBlock[];
   readMinutes: number;
 }
+
+const ARTICLE_IMAGES: Record<number, BlogArticle["image"]> = {
+  1: {
+    src: "/blog-articles/AI-Business-Analysis-in-2027.jpg",
+    alt: "Colorful charts and data analytics graphics on a dark background.",
+  },
+  2: {
+    src: "/blog-articles/The-Future-of-AI-Business-Consulting.jpg",
+    alt: "Business consultants reviewing information together around a table.",
+  },
+  3: {
+    src: "/blog-articles/Will-AI%20Replace-Business-Analysts.png",
+    alt: "A humanoid robot beside a programming board in a classroom.",
+  },
+  4: {
+    src: "/blog-articles/AI-Business-Strategy-in-2027.jpg",
+    alt: "A presenter leading a business workshop for a seated team.",
+  },
+  5: {
+    src: "/blog-articles/7-Essential-Skills-Aspiring-Business-Analysts-Need-to-Develop-in-2027.jpg",
+    alt: "A typewriter holding a page marked artificial intelligence.",
+  },
+  6: {
+    src: "/blog-articles/How-to-Become-an-AI-Business-Consultant.jpg",
+    alt: "A professional explaining a process diagram on a whiteboard.",
+  },
+  7: {
+    src: "/blog-articles/AI-Literacy-vs-Technical-Expertise.jpg",
+    alt: "An abstract network of connected points representing artificial intelligence.",
+  },
+  8: {
+    src: "/blog-articles/From-Beginner-to-Business-Analyst.jpg",
+    alt: "A sequence of AI assistants working at individual laptops.",
+  },
+  9: {
+    src: "/blog-articles/Agentic_AI_Explained.jpg",
+    alt: "AI assistant robots working at laptops in a coordinated sequence.",
+  },
+  10: {
+    src: "/blog-articles/From_AI_Prompts_to_AI_Workflows.jpg",
+    alt: "A laptop displaying a report on a desk with a notebook and phone.",
+  },
+  11: {
+    src: "/blog-articles/Practical_Skills_and_AI.jpg",
+    alt: "A person sketching connected workflow steps in a notebook.",
+  },
+  12: {
+    src: "/blog-articles/Business_Consulting_and_Problem-Solving.jpg",
+    alt: "A hand-drawn process diagram used to map a business workflow.",
+  },
+};
 
 const sourcePath = path.join(
   process.cwd(),
@@ -102,11 +157,16 @@ function parseArticles(markdown: string): BlogArticle[] {
       flushArticle();
       const number = Number(articleMatch[1]);
       const title = cleanMarkdown(articleMatch[2]);
+      const image = ARTICLE_IMAGES[number];
+      if (!image) {
+        throw new Error(`Missing image mapping for blog article ${number}: ${title}`);
+      }
       current = {
         number,
         title,
         slug: slugify(title),
         category,
+        image,
         blocks: [],
       };
       headingCounts = new Map();

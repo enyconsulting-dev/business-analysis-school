@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import ArticleContent from "@/components/ArticleContent";
 import {
@@ -88,6 +89,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </p>
         </div>
       </header>
+
+      <figure className="mx-auto max-w-6xl px-5 pt-8 sm:px-8 sm:pt-10">
+        <div className="relative aspect-[16/8] overflow-hidden rounded-3xl bg-slate-200 shadow-lg sm:aspect-[16/7]">
+          <Image
+            src={article.image.src}
+            alt={article.image.alt}
+            fill
+            priority
+            sizes="(min-width: 1280px) 1152px, calc(100vw - 40px)"
+            className="object-cover"
+          />
+        </div>
+      </figure>
 
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,1fr)_260px]">
         <article className="min-w-0 rounded-3xl border border-slate-200/80 bg-white px-6 py-8 shadow-sm sm:px-10 sm:py-12">
