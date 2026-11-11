@@ -1,83 +1,55 @@
 export interface Testimonial {
   id: number;
-  quote: string;
+  quote?: string;
+  videoTitle?: string;
+  videoId?: string;
   author: string;
-  location: string; 
-  result: string;   
-  photo?: string;   
-  flag: string;    
+  location?: string;
+  result?: string;
+  photo?: string;
+  flag?: string;
   isVideo: boolean;
-  programType: 'accelerator' | 'certification' | 'corporate' | 'course';
-  careerStage: 'beginner' | 'career-changer' | 'experienced';
-  programCompleted: string;
-  country: string;
+  programType?: 'accelerator' | 'certification' | 'corporate' | 'course';
+  careerStage?: 'beginner' | 'career-changer' | 'experienced';
+  programCompleted?: string;
+  country?: string;
 }
 
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    quote: "In 6 months, I went from accountant to business analyst earning $95,000. Coach Eno’s program changed the entire trajectory of my career and my family’s future.",
-    author: "Tunde A.",
-    location: "Nigeria → Canada",
-    result: "$95K Starting Salary",
-    flag: "🇨🇦",
+    videoTitle: "Returning to Learning after 15 years | Business Analyst Success Story",
+    videoId: "9QXf63xfJWs",
+    author: "Adaeze Ogboyen",
     isVideo: true,
-    programType: 'accelerator',
-    careerStage: 'career-changer',
-    programCompleted: "AI Accelerator - Tier 2",
-    country: "Canada"
   },
   {
     id: 2,
-    quote: "I had zero tech experience. I was a teacher for 12 years. After the Accelerator program, I landed a BA role at a Fortune 500 company within 60 days.",
-    author: "Sarah J.",
-    location: "United States",
-    result: "Fortune 500 Placement",
-    flag: "🇺🇸",
+    videoTitle: "She landed a Product Manager job in 45 days | Business Analysis School Review",
+    videoId: "OZtNK1E_qPE",
+    author: "Rafiat",
     isVideo: true,
-    programType: 'accelerator',
-    careerStage: 'career-changer',
-    programCompleted: "AI Accelerator - Tier 1",
-    country: "USA"
   },
   {
     id: 3,
-    quote: "The certification prep was incredible. I passed my CBAP on the first attempt. The coaching and the mocks — everything was designed for success.",
-    author: "David L.",
-    location: "United Kingdom",
-    result: "CBAP Certified — First Attempt",
-    flag: "🇬🇧",
-    isVideo: false,
-    programType: 'certification',
-    careerStage: 'experienced',
-    programCompleted: "CBAP Certification Prep",
-    country: "UK"
+    videoTitle: "The Program Gave Me Tools I could Use Immediately at Work | Business Analysis School",
+    videoId: "T1v1plDw9-M",
+    author: "Franca Awa",
+    isVideo: true,
   },
   {
     id: 4,
-    quote: "Eno Eka is a dedicated coach. The continuous support and guidance she gives propelled me to achieve great success in my BA career.",
-    author: "Chioma O.",
-    location: "Lagos, Nigeria",
-    result: "Career Acceleration",
-    flag: "🇳🇬",
-    isVideo: false,
-    programType: 'accelerator',
-    careerStage: 'beginner',
-    programCompleted: "AI Accelerator - Tier 1",
-    country: "Nigeria"
+    videoTitle: "How I passed CBAP Exam | Business Analyst Success Story",
+    videoId: "CWX8eAYx7_U",
+    author: "Funsho Emmanuel",
+    isVideo: true,
   },
   {
     id: 5,
-    quote: "The AI Consultant tier changed everything. I now run my own consulting practice billing $150 per hour. The setup support was worth 10x.",
-    author: "Michael R.",
-    location: "Atlanta, USA",
-    result: "$150/hr Consulting Rate",
-    flag: "🇺🇸",
+    videoTitle: "How I Transitioned Into Business Analysis | Business Analyst Success Story",
+    videoId: "7N58Dzga-Y8",
+    author: "Eugene Equere",
     isVideo: true,
-    programType: 'accelerator',
-    careerStage: 'experienced',
-    programCompleted: "AI Accelerator - Tier 3",
-    country: "USA"
   },
   {
     id: 6,
