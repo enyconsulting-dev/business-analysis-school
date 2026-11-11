@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState, type FormEvent } from "react";
 import type { BlogArticle } from "@/lib/blog-articles";
 import { submitToWebhook } from "@/lib/webhook";
@@ -139,6 +140,21 @@ export default function BlogIndex({ articles }: BlogIndexProps) {
                 key={article.slug}
                 className="group flex h-full flex-col rounded-3xl border border-slate-200/80 bg-white p-7 shadow-sm transition-all hover:-translate-y-1 hover:border-orchid/30 hover:shadow-xl"
               >
+                <Link
+                  href={`/blog/${article.slug}`}
+                  aria-label={`Read ${article.title}`}
+                  className="-mx-7 -mt-7 mb-6 block overflow-hidden rounded-t-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orchid"
+                >
+                  <div className="relative aspect-[16/10] bg-slate-100">
+                    <Image
+                      src={article.image.src}
+                      alt={article.image.alt}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                </Link>
                 <div className="mb-7 flex items-center justify-between gap-3">
                   <span className="rounded-full bg-[#f4eff7] px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-wider text-orchid">
                     {article.category}
