@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileCTA from "@/components/MobileCTA";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
+import { DEFAULT_OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 const serif = Instrument_Serif({
   subsets: ["latin"],
@@ -22,9 +23,40 @@ const sans = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Business Analysis School",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Business Analysis Training",
+    template: "%s | Business Analysis School",
+  },
   description:
-    "The global leader in business analysis education. IIBA Endorsed Education Provider & ScrumStudy Authorized Training Partner.",
+    "Build business analysis, certification, and AI skills with practical training and career support from Business Analysis School.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Business Analysis School",
+    locale: "en_US",
+    url: "/",
+    title: "Business Analysis Training | Business Analysis School",
+    description:
+      "Build business analysis, certification, and AI skills with practical training and career support.",
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Business Analysis School — business analysis and AI career training",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Business Analysis Training | Business Analysis School",
+    description:
+      "Build business analysis, certification, and AI skills with practical training and career support.",
+    images: [DEFAULT_OG_IMAGE],
+  },
 };
 
 export default function RootLayout({

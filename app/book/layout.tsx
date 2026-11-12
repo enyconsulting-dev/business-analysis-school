@@ -1,14 +1,8 @@
-import { Metadata } from "next";
+import type { ReactNode } from "react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "The Six-Figure Business Analyst | Bestselling Career Guide | Business Analysis School",
-  description: "12 Simple Steps to Kickstart Your Career Without a Tech Degree or Experience. The definitive guide by Eno Eka.",
-};
+export const metadata = pageMetadata.book;
 
-export default function BookLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function BookLayout({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
