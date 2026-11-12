@@ -38,7 +38,7 @@ const ARTICLE_IMAGES: Record<number, BlogArticle["image"]> = {
     alt: "A presenter leading a business workshop for a seated team.",
   },
   5: {
-    src: "/blog-articles/7-Essential-Skills-Aspiring-Business-Analysts-Need-to-Develop-in-2027.jpg",
+    src:  "/blog-articles/7-essentials-skills-aspiring.jpg",
     alt: "A typewriter holding a page marked artificial intelligence.",
   },
   6: {
