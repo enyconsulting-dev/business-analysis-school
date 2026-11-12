@@ -1,14 +1,12 @@
-import { Metadata } from "next";
+import type { ReactNode } from "react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Business Analysis Certifications | ECBA, CCBA, CBAP Prep | Business Analysis School",
-  description: "Get globally recognized certifications. ECBA, CCBA, and CBAP preparation courses with a 98% first-time pass rate.",
-};
+export const metadata = pageMetadata.certifications;
 
 export default function CertificationsLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return <>{children}</>;
 }
