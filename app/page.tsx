@@ -259,7 +259,7 @@ export default function Home() {
       </section>
 
       {/* ========== AI ACCELERATOR PROGRAMS (3 TIERS) ========== */}
-      <AcceleratorTiers />
+      <AcceleratorTiers showVipOffer />
 
       {/* ========== SUCCESS STORIES (ROTATING CAROUSEL) ========== */}
       <TestimonialCarousel />
