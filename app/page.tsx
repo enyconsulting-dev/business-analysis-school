@@ -26,10 +26,13 @@ export default function Home() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: [0.21, 1.11, 0.81, 0.99] as any }
+      transition: {
+        duration: 0.7,
+        ease: [0.21, 1.11, 0.81, 0.99] as const,
+      },
     },
   };
 
@@ -147,7 +150,7 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
               >
                 <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light">
-                  You’re an experienced professional. You have skills, education, and years of real work under your belt. <span className="font-medium text-orchid">But you’re stuck</span> — stuck in a role that underpay you, stuck in an industry that’s shrinking, or stuck wondering how to break into tech without going back to school and starting over from scratch.
+                  You&apos;re an experienced professional. You have skills, education, and years of real work under your belt. <span className="font-medium text-orchid">But you&apos;re stuck</span> — stuck in a role that underpay you, stuck in an industry that&apos;s shrinking, or stuck wondering how to break into tech without going back to school and starting over from scratch.
                 </p>
               </motion.div>
 
@@ -158,7 +161,7 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
               >
                 <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light">
-                  Here’s what nobody tells you: <span className="italic">you don’t need a computer science degree</span> to earn six figures in tech. You don’t need to learn to code. You don’t need to start at the bottom. What you need is a proven system to repackage your existing experience, position yourself for the roles that are hiring right now, and walk into interviews with the confidence and credentials that make you the obvious choice.
+                  Here&apos;s what nobody tells you: <span className="italic">you don&apos;t need a computer science degree</span> to earn six figures in tech. You don&apos;t need to learn to code. You don&apos;t need to start at the bottom. What you need is a proven system to repackage your existing experience, position yourself for the roles that are hiring right now, and walk into interviews with the confidence and credentials that make you the obvious choice.
                 </p>
               </motion.div>
 
@@ -169,11 +172,11 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
               >
                 <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light pb-20">
-                  That’s exactly what Business Analysis School delivers. We’ve helped over <span className="bg-gold/10 px-1 font-bold">100,000 professionals</span> across 90+ countries make this exact transition — from accountants, project managers, teachers, operations professionals, and managers into high-paying business analysis, product management, data analysis, and AI consulting roles.
+                  That&apos;s exactly what Business Analysis School delivers. We&apos;ve helped over <span className="bg-gold/10 px-1 font-bold">100,000 professionals</span> across 90+ countries make this exact transition — from accountants, project managers, teachers, operations professionals, and managers into high-paying business analysis, product management, data analysis, and AI consulting roles.
                 </p>
                 <div className="pt-10 border-t border-gray-100">
                   <p className="text-[1.2rem] md:text-3xl font-serif text-navy leading-snug">
-                    The question isn’t whether you can do this. <br />
+                    The question isn&apos;t whether you can do this. <br />
                     <span className="text-orchid">The question is how quickly you want to start.</span>
                   </p>
                 </div>
@@ -192,7 +195,7 @@ export default function Home() {
                       </div>
                       <h4 className="font-serif text-3xl mb-4 italic">The Positioning Shift</h4>
                       <p className="text-white/40 font-light leading-relaxed max-w-[280px] mx-auto">
-                        Moving from 'Generalist Experience' to 'Specialist Strategic Asset' in 90 days.
+                        Moving from &apos;Generalist Experience&apos; to &apos;Specialist Strategic Asset&apos; in 90 days.
                       </p>
                       <div className="mt-8 inline-flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-orchid-lt">
                         <span className="w-1.5 h-1.5 rounded-full bg-orchid-lt animate-pulse"></span>

@@ -75,7 +75,7 @@ function SuccessContent() {
 
         {type === 'training' && (
           <p className="mt-8 text-[0.8rem] text-gray-400">
-            Check your spam folder if you don't see the email within 2 minutes.
+            Check your spam folder if you don&apos;t see the email within 2 minutes.
           </p>
         )}
       </motion.div>

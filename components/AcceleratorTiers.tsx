@@ -198,7 +198,7 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
                   </li>
                </ul>
                <div className="mt-6 p-4 bg-white/5 rounded-2xl border border-white/5 text-[0.75rem] leading-relaxed text-white/60 italic">
-                 "For professionals building an AI consulting practice to generate six-figure+ revenue within 12 months."
+                 &ldquo;For professionals building an AI consulting practice to generate six-figure+ revenue within 12 months.&rdquo;
                </div>
             </div>
 

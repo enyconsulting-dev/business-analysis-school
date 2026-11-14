@@ -54,7 +54,7 @@ function VideoContent() {
         >
           <h3 className="font-serif text-2xl mb-4 italic">Ready to accelerate your transition?</h3>
           <p className="text-white/60 text-[1rem] leading-relaxed mb-10">
-            If you're serious about landing a six-figure role as an AI Business Analyst in the next 90 days, let's talk about how we can make it happen for you.
+            If you&apos;re serious about landing a six-figure role as an AI Business Analyst in the next 90 days, let&apos;s talk about how we can make it happen for you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 

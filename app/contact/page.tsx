@@ -237,7 +237,7 @@ export default function Contact() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">I'm Interested In</label>
+                          <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-2 ml-1">I&apos;m Interested In</label>
                           <select 
                             className="w-full bg-white border border-gray-100 rounded-xl px-5 py-4 text-[0.95rem] focus:outline-none focus:ring-2 focus:ring-orchid focus:border-orchid transition-all appearance-none cursor-pointer"
                             value={formData.interest}
@@ -307,7 +307,7 @@ export default function Contact() {
         <div className="max-w-[700px] mx-auto px-10">
           <h2 className="font-serif text-3xl text-navy mb-6 italic italic italic">Ready to accelerate your career?</h2>
           <p className="text-gray-400 font-light mb-12 italic italic italic italic">
-            Don't wait for a response. Get instant access to our free masterclass and see how our framework works in 2026.
+            Don&apos;t wait for a response. Get instant access to our free masterclass and see how our framework works in 2026.
           </p>
           <Link href="/free-training" className="inline-flex items-center gap-3 bg-white border border-navy text-navy font-bold py-4 px-12 rounded-xl hover:bg-navy hover:text-white transition-all no-underline">
             Watch Free Training

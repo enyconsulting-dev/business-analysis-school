@@ -59,7 +59,7 @@ export default function CareerConsultation() {
         <div className="max-w-[700px] mx-auto px-10 relative z-10">
           <h2 className="font-serif text-[2.2rem] mb-6 text-white italic">Wait! Unsure if a consultation is for you?</h2>
           <p className="text-[1rem] text-white/50 font-light mb-10 max-w-[500px] mx-auto leading-relaxed">
-            If you're looking for our high-end coaching programs, we recommend starting with our free training first to see if we're a good fit.
+            If you&apos;re looking for our high-end coaching programs, we recommend starting with our free training first to see if we&apos;re a good fit.
           </p>
           <Link href="/free-training" className="bg-white hover:bg-gray-100 text-navy-deep font-bold py-4 px-12 rounded-lg no-underline transition-all shadow-xl hover:-translate-y-1 inline-block">
             Watch Free Training Instead
