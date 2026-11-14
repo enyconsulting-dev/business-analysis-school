@@ -417,7 +417,7 @@ export default function BlogPage() {
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
             {isSuccess ? (
               <div className="w-full py-4 bg-white/10 rounded-lg text-white font-bold animate-fade-in">
-                ✓ You're on the list!
+                ✓ You&apos;re on the list!
               </div>
             ) : (
               <>

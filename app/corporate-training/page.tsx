@@ -101,7 +101,7 @@ export default function CorporateTraining() {
                  <div className="text-[4rem] font-serif text-white mb-4 italic">340%</div>
                  <h4 className="text-xl font-serif text-gold mb-6">Average ROI for Enterprise Clients</h4>
                  <p className="text-white/50 font-light leading-relaxed mb-8">
-                   "After implementing the BA School AI frameworks, our project delivery speed increased by 45% and rework costs were reduced by over $2.4M within the first 12 months."
+                   &ldquo;After implementing the BA School AI frameworks, our project delivery speed increased by 45% and rework costs were reduced by over $2.4M within the first 12 months.&rdquo;
                  </p>
                  <div className="flex items-center gap-4">
                    <div className="w-12 h-12 rounded-full bg-white/10"></div>
@@ -196,9 +196,9 @@ export default function CorporateTraining() {
 
             <div className="relative">
                <div className="bg-white/[0.03] border border-white/10 rounded-[3rem] p-12 backdrop-blur-md">
-                 <div className="text-gold text-[3rem] mb-6 font-serif">"</div>
+                 <div className="text-gold text-[3rem] mb-6 font-serif">&ldquo;</div>
                  <p className="text-[1.2rem] text-white/80 font-light leading-relaxed italic mb-8">
-                   "Business Analysis School has fundamentally changed how our L&D department views technical upskilling. Their framework is not just educational—it's immediately actionable. Our analysts are now driving innovation from within."
+                   &ldquo;Business Analysis School has fundamentally changed how our L&D department views technical upskilling. Their framework is not just educational—it&apos;s immediately actionable. Our analysts are now driving innovation from within.&rdquo;
                  </p>
                  <div className="flex items-center gap-4">
                    <div className="w-14 h-14 rounded-full bg-white/10"></div>

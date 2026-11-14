@@ -74,7 +74,7 @@ export default function Certifications() {
 
   return (
     <>
-      {/* SEO Title Handled by Next.js metadata in layout or here via Head if needed, but usually in layout or metadata export for App Router. App router uses export const metadata in page.tsx or layout.tsx. I will add it as an export below the component. */}
+      {/* SEO Title Handled by Next.js metadata in layout or here via Head if needed, but usually in layout or metadata export for App Router. App router uses export const metadata in page.tsx or layout.tsx. */}
       
       <div className="bg-navy-deep text-white min-h-screen font-sans selection:bg-orchid/30">
         
@@ -94,7 +94,7 @@ export default function Certifications() {
                 <span className="text-gold italic font-normal">Certifications</span>
               </h1>
               <p className="text-[1.1rem] md:text-[1.25rem] text-white/50 font-light max-w-[750px] mx-auto mb-12 leading-relaxed">
-                Join 100,000+ professionals who achieved career mastery through our certified training programs. We don't just teach the BABOK Guide; we help you master it and pass your exam on the first attempt.
+                Join 100,000+ professionals who achieved career mastery through our certified training programs. We don&apos;t just teach the BABOK Guide; we help you master it and pass your exam on the first attempt.
               </p>
             </motion.div>
 
@@ -158,7 +158,7 @@ export default function Certifications() {
                   <div className="bg-white/[0.03] border border-white/5 rounded-[3rem] p-8 md:p-14">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
                       <div>
-                        <h4 className="text-[0.65rem] font-bold uppercase tracking-widest text-gold mb-6 border-b border-gold/20 pb-2">Who It's For</h4>
+                        <h4 className="text-[0.65rem] font-bold uppercase tracking-widest text-gold mb-6 border-b border-gold/20 pb-2">Who It&apos;s For</h4>
                         <p className="text-[0.95rem] text-white/70 font-light leading-relaxed">{cert.whoItIsFor}</p>
                       </div>
                       <div>

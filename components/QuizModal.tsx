@@ -165,7 +165,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                   </div>
                   
                   <h2 className="font-serif text-2xl md:text-3xl mb-4 leading-tight italic">
-                    We've Found Your Path.
+                    We&apos;ve Found Your Path.
                   </h2>
                   <p className="text-[0.95rem] text-gray-500 font-light mb-10">
                     Enter your details below to get your personalized 2026 BA Career Roadmap and tailored assessment results.

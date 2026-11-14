@@ -71,7 +71,7 @@ export default function ExitIntentPopup() {
             onClick={() => setIsOpen(false)}
             className="text-[0.75rem] text-gray-400 hover:text-gray-600 underline font-medium"
           >
-            No thanks, I'll figure it out myself
+            No thanks, I&apos;ll figure it out myself
           </button>
         </div>
       </div>

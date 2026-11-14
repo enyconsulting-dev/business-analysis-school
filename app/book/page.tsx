@@ -107,7 +107,7 @@ export default function Book() {
             >
               <div className="w-16 h-1 bg-orchid/30 rounded-full"></div>
               <p className="text-[1.4rem] md:text-[1.8rem] font-serif leading-snug text-navy italic">
-                "This is the book that started it all. Written from my personal experience of pivoting from accounting to a six-figure consulting career within months of moving to Canada."
+                &ldquo;This is the book that started it all. Written from my personal experience of pivoting from accounting to a six-figure consulting career within months of moving to Canada.&rdquo;
               </p>
               <div className="space-y-8 text-[1.1rem] md:text-[1.15rem] leading-relaxed text-gray-500 font-light">
                 <p>
@@ -153,7 +153,7 @@ export default function Book() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="font-serif text-[clamp(2rem,4vw,3.5rem)] leading-tight mb-6 italic">What You'll Discover Inside</h2>
+            <h2 className="font-serif text-[clamp(2rem,4vw,3.5rem)] leading-tight mb-6 italic">What You&apos;ll Discover Inside</h2>
             <div className="w-20 h-1 bg-gold mx-auto rounded-full"></div>
           </motion.div>
 
@@ -249,7 +249,7 @@ export default function Book() {
           >
             <h2 className="font-serif text-[clamp(2rem,5vw,3rem)] text-white leading-tight mb-10 italic italic">Success Starts With The Right Blueprint</h2>
             <p className="text-[1.2rem] text-white/50 font-light mb-12 leading-relaxed italic italic">
-              "Your next six-figure role is just a few decisions away. This book is the first decision."
+              &ldquo;Your next six-figure role is just a few decisions away. This book is the first decision.&rdquo;
             </p>
             <Link href="/contact" className="inline-flex items-center gap-4 bg-orchid hover:bg-orchid-lt text-white font-bold py-5 px-14 rounded-2xl shadow-[0_20px_60px_rgba(150,8,142,0.3)] transition-all hover:-translate-y-1 no-underline text-[1.1rem]">
               Talk to a Career Strategist

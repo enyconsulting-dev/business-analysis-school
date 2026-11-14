@@ -80,7 +80,7 @@ export default function CorporateProposalModal({ isOpen, onClose }: CorporatePro
               </div>
               <h2 className="font-serif text-[2rem] text-navy mb-4 italic">Request a Training Proposal</h2>
               <p className="text-gray-500 font-light leading-relaxed">
-                Provide your team's details and our enterprise advisor will contact you within 24 hours to discuss a customized training solution.
+                Provide your team&apos;s details and our enterprise advisor will contact you within 24 hours to discuss a customized training solution.
               </p>
             </div>
 
