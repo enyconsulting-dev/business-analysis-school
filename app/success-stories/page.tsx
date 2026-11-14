@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { testimonials, Testimonial } from "@/data/testimonials";
+import { testimonials } from "@/data/testimonials";
+import TestimonialStoryCard from "@/components/TestimonialStoryCard";
 
 export default function SuccessStories() {
   const [filterType, setFilterType] = useState<string>("all");
@@ -21,7 +22,13 @@ export default function SuccessStories() {
 
   // Derive unique countries for the filter
   const countries = useMemo(() => {
-    const vals = Array.from(new Set(testimonials.map(t => t.country)));
+    const vals = Array.from(
+      new Set(
+        testimonials
+          .map((testimonial) => testimonial.country)
+          .filter((country): country is string => Boolean(country)),
+      ),
+    );
     return vals.sort();
   }, []);
 
@@ -110,46 +117,9 @@ export default function SuccessStories() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}
-                  className="bg-white rounded-[2.5rem] border border-gray-100 p-8 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden flex flex-col"
+                  className="h-full"
                 >
-                  {/* Video Badge */}
-                  {t.isVideo && (
-                    <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-orchid/10 flex items-center justify-center text-orchid animate-pulse group-hover:bg-orchid group-hover:text-white transition-all cursor-pointer">
-                      <span className="material-symbols-outlined text-[1.4rem]">play_arrow</span>
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-4 mb-8">
-                     <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-300 overflow-hidden relative">
-                        <span className="material-symbols-outlined text-[2rem]">person</span>
-                        {/* If we had photo logic, it would go here */}
-                     </div>
-                     <div>
-                        <div className="flex items-center gap-2">
-                           <h4 className="font-bold text-navy leading-none">{t.author}</h4>
-                           <span className="text-[1.2rem]">{t.flag}</span>
-                        </div>
-                        <p className="text-[0.7rem] font-bold text-gray-400 uppercase tracking-widest mt-1">{t.location}</p>
-                     </div>
-                  </div>
-
-                  <div className="relative mb-8 flex-grow">
-                     <div className="text-gray-200 text-[4rem] absolute -top-8 -left-4 font-serif select-none pointer-events-none group-hover:text-gold/20 transition-colors">“</div>
-                     <p className="text-[0.95rem] leading-relaxed text-gray-500 font-light relative z-10 italic">
-                        {t.quote}
-                     </p>
-                  </div>
-
-                  <div className="pt-6 border-t border-gray-50 space-y-3">
-                     <div className="flex items-center gap-2">
-                        <span className="text-[0.65rem] font-bold text-gray-300 uppercase tracking-widest">Program:</span>
-                        <span className="text-[0.75rem] font-bold text-navy/80">{t.programCompleted}</span>
-                     </div>
-                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-lg text-green-600">
-                        <span className="material-symbols-outlined text-[0.9rem]">verified</span>
-                        <span className="text-[0.7rem] font-bold uppercase tracking-wider">{t.result}</span>
-                     </div>
-                  </div>
+                  <TestimonialStoryCard testimonial={t} />
                 </motion.div>
               ))}
             </AnimatePresence>

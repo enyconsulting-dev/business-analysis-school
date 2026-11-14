@@ -246,6 +246,7 @@ export default function CorporateTraining() {
         onClose={() => setIsBrochureOpen(false)}
         type="ebook"
         resourceTitle="Corporate Training Brochure & Curriculum"
+        file="/corporate-training-brochure.pdf"
       />
     </div>
   );

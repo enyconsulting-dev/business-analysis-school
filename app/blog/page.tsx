@@ -1,7 +1,12 @@
-"use client";
+import type { Metadata } from "next";
+import BlogIndex from "@/components/BlogIndex";
+import { getBlogArticles } from "@/lib/blog-articles";
 
-import { useState } from "react";
-import { submitToWebhook } from "@/lib/webhook";
+export const metadata: Metadata = {
+  title: "Articles on Business Analysis, Consulting and AI",
+  description:
+    "Practical articles on business analysis, consulting, AI literacy, workflows, and career development.",
+};
 
 export default function BlogPage() {
   const [email, setEmail] = useState("");
@@ -448,4 +453,5 @@ export default function BlogPage() {
       </section>
     </>
   );
+  return <BlogIndex articles={getBlogArticles()} />;
 }
