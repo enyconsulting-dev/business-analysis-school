@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { submitToWebhook } from "@/lib/webhook";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 interface CorporateProposalModalProps {
   isOpen: boolean;
@@ -13,6 +15,8 @@ interface CorporateProposalModalProps {
 export default function CorporateProposalModal({ isOpen, onClose }: CorporateProposalModalProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,27 +26,34 @@ export default function CorporateProposalModal({ isOpen, onClose }: CorporatePro
     objectives: ""
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Corporate Training Inquiry",
-      type: "contact",
-      event_type: "corporate_rfp",
-      contact_name: formData.name,
-      work_email: formData.email,
-      company_name: formData.company,
-      team_size: formData.teamSize,
-      job_title: formData.jobTitle,
-      training_objectives: formData.objectives,
-      tags: "Corporate Training, Enterprise RFP"
-    });
-    
-    setIsSubmitting(false);
-    router.push("/success?type=contact");
-    onClose();
+    setSubmitError("");
+
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Corporate Training Inquiry",
+        type: "contact",
+        event_type: "corporate_rfp",
+        contact_name: formData.name,
+        work_email: formData.email,
+        company_name: formData.company,
+        team_size: formData.teamSize,
+        job_title: formData.jobTitle,
+        training_objectives: formData.objectives,
+        tags: "Corporate Training, Enterprise RFP"
+      }, protection.token, form);
+      router.push("/success?type=contact");
+      onClose();
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -161,6 +172,9 @@ export default function CorporateProposalModal({ isOpen, onClose }: CorporatePro
                   onChange={e => setFormData({...formData, objectives: e.target.value})}
                 ></textarea>
               </div>
+
+              {protection.fields}
+              <SubmissionError message={submitError} />
 
               <button 
                 disabled={isSubmitting}

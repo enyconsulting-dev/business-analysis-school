@@ -3,40 +3,49 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { submitToWebhook } from "@/lib/webhook";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
 import ResourceOptinModal from "@/components/ResourceOptinModal";
-
-const FREE_TRAINING_WEBHOOK = "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/c82296b3-022a-41a1-84c1-d0c213bf7518";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 export default function FreeTraining() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const protection = useSubmissionProtection();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: ""
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Free Training Opt-in",
-      type: "free master class",
-      event_type: "lead_optin",
-      resource_title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree",
-      resource_type: "masterclass",
-      full_name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      tags: "Free Training, Masterclass Opt-in"
-    }, FREE_TRAINING_WEBHOOK);
+    setSubmitError("");
 
-    setIsSubmitting(false);
-    router.push("/free-training/video");
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Free Training Opt-in",
+        type: "free master class",
+        event_type: "lead_optin",
+        resource_title: "How to Become an AI Business Analyst in 2026 Without a Tech Degree",
+        resource_type: "masterclass",
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        tags: "Free Training, Masterclass Opt-in"
+      }, protection.token, form);
+      router.push("/free-training/video");
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const discoveryPoints = [
@@ -148,6 +157,9 @@ export default function FreeTraining() {
                   onChange={e => setFormData({...formData, phone: e.target.value})}
                 />
               </div>
+
+              {protection.fields}
+              <SubmissionError message={submitError} />
 
               <button 
                 disabled={isSubmitting}
@@ -280,7 +292,6 @@ export default function FreeTraining() {
         onClose={() => setIsModalOpen(false)}
         type="masterclass"
         resourceTitle="How to Become an AI Business Analyst in 2026 Without a Tech Degree"
-        webhookUrl={FREE_TRAINING_WEBHOOK}
       />
     </div>
   );

@@ -3,6 +3,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 interface QuizModalProps {
   isOpen: boolean;
@@ -38,14 +41,14 @@ const steps = [
   }
 ];
 
-import { submitToWebhook } from "@/lib/webhook";
-
 export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isFinalStep, setIsFinalStep] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -61,9 +64,11 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
+    setSubmitError("");
     
     // Map answer indices to readable keys
     const mappedAnswers = {
@@ -72,21 +77,26 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
       commitment: answers[2]
     };
 
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Quiz Diagnostic",
-      type: "quiz",
-      event_type: "quiz_diagnostic",
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      email: formData.email,
-      answers: mappedAnswers,
-      tags: `Quiz Diagnostic, ${mappedAnswers.background}, ${mappedAnswers.goal}`
-    });
-
-    setIsSubmitting(false);
-    onClose();
-    router.push("/success?type=training");
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Quiz Diagnostic",
+        type: "quiz",
+        event_type: "quiz_diagnostic",
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        answers: mappedAnswers,
+        tags: `Quiz Diagnostic, ${mappedAnswers.background}, ${mappedAnswers.goal}`
+      }, protection.token, form);
+      onClose();
+      router.push("/success?type=training");
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const progress = ((currentStep + (isFinalStep ? 1 : 0)) / (steps.length + 1)) * 100;
@@ -208,6 +218,9 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                         onChange={e => setFormData({...formData, email: e.target.value})}
                       />
                     </div>
+
+                    {protection.fields}
+                    <SubmissionError message={submitError} />
 
                     <button 
                       disabled={isSubmitting}

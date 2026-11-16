@@ -3,11 +3,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { submitToWebhook } from "@/lib/webhook";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
   const [formData, setFormData] = useState({
     firstName: "",
     email: "",
@@ -16,25 +20,32 @@ export default function Contact() {
     message: ""
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Contact Inquiry",
-      type: "contact",
-      event_type: "contact_inquiry",
-      full_name: formData.firstName,
-      email: formData.email,
-      phone: formData.phone,
-      interest: formData.interest,
-      message: formData.message,
-      tags: `Contact Inquiry, ${formData.interest}`
-    });
+    setSubmitError("");
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Contact Inquiry",
+        type: "contact",
+        event_type: "contact_inquiry",
+        full_name: formData.firstName,
+        email: formData.email,
+        phone: formData.phone,
+        interest: formData.interest,
+        message: formData.message,
+        tags: `Contact Inquiry, ${formData.interest}`
+      }, protection.token, form);
+      setIsSuccess(true);
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactMethods = [
@@ -258,6 +269,9 @@ export default function Contact() {
                           onChange={e => setFormData({...formData, message: e.target.value})}
                         ></textarea>
                       </div>
+
+                      {protection.fields}
+                      <SubmissionError message={submitError} />
 
                       <button 
                         disabled={isSubmitting}

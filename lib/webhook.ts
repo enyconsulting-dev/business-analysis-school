@@ -1,55 +1,55 @@
-/**
- * Centralized Webhook Utility
- * Used to send lead data, applications, and inquiries to a unified backend/GHL endpoint.
- * Standardized inputs now include a "tags" string for better CRM segmentation.
- */
-
-const DEFAULT_WEBHOOK_URL =
-  "https://services.leadconnectorhq.com/hooks/Qum6zwDsfvHsbXiehFQR/webhook-trigger/c82296b3-022a-41a1-84c1-d0c213bf7518";
-
 type WebhookPayload = Record<string, unknown> & {
-  event_type?: string;
+  event_type: string;
 };
 
-export async function submitToWebhook(payload: WebhookPayload, customUrl?: string) {
-  const targetUrl = customUrl || DEFAULT_WEBHOOK_URL;
-  const timestamp = new Date().toISOString();
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
 
-  const enhancedPayload = {
-    ...payload,
-    timestamp,
-    source_url: typeof window !== "undefined" ? window.location.href : "server-side",
-    user_agent: typeof window !== "undefined" ? navigator.userAgent : "server-side",
-  };
-
-  if (!targetUrl) {
-    console.group("🚀 [Mock Webhook Submission]");
-    console.log("Event Type:", payload.event_type || "unspecified");
-    console.log("Payload:", enhancedPayload);
-    console.groupEnd();
-
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    return { success: true, mock: true };
-  }
+export async function submitToWebhook(
+  payload: WebhookPayload,
+  token: string,
+  form: HTMLFormElement,
+): Promise<void> {
+  const website = new FormData(form).get("website");
+  let response: Response;
 
   try {
-    const response = await fetch(targetUrl, {
+    response = await fetch("/api/lead", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(enhancedPayload),
+      body: JSON.stringify({
+        payload,
+        token,
+        website: typeof website === "string" ? website : "",
+      }),
     });
-
-    if (!response.ok) {
-      throw new Error(`Webhook failed with status: ${response.status}`);
-    }
-
-    return { success: true };
   } catch (error) {
-    console.error("❌ Webhook Submission Error:", error);
-    return { success: false, error };
+    console.error("Lead submission request failed:", error);
+    throw new Error("Unable to reach the server. Please try again.");
+  }
+
+  let result: unknown;
+  try {
+    result = await response.json();
+  } catch {
+    result = null;
+  }
+
+  if (!response.ok) {
+    const message =
+      isRecord(result) && typeof result.error === "string"
+        ? result.error
+        : "We couldn't submit your request. Please try again.";
+    throw new Error(message);
   }
 }
 
+export function getSubmissionErrorMessage(error: unknown): string {
+  return error instanceof Error
+    ? error.message
+    : "We couldn't submit your request. Please try again.";
+}

@@ -3,7 +3,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { submitToWebhook } from "@/lib/webhook";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 interface ResourceOptinModalProps {
   isOpen: boolean;
@@ -11,52 +13,59 @@ interface ResourceOptinModalProps {
   type: "masterclass" | "ebook";
   resourceTitle: string;
   file?: string;
-  webhookUrl?: string;
 }
 
-export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file, webhookUrl }: ResourceOptinModalProps) {
+export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file }: ResourceOptinModalProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: ""
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formElement = e.currentTarget;
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: `BAS ${type === 'masterclass' ? 'Masterclass' : 'Ebook'} Opt-in`,
-      type: type === 'masterclass' ? "free master class" : "resource",
-      event_type: "lead_optin",
-      resource_title: resourceTitle,
-      resource_type: type,
-      full_name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
-    }, webhookUrl);
+    setSubmitError("");
 
-    setIsSubmitting(false);
-    
-    // Trigger download if file is provided
-    if (file) {
-      const link = document.createElement('a');
-      link.href = file;
-      link.download = file.split('/').pop() || 'download';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    
-    onClose();
-    if (type === 'masterclass') {
-      router.push("/free-training/video");
-    } else {
-      router.push("/success?type=training");
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: `BAS ${type === 'masterclass' ? 'Masterclass' : 'Ebook'} Opt-in`,
+        type: type === 'masterclass' ? "free master class" : "resource",
+        event_type: "lead_optin",
+        resource_title: resourceTitle,
+        resource_type: type,
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
+      }, protection.token, formElement);
+
+      if (file) {
+        const link = document.createElement('a');
+        link.href = file;
+        link.download = file.split('/').pop() || 'download';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      onClose();
+      if (type === 'masterclass') {
+        router.push("/free-training/video");
+      } else {
+        router.push("/success?type=training");
+      }
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -135,6 +144,9 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                     onChange={e => setFormData({...formData, phone: e.target.value})}
                   />
                 </div>
+
+                {protection.fields}
+                <SubmissionError message={submitError} />
 
                 <button 
                   disabled={isSubmitting}

@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 interface ApplicationModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-import { submitToWebhook } from "@/lib/webhook";
-
 export default function ApplicationModal({ isOpen, onClose }: ApplicationModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -22,25 +26,34 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Empire Builder Application",
-      type: "application",
-      event_type: "application_submission",
-      program: "Empire Builder (Tier 3)",
-      full_name: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      current_role: formData.role,
-      income_level: formData.income,
-      primary_goal: formData.goal,
-      tags: "Tier 3 Application, Empire Builder"
-    });
+    const form = e.currentTarget;
+    setIsSubmitting(true);
+    setSubmitError("");
 
-    setIsSubmitted(true);
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Empire Builder Application",
+        type: "application",
+        event_type: "application_submission",
+        program: "Empire Builder (Tier 3)",
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        current_role: formData.role,
+        income_level: formData.income,
+        primary_goal: formData.goal,
+        tags: "Tier 3 Application, Empire Builder"
+      }, protection.token, form);
+      setIsSubmitted(true);
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -149,7 +162,10 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                   </div>
                 </div>
 
-                <button type="submit" className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-4 rounded-xl mt-6 transition-all shadow-xl hover:-translate-y-0.5">
+                {protection.fields}
+                <SubmissionError message={submitError} />
+
+                <button type="submit" disabled={isSubmitting} className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-4 rounded-xl mt-6 transition-all shadow-xl hover:-translate-y-0.5 disabled:opacity-50">
                   Submit Application & Book Call
                 </button>
                 <p className="text-center text-[0.7rem] text-gray-400 mt-4 leading-relaxed px-4">

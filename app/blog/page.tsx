@@ -1,29 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { submitToWebhook } from "@/lib/webhook";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 export default function BlogPage() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
 
-  const handleSubscribe = async (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
-    
-    await submitToWebhook({
-      source: "BAS",
-      tag: "BAS Newsletter Signup",
-      type: "newsletter",
-      event_type: "newsletter_signup",
-      email: email,
-      tags: "Newsletter Signup, Blog Footer"
-    });
+    setSubmitError("");
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setEmail("");
+    try {
+      await submitToWebhook({
+        source: "BAS",
+        tag: "BAS Newsletter Signup",
+        type: "newsletter",
+        event_type: "newsletter_signup",
+        email: email,
+        tags: "Newsletter Signup, Blog Footer"
+      }, protection.token, form);
+      setIsSuccess(true);
+      setEmail("");
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <>
@@ -430,6 +441,10 @@ export default function BlogPage() {
                   onChange={e => setEmail(e.target.value)}
                   disabled={isSubmitting}
                 />
+                <div className="w-full">
+                  {protection.fields}
+                  <SubmissionError message={submitError} />
+                </div>
                 <button
                   disabled={isSubmitting}
                   className="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-bold transition-transform hover:-translate-y-0.5 shadow-lg flex items-center justify-center min-w-[140px]"
