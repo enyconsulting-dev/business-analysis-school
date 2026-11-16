@@ -24,6 +24,7 @@ export default function Header() {
     { name: "Free Training", href: "/free-training" },
     { name: "Programs", href: "/programs" },
     { name: "Resources", href: "/resources" },
+    { name: "Blog", href: "https://businessanalysisschool.com/blog" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];

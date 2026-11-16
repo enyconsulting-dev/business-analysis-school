@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
 import SubmissionError from "@/components/SubmissionError";
@@ -20,6 +20,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const protection = useSubmissionProtection();
+  const [submissionError, setSubmissionError] = useState("");
+  const [downloadReady, setDownloadReady] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,6 +29,14 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (isOpen) {
+      setSubmissionError("");
+      setDownloadReady(false);
+    }
+  }, [isOpen, resourceTitle, file]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formElement = e.currentTarget;
     setIsSubmitting(true);
@@ -34,6 +44,10 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
 
     try {
       await submitToWebhook({
+    setSubmissionError("");
+
+    try {
+      const result = await submitToWebhook({
         source: "BAS",
         tag: `BAS ${type === 'masterclass' ? 'Masterclass' : 'Ebook'} Opt-in`,
         type: type === 'masterclass' ? "free master class" : "resource",
@@ -45,6 +59,12 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
         phone: formData.phone,
         tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
       }, protection.token, formElement);
+      }, webhookUrl);
+
+      if (!result.success) {
+        setSubmissionError("We couldn't submit your request. Please try again.");
+        return;
+      }
 
       if (file) {
         const link = document.createElement('a');
@@ -53,6 +73,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        setDownloadReady(true);
+        return;
       }
 
       onClose();
@@ -64,6 +86,8 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
     } catch (error) {
       protection.reset();
       setSubmitError(getSubmissionErrorMessage(error));
+    } catch {
+      setSubmissionError("We couldn't submit your request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -100,50 +124,98 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-50 border border-gray-200 rounded-md text-[0.65rem] font-bold uppercase tracking-widest text-gray-400 mb-6 font-sans">
                 {type === 'masterclass' ? 'Instant Access Training' : 'Digital Guide Download'}
               </div>
-              
-              <h2 className="font-serif text-2xl mb-4 leading-tight italic">
-                {type === 'masterclass' ? 'Watch the Masterclass' : 'Get the Starter Kit'}
-              </h2>
-              <p className="text-[0.9rem] text-gray-500 font-light mb-8">
-                {resourceTitle}
-              </p>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Full Name</label>
-                  <input 
-                    required
-                    type="text" 
-                    placeholder="Your full name"
-                    className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
-                    value={formData.name}
-                    onChange={e => setFormData({...formData, name: e.target.value})}
-                  />
+              {downloadReady ? (
+                <div className="text-center">
+                  <div className="mb-5 text-orchid">
+                    <span className="material-symbols-outlined text-5xl">check_circle</span>
+                  </div>
+                  <h2 className="font-serif text-2xl mb-3 leading-tight italic">
+                    Your download is ready
+                  </h2>
+                  <p className="text-[0.9rem] text-gray-500 font-light mb-7">
+                    Your request was received. If the download didn&apos;t start, use the button below.
+                  </p>
+                  <a
+                    href={file}
+                    download
+                    className="block w-full bg-navy hover:bg-navy-alt text-white text-center font-bold py-4 rounded-xl shadow-lg transition-all no-underline"
+                  >
+                    Download {resourceTitle}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="mt-4 text-sm font-bold text-gray-500 hover:text-navy"
+                  >
+                    Close
+                  </button>
                 </div>
-                
-                <div>
-                  <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Email Address</label>
-                  <input 
-                    required
-                    type="email" 
-                    placeholder="Your best email"
-                    className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
-                    value={formData.email}
-                    onChange={e => setFormData({...formData, email: e.target.value})}
-                  />
-                </div>
+              ) : (
+                <>
+                  <h2 className="font-serif text-2xl mb-4 leading-tight italic">
+                    {type === 'masterclass' ? 'Watch the Masterclass' : 'Get your resource'}
+                  </h2>
+                  <p className="text-[0.9rem] text-gray-500 font-light mb-8">
+                    {resourceTitle}
+                  </p>
 
-                <div>
-                  <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Phone Number</label>
-                  <input 
-                    required
-                    type="tel" 
-                    placeholder="WhatsApp number preferred"
-                    className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
-                    value={formData.phone}
-                    onChange={e => setFormData({...formData, phone: e.target.value})}
-                  />
-                </div>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Full Name</label>
+                      <input
+                        required
+                        type="text"
+                        placeholder="Your full name"
+                        className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                        value={formData.name}
+                        onChange={e => setFormData({...formData, name: e.target.value})}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Email Address</label>
+                      <input
+                        required
+                        type="email"
+                        placeholder="Your best email"
+                        className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                        value={formData.email}
+                        onChange={e => setFormData({...formData, email: e.target.value})}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[0.65rem] font-bold uppercase tracking-wider text-gray-400 mb-1.5 ml-1">Phone Number</label>
+                      <input
+                        required
+                        type="tel"
+                        placeholder="WhatsApp number preferred"
+                        className="w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-3.5 text-[0.9rem] focus:outline-none focus:ring-2 focus:ring-orchid/20 focus:border-orchid transition-all"
+                        value={formData.phone}
+                        onChange={e => setFormData({...formData, phone: e.target.value})}
+                      />
+                    </div>
+
+                    <button
+                      disabled={isSubmitting}
+                      className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-4 rounded-xl shadow-lg shadow-navy/20 transition-all active:scale-[0.98] mt-4 flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                      ) : (
+                        <>
+                          {type === 'masterclass' ? 'Get Instant Access' : 'Get My Resource'}
+                          <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        </>
+                      )}
+                    </button>
+
+                    {submissionError && (
+                      <p role="alert" className="text-sm text-red-600 text-center">
+                        {submissionError}
+                      </p>
+                    )}
 
                 {protection.fields}
                 <SubmissionError message={submitError} />
@@ -166,6 +238,12 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                   🔒 We value your privacy. Your data is encrypted and secure.
                 </p>
               </form>
+                    <p className="text-[0.6rem] text-gray-400 text-center mt-6">
+                      🔒 We value your privacy. Your data is encrypted and secure.
+                    </p>
+                  </form>
+                </>
+              )}
             </div>
           </motion.div>
         </div>
