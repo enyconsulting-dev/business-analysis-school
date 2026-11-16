@@ -3,7 +3,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { submitToWebhook } from "@/lib/webhook";
+import { getSubmissionErrorMessage, submitToWebhook } from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 interface ResourceOptinModalProps {
   isOpen: boolean;
@@ -11,12 +13,13 @@ interface ResourceOptinModalProps {
   type: "masterclass" | "ebook";
   resourceTitle: string;
   file?: string;
-  webhookUrl?: string;
 }
 
-export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file, webhookUrl }: ResourceOptinModalProps) {
+export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitle, file }: ResourceOptinModalProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const protection = useSubmissionProtection();
   const [submissionError, setSubmissionError] = useState("");
   const [downloadReady, setDownloadReady] = useState(false);
   const [formData, setFormData] = useState({
@@ -25,6 +28,7 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
     phone: ""
   });
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   useEffect(() => {
     if (isOpen) {
       setSubmissionError("");
@@ -34,7 +38,12 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const formElement = e.currentTarget;
     setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      await submitToWebhook({
     setSubmissionError("");
 
     try {
@@ -49,6 +58,7 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
         email: formData.email,
         phone: formData.phone,
         tags: `${type === 'masterclass' ? 'Masterclass' : 'Ebook'}, ${resourceTitle}`
+      }, protection.token, formElement);
       }, webhookUrl);
 
       if (!result.success) {
@@ -73,6 +83,9 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
       } else {
         router.push("/success?type=training");
       }
+    } catch (error) {
+      protection.reset();
+      setSubmitError(getSubmissionErrorMessage(error));
     } catch {
       setSubmissionError("We couldn't submit your request. Please try again.");
     } finally {
@@ -204,6 +217,27 @@ export default function ResourceOptinModal({ isOpen, onClose, type, resourceTitl
                       </p>
                     )}
 
+                {protection.fields}
+                <SubmissionError message={submitError} />
+
+                <button 
+                  disabled={isSubmitting}
+                  className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-4 rounded-xl shadow-lg shadow-navy/20 transition-all active:scale-[0.98] mt-4 flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                  ) : (
+                    <>
+                      {type === 'masterclass' ? 'Get Instant Access' : 'Send My eBook'}
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </>
+                  )}
+                </button>
+                
+                <p className="text-[0.6rem] text-gray-400 text-center mt-6">
+                  🔒 We value your privacy. Your data is encrypted and secure.
+                </p>
+              </form>
                     <p className="text-[0.6rem] text-gray-400 text-center mt-6">
                       🔒 We value your privacy. Your data is encrypted and secure.
                     </p>
