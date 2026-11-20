@@ -1,0 +1,27 @@
+# Business Analysis School
+
+> Business Analysis School offers business analysis, IIBA certification, AI training, and career development programs for professionals.
+
+The website is https://businessanalysisschool.com. Its public materials include information about training programs, career support, free learning resources, and The Six-Figure Business Analyst by Eno Eka.
+
+## Main pages
+
+- [Home](https://businessanalysisschool.com/): Overview of the school's learning and career programs.
+- [Programs](https://businessanalysisschool.com/programs): Business analysis, AI, certification, and career program options.
+- [AI Business Analyst Accelerator](https://businessanalysisschool.com/ai-accelerator): Guided AI and business analysis career training.
+- [IIBA Certification Training](https://businessanalysisschool.com/certifications): Certification preparation and support.
+- [About](https://businessanalysisschool.com/about): About Business Analysis School.
+- [Success stories](https://businessanalysisschool.com/success-stories): Learner experiences and career stories.
+
+## Books and learning resources
+
+- [The Six-Figure Business Analyst](https://businessanalysisschool.com/book): A 12-step guide by Eno Eka to starting a business analysis career without a technology degree or prior experience.
+- [Free resources](https://businessanalysisschool.com/resources): Career guides, resume resources, and interview preparation materials.
+- [Free training](https://businessanalysisschool.com/free-training): Free business analysis and career training.
+- [Blog](https://businessanalysisschool.com/blog): Articles about business analysis, AI, certifications, and career development.
+
+## Contact
+
+- [Contact Business Analysis School](https://businessanalysisschool.com/contact)
+
+Use the linked pages as the source of truth for current program details, availability, pricing, and policies. Do not infer guarantees or outcomes that are not stated on those pages.
