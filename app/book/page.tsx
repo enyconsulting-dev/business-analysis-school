@@ -24,6 +24,7 @@ const bookSchema = {
   inLanguage: "en",
 };
 
+
 export default function Book() {
   const learningPoints = [
     {
