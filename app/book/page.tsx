@@ -1,7 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+
+const bookSchema = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  name: "The Six-Figure Business Analyst",
+  author: {
+    "@type": "Person",
+    name: "Eno Eka",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Business Analysis School",
+    url: "https://businessanalysisschool.com",
+  },
+  description:
+    "A practical 12-step guide to starting a business analysis career without a technology degree or prior experience.",
+  image: "https://businessanalysisschool.com/six-figure.webp",
+  url: "https://businessanalysisschool.com/book",
+  inLanguage: "en",
+};
 
 export default function Book() {
   const learningPoints = [
@@ -34,6 +55,10 @@ export default function Book() {
 
   return (
     <div className="bg-white text-navy min-h-screen font-sans selection:bg-orchid/30 overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(bookSchema) }}
+      />
       
       {/* ========== HERO SECTION ========== */}
       <section className="relative py-24 md:py-32 bg-navy-deep text-white overflow-hidden">
@@ -54,10 +79,13 @@ export default function Book() {
               
               {/* 3D Book Mockup */}
               <div className="relative w-full max-w-[380px] aspect-[1/1.4] mx-auto rounded-r-xl overflow-hidden shadow-[20px_20px_60px_rgba(0,0,0,0.6)] border-l-4 border-gold/40 transition-transform duration-700 hover:scale-[1.02]">
-                 <img 
-                   src="/six-figure.webp" 
+                 <Image
+                   src="/six-figure.webp"
                    alt="The Six-Figure Business Analyst Book Cover" 
-                   className="w-full h-full object-cover"
+                   fill
+                   priority
+                   sizes="(max-width: 1024px) 80vw, 380px"
+                   className="object-cover"
                  />
               </div>
             </motion.div>
@@ -128,10 +156,12 @@ export default function Book() {
                viewport={{ once: true }}
                className="relative overflow-hidden aspect-[4/5] rounded-[3rem] bg-gray-50 border border-gray-100 group"
             >
-               <img 
-                 src="/eno-glossy.png" 
+               <Image
+                 src="/eno-glossy.png"
                  alt="Eno Eka" 
-                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                 fill
+                 sizes="(max-width: 1024px) 80vw, 420px"
+                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                />
                <div className="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-40"></div>
                <div className="absolute bottom-8 left-8 right-8 z-20 text-white text-center">
