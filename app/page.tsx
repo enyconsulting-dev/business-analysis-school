@@ -89,7 +89,7 @@ export default function Home() {
           {/* STAT 1 */}
           <div className="text-center group min-w-[120px]">
             <div className="font-serif text-3xl md:text-4xl text-gold leading-none mb-2">
-              <Counter to={100} suffix="K+" />
+              <Counter to={100000} suffix="+" />
             </div>
             <div className="text-[0.65rem] text-white/40 uppercase tracking-[0.2em] font-bold">Professionals Trained</div>
           </div>
@@ -150,7 +150,7 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
               >
                 <p className="text-[1.1rem] md:text-[1.25rem] leading-[1.8] text-navy font-light">
-                  You&apos;re an experienced professional. You have skills, education, and years of real work under your belt. <span className="font-medium text-orchid">But you&apos;re stuck</span> — stuck in a role that underpay you, stuck in an industry that&apos;s shrinking, or stuck wondering how to break into tech without going back to school and starting over from scratch.
+                  You&apos;re an experienced professional. You have skills, education, and years of real work under your belt. <span className="font-medium text-orchid">But you&apos;re stuck</span> — stuck in a role that underpays you, stuck in an industry that&apos;s shrinking, or stuck wondering how to break into tech without going back to school and starting over from scratch.
                 </p>
               </motion.div>
 
@@ -427,11 +427,8 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl shadow-xl shadow-navy/20 transition-all active:scale-[0.98] no-underline text-center">
+                <a href="https://thesixfigurebusinessanalystbook.com/" target="_blank" rel="noopener noreferrer" className="bg-navy hover:bg-navy-alt text-white font-bold py-4 px-10 rounded-xl shadow-xl shadow-navy/20 transition-all active:scale-[0.98] no-underline text-center">
                   Get the Book
-                </a>
-                <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="bg-white border border-navy text-navy hover:bg-gray-50 font-bold py-4 px-10 rounded-xl transition-all active:scale-[0.98] no-underline text-center">
-                  Book + Workbook Bundle
                 </a>
               </div>
             </div>

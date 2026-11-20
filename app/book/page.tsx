@@ -109,7 +109,7 @@ export default function Book() {
                   12 Simple Steps to Kickstart Your Career Without a Tech Degree or Experience
                 </p>
                 <div className="flex flex-col sm:flex-row gap-5">
-                  <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="bg-white hover:bg-gray-100 text-navy font-bold py-5 px-12 rounded-2xl shadow-2xl transition-all active:scale-[0.98] no-underline flex items-center justify-center gap-3">
+                  <a href="https://thesixfigurebusinessanalystbook.com/" target="_blank" rel="noopener noreferrer" className="bg-white hover:bg-gray-100 text-navy font-bold py-5 px-12 rounded-2xl shadow-2xl transition-all active:scale-[0.98] no-underline flex items-center justify-center gap-3">
                     Get the Book
                     <span className="material-symbols-outlined text-sm">shopping_cart</span>
                   </a>
@@ -218,13 +218,13 @@ export default function Book() {
             viewport={{ once: true }}
             className="mb-20"
           >
-            <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-none mb-8 italic">Choose Your Roadmap</h2>
+            <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-none mb-8 italic">Get the Book</h2>
             <p className="text-[1.15rem] text-gray-400 font-light max-w-[600px] mx-auto italic">
-              Whether you want just the playbook or the full implementation system, we have you covered.
+              Get the practical playbook for starting your business analysis career.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[900px] mx-auto">
+          <div className="grid grid-cols-1 gap-8 max-w-[600px] mx-auto">
             {/* Book Only */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -240,32 +240,11 @@ export default function Book() {
                 <li className="flex gap-3"><span className="text-orchid">✓</span> 12 Proven Steps Roadmap</li>
                 <li className="flex gap-3"><span className="text-orchid">✓</span> Interview Cheat Sheet</li>
               </ul>
-              <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-5 rounded-2xl transition-all shadow-lg active:scale-[0.98] text-center no-underline flex items-center justify-center">
+              <a href="https://thesixfigurebusinessanalystbook.com/" target="_blank" rel="noopener noreferrer" className="w-full bg-navy hover:bg-navy-alt text-white font-bold py-5 rounded-2xl transition-all shadow-lg active:scale-[0.98] text-center no-underline flex items-center justify-center">
                 Get the Book
               </a>
             </motion.div>
 
-            {/* Bundle */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-navy-deep border-2 border-gold rounded-[3rem] p-10 md:p-14 text-center flex flex-col scale-105 shadow-[0_40px_100px_rgba(0,0,0,0.3)] relative overflow-hidden group"
-            >
-              <div className="absolute top-0 left-0 w-full h-[6px] bg-gold animate-glow"></div>
-              <div className="text-[0.7rem] font-bold tracking-[0.2em] text-gold uppercase mb-8">Unbeatable Value</div>
-              <h3 className="font-serif text-3xl text-white mb-4 italic">Book + Workbook Bundle</h3>
-              <div className="font-serif text-5xl text-gold mb-12">$47.00</div>
-              <ul className="space-y-4 mb-12 text-[0.95rem] text-white/50 text-left font-light mx-auto max-w-[280px]">
-                <li className="flex gap-3 text-white"><span className="text-gold font-bold">✓</span> The Six-Figure BA Book</li>
-                <li className="flex gap-3 text-white"><span className="text-gold font-bold">✓</span> <span className="underline decoration-gold/50">Companion Workbook</span></li>
-                <li className="flex gap-3"><span className="text-gold">✓</span> Exercises & Planning Templates</li>
-                <li className="flex gap-3"><span className="text-gold">✓</span> Career Transformation Map</li>
-              </ul>
-              <a href="https://www.amazon.com/dp/1738168301?ref_=cm_sw_r_cp_ud_dp_RYZ4H00E0M0NFJM74WRF" target="_blank" rel="noopener noreferrer" className="w-full bg-gold hover:bg-gold-lt text-navy font-bold py-5 rounded-2xl shadow-xl shadow-gold/20 transition-all active:scale-[0.98] ring-4 ring-gold/10 text-center no-underline flex items-center justify-center">
-                Get Book + Workbook Bundle
-              </a>
-            </motion.div>
           </div>
         </div>
       </section>

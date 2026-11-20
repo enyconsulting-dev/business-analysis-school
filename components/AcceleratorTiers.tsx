@@ -28,6 +28,14 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
           </p>
         </div>
 
+        <div className="mb-10 rounded-2xl border border-gold/20 bg-gold/5 px-6 py-5 text-center">
+          <p className="font-bold text-gold">January 2027 Term 1 Academy</p>
+          <p className="mt-1 text-sm text-white/60">
+            Orientation: Wednesday, January 20, 2027 · Classes begin Saturday,
+            January 23, 2027 · Late enrollment closes Sunday, January 31, 2027.
+          </p>
+        </div>
+
         {/* Pricing Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           
@@ -37,12 +45,12 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
               <div className="text-[0.65rem] font-bold text-[#4FC3F7] uppercase tracking-[0.2em] mb-3">Tier 1 — Career Accelerator</div>
               <h3 className="font-serif text-2xl text-white mb-4 italic">Certified AI Business Analyst</h3>
               <div className="space-y-1">
-                <div className="font-serif text-[2.5rem] tracking-tight leading-none">$1,997</div>
-                <div className="text-[0.8rem] text-white/30 font-light italic">Regular: $2,500 | Value: $8,750</div>
+                <div className="font-serif text-[2.5rem] tracking-tight leading-none">$1,997 USD</div>
+                <div className="text-[0.8rem] text-white/30 font-light italic">Regular: $2,500 USD | Value: $8,750 USD</div>
               </div>
               <div className="mt-4 pt-4 border-t border-white/5 space-y-1">
                 <div className="text-[0.7rem] font-bold text-white/60 uppercase tracking-widest">Payment Plans</div>
-                <div className="text-[0.75rem] text-[#4FC3F7] font-medium">Pay in full: $1,997 | 2 payments: $1,100 | 3 payments: $800</div>
+                <div className="text-[0.75rem] text-[#4FC3F7] font-medium">Pay in full: $1,997 USD | 2 × $1,100 USD (total $2,200 USD) | 3 × $800 USD (total $2,400 USD)</div>
               </div>
             </div>
 
@@ -87,9 +95,6 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
                 Enroll Now — 50 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
               </a>
-              <div className="text-[0.75rem] text-center bg-green/10 text-green py-2 px-3 rounded-lg border border-green/20">
-                <strong>Pay-in-Full Bonus:</strong> $900 Cert Bundle FREE
-              </div>
             </div>
           </div>
 
@@ -103,8 +108,8 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
               <div className="text-[0.65rem] font-bold text-orchid-lt uppercase tracking-[0.2em] mb-3">Tier 2 — Strategy & Leadership</div>
               <h3 className="font-serif text-2xl text-white mb-4 italic">Certified AI Business Strategist</h3>
               <div className="space-y-1">
-                <div className="font-serif text-[2.5rem] tracking-tight leading-none">$2,997</div>
-                <div className="text-[0.8rem] text-white/30 font-light italic">Regular: $3,500 | Value: $18,500</div>
+                <div className="font-serif text-[2.5rem] tracking-tight leading-none">$2,997 USD</div>
+                <div className="text-[0.8rem] text-white/30 font-light italic">Regular: $3,500 USD | Value: $18,500 USD</div>
               </div>
             </div>
 
@@ -148,9 +153,6 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
                 Enroll Now — 25 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
               </a>
-              <div className="text-[0.75rem] text-center bg-green/10 text-green py-2 px-3 rounded-lg border border-green/20">
-                <strong>Pay-in-Full Bonus:</strong> $900 Cert Bundle FREE
-              </div>
             </div>
           </div>
 
@@ -160,12 +162,12 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
               <div className="text-[0.65rem] font-bold text-gold uppercase tracking-[0.2em] mb-3">Tier 3 — The Empire Builder</div>
               <h3 className="font-serif text-2xl text-white mb-4 italic">Certified AI Business Consultant</h3>
               <div className="space-y-1">
-                <div className="font-serif text-[2.5rem] tracking-tight leading-none italic">$4,997</div>
-                <div className="text-[0.8rem] text-white/30 font-light italic">VIP Option: $9,997 | Value: $45,000</div>
+                <div className="font-serif text-[2.5rem] tracking-tight leading-none italic">$4,997 USD</div>
+                <div className="text-[0.8rem] text-white/30 font-light italic">VIP Option: $9,997 USD | Value: $45,000 USD</div>
               </div>
               <div className="mt-4 pt-4 border-t border-white/5 space-y-1">
                 <div className="text-[0.7rem] font-bold text-white/60 uppercase tracking-widest">Payment Plans</div>
-                <div className="text-[0.75rem] text-gold font-medium">5-month plan: $1,050/month | Corporate Sponsorship</div>
+                <div className="text-[0.75rem] text-gold font-medium">5 monthly payments of $1,050 USD (total $5,250 USD)</div>
               </div>
             </div>
 
@@ -208,9 +210,6 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
                 Apply Now — Only 10 Spots
                 <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">assignment_turned_in</span>
               </a>
-              <div className="text-[0.75rem] text-center bg-green/10 text-green py-2 px-3 rounded-lg border border-green/20">
-                <strong>Pay-in-Full Bonus:</strong> $900 Cert Bundle FREE
-              </div>
             </div>
           </div>
 
@@ -234,9 +233,12 @@ export default function AcceleratorTiers({ showVipOffer = false }: AcceleratorTi
                   </p>
 
                   <div className="mb-7 mt-auto">
-                    <div className="font-serif text-5xl tracking-tight text-white">$9,997</div>
+                    <div className="font-serif text-5xl tracking-tight text-white">$9,997 USD</div>
                     <div className="mt-2 text-xs text-white/45">Grand price · VIP Business Consulting</div>
                   </div>
+                  <p className="mb-6 text-xs leading-relaxed text-white/60">
+                    Compared with the $4,997 USD Consultant tier, VIP adds 12 consulting and AI consulting modules, three months of direct one-on-one access to Eno, a done-for-you authority portfolio and AI Command Center, plus sales, proposal, marketing, and operations toolkits.
+                  </p>
                   <a
                     href="/contact"
                     className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-gold px-6 py-4 font-bold text-navy-deep no-underline shadow-xl shadow-gold/10 transition-all hover:-translate-y-0.5 hover:bg-gold-lt sm:w-auto"
