@@ -4,7 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState, type FormEvent } from "react";
 import type { BlogArticle } from "@/lib/blog-articles";
-import { submitToWebhook } from "@/lib/webhook";
+import {
+  getSubmissionErrorMessage,
+  submitToWebhook,
+} from "@/lib/webhook";
+import SubmissionError from "@/components/SubmissionError";
+import { useSubmissionProtection } from "@/components/SubmissionProtection";
 
 const SUPPORT_URL = "https://eny-support-page.vercel.app";
 
@@ -23,35 +28,29 @@ export default function BlogIndex({ articles }: BlogIndexProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscriptionError, setSubscriptionError] = useState("");
+  const protection = useSubmissionProtection();
 
   const handleSubscribe = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
     setIsSubmitting(true);
     setSubscriptionError("");
 
     try {
-      const result = await submitToWebhook({
+      await submitToWebhook({
         source: "BAS",
         tag: "BAS Newsletter Signup",
         type: "newsletter",
         event_type: "newsletter_signup",
         email,
         tags: "Newsletter Signup, Blog Footer",
-      });
-
-      if (!result.success) {
-        setSubscriptionError(
-          "We couldn't complete your subscription. Please try again.",
-        );
-        return;
-      }
+      }, protection.token, form);
 
       setIsSubscribed(true);
       setEmail("");
-    } catch {
-      setSubscriptionError(
-        "We couldn't complete your subscription. Please try again.",
-      );
+    } catch (error) {
+      protection.reset();
+      setSubscriptionError(getSubmissionErrorMessage(error));
     } finally {
       setIsSubmitting(false);
     }
@@ -249,10 +248,11 @@ export default function BlogIndex({ articles }: BlogIndexProps) {
                 >
                   {isSubmitting ? "Submitting…" : "Subscribe"}
                 </button>
+                <div className="sm:basis-full">{protection.fields}</div>
                 {subscriptionError && (
-                  <p className="text-sm text-red-600 sm:basis-full" role="alert">
-                    {subscriptionError}
-                  </p>
+                  <div className="sm:basis-full">
+                    <SubmissionError message={subscriptionError} />
+                  </div>
                 )}
               </form>
             )}
