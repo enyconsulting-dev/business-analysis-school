@@ -25,5 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}${path}`,
     changeFrequency: path === "/" || path === "/blog" ? "weekly" : "monthly",
     priority: path === "/" ? 1 : path === "/blog" ? 0.9 : 0.7,
+    ...(path === "/book" ? { images: [`${SITE_URL}/six-figure.webp`] } : {}),
   })) satisfies MetadataRoute.Sitemap;
 }

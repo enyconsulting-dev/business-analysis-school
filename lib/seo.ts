@@ -76,7 +76,7 @@ export const pageMetadata = {
   book: createPageMetadata({
     title: "The Six-Figure Business Analyst Book",
     description:
-      "Explore a practical guide to starting a business analysis career without a technology degree or prior experience.",
+      "Discover 12 practical steps to start a business analysis career without a technology degree or prior experience in The Six-Figure Business Analyst by Eno Eka.",
     path: "/book",
   }),
   careerConsultation: createPageMetadata({
