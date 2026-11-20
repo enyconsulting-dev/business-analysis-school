@@ -118,7 +118,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 11,
-    quote: "Confidently handled multiple offers. The salary negotiation training payed for the program in the first week.",
+    quote: "Confidently handled multiple offers. The salary negotiation training paid for the program in the first week.",
     author: "Ahmed M.",
     location: "Dubai, UAE",
     result: "Multiple Tech Offers",
@@ -158,7 +158,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 14,
-    quote: "The SCUM Master prep was so detailed. Passed the SPOC and SMC exams back-to-back with 95% scores.",
+    quote: "The Scrum Master prep was so detailed. Passed the SPOC and SMC exams back-to-back with 95% scores.",
     author: "James K.",
     location: "Nairobi, Kenya",
     result: "Dual Scrum Certified",
@@ -236,7 +236,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 20,
-    quote: "Within 2 weeks of the resume rewrite, my LinkedIn impressions jumped 500% and Recuiters started DMing me.",
+    quote: "Within 2 weeks of the resume rewrite, my LinkedIn impressions jumped 500% and Recruiters started DMing me.",
     author: "Vivian C.",
     location: "United Kingdom",
     result: "High-Visibility Resume",

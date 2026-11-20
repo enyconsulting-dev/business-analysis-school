@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, useTransform, motion, animate, useMotionValueEvent } from "framer-motion";
+import {
+  animate,
+  useInView,
+  useMotionValue,
+  useMotionValueEvent,
+} from "framer-motion";
 
 interface CounterProps {
   to: number;
@@ -15,10 +20,15 @@ export default function Counter({ to, suffix = "", prefix = "", duration = 2, de
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const count = useMotionValue(0);
-  const [displayValue, setDisplayValue] = useState("0");
+  const formatValue = (value: number) =>
+    new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }).format(value);
+  const [displayValue, setDisplayValue] = useState(() => formatValue(to));
 
   useMotionValueEvent(count, "change", (latest) => {
-    setDisplayValue(latest.toFixed(decimals));
+    setDisplayValue(formatValue(latest));
   });
 
   useEffect(() => {

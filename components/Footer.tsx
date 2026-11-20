@@ -48,10 +48,10 @@ export default function Footer() {
             <h4 className="text-[0.68rem] font-bold tracking-widest uppercase text-white/90 mb-6">Resources</h4>
             <div className="flex flex-col gap-3">
               <Link href="/resources" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Resource Hub</Link>
+              <Link href="/about" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">About</Link>
               <Link href="/book" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">The Bestselling Book</Link>
               <Link href="/blog" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Industry Blog</Link>
               <Link href="/success-stories" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Success Stories</Link>
-              <Link href="#" className="text-[0.82rem] text-white/50 hover:text-gold no-underline transition-all duration-300 hover:translate-x-1">Podcast</Link>
             </div>
           </div>
 
