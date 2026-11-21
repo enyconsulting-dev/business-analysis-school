@@ -28,22 +28,26 @@ function VideoContent() {
           </h1>
         </motion.div>
 
-        {/* Video Player Placeholder */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="w-full aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl relative border border-white/5 ring-1 ring-white/10"
+          className="relative w-full"
         >
-          <div className="absolute inset-0 flex items-center justify-center bg-navy/40 backdrop-blur-[2px]">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-gold/20 cursor-pointer hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-navy text-4xl ml-1">play_arrow</span>
-              </div>
-              <p className="text-white/60 font-medium">Click to play masterclass</p>
-            </div>
+          <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-gold/10 blur-3xl"></div>
+          <div className="w-full aspect-video overflow-hidden rounded-2xl bg-black shadow-[0_30px_90px_rgba(0,0,0,0.55)] ring-1 ring-white/10 md:rounded-3xl">
+            <iframe
+              src="https://player.vimeo.com/video/1236888783?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;dnt=1"
+              title="The AI Business Analyst Career Roadmap for 2026"
+              className="h-full w-full"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              allowFullScreen
+            />
           </div>
-          {/* In a real app, use <iframe /> or <video /> here */}
+          <div className="mt-4 flex items-center justify-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-white/40">
+            <span className="material-symbols-outlined text-sm text-gold">play_circle</span>
+            AI Business Analyst Masterclass
+          </div>
         </motion.div>
 
         <motion.div 
